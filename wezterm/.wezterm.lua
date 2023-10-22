@@ -9,7 +9,6 @@ return {
 	},
 	color_scheme = "OneDark",
 	font = wezterm.font_with_fallback({
-		{ family = "JetBrains Mono", weight = "Medium" },
 		{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
 	}),
 	font_size = 13.5,
