@@ -1,0 +1,41 @@
+" Map leader to space
+let mapleader=" "
+
+" Plugins
+set NERDTree
+set highlightedyank
+
+" Common settings
+set showmode
+set showcmd
+set scrolloff=8
+set ignorecase
+set smartcase
+set incsearch
+set nohlsearch
+set number
+set relativenumber
+
+" Idea specific settings
+set ideastatusicon=gray
+
+" Remaps
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzz
+nnoremap N Nzz
+xnoremap <leader>p "_dP
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" Actions
+nmap <leader>/ <action>(ShowErrorDescription)
+nmap <leader>e <action>(GotoNextError)
+nmap <leader>h <action>(PreviousTab)
+nmap <leader>l <action>(NextTab)
+nmap <leader>i <action>(Generate)
