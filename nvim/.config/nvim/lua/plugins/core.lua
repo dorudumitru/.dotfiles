@@ -11,6 +11,10 @@ return {
 						strings = "none",
 						variables = "none",
 					},
+					highlights = {
+						-- italic html attributes
+						["@tag.attribute"] = { fmt = "italic" },
+					},
 				})
 				require("onedark").load()
 			end,
