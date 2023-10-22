@@ -8,9 +8,9 @@ return {
 		["OneDark"] = onedark,
 	},
 	color_scheme = "OneDark",
-	-- font = wezterm.font_with_fallback({
-	-- 	{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
-	-- }),
+	font = wezterm.font_with_fallback({
+		{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
+	}),
 	font_size = 13.5,
 	line_height = 1.1,
 	window_decorations = "RESIZE",
