@@ -3,19 +3,6 @@ return {
 		"LazyVim/LazyVim",
 		opts = {
 			colorscheme = function()
-				require("onedark").setup({
-					code_style = {
-						comments = "italic",
-						keywords = "italic",
-						functions = "bold",
-						strings = "none",
-						variables = "none",
-					},
-					highlights = {
-						-- italic html attributes
-						["@tag.attribute"] = { fmt = "italic" },
-					},
-				})
 				require("onedark").load()
 			end,
 		},
