@@ -12,7 +12,6 @@ return {
 				},
 				highlights = {
 					["@tag.attribute"] = { fmt = "italic" },
-					["@punctuation.bracket"] = { fg = "#E5C07B" },
 				},
 			})
 		end,
