@@ -12,6 +12,7 @@ return {
 				},
 				highlights = {
 					["@tag.attribute"] = { fmt = "italic" },
+					["@tag.delimiter"] = { fg = "#848b98" },
 				},
 			})
 		end,
