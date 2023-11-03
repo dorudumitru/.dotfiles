@@ -11,12 +11,18 @@ return {
 	font = wezterm.font_with_fallback({
 		{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
 	}),
-	font_size = 13.5,
+	font_size = 13,
 	line_height = 1.1,
 	window_decorations = "RESIZE",
 	use_fancy_tab_bar = false,
 	initial_cols = 110,
 	initial_rows = 25,
+	window_padding = {
+		left = 0,
+		right = 0,
+		top = 0,
+		bottom = 0,
+	},
 	keys = {
 		{
 			key = "H",
