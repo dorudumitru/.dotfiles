@@ -20,7 +20,9 @@ function rider() { ( jbrider "$@" & ) > /dev/null 2>&1 }
 function storm() { ( webstorm "$@" & ) > /dev/null 2>&1 }
 function lion() { ( clion "$@" & ) > /dev/null 2>&1 }
 
-alias wezterm='flatpak run org.wezfurlong.wezterm'
+alias vim='nvim'
+alias vi='nvim'
+alias vimdiff='nvim -d'
 
 alias ls='lsd'
 alias l='ls -l'
