@@ -13,8 +13,22 @@ return {
 			opts = function(_, opts)
 				vim.list_extend(opts.ensure_installed, {
 					"svelte",
+					"css",
 				})
 			end,
+		},
+	},
+	{
+		{
+			"williamboman/mason.nvim",
+			opts = {
+				ensure_installed = {
+					"css-lsp",
+					"emmet-language-server",
+					"lua-language-server",
+					"svelte-language-server",
+				},
+			},
 		},
 	},
 	{
