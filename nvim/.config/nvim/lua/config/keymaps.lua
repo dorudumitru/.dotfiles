@@ -14,12 +14,6 @@ vim.keymap.set("n", "<leader>Y", '"+Y')
 vim.keymap.set("n", "<leader>d", '"_d')
 vim.keymap.set("v", "<leader>d", '"_d')
 
--- VS Code
-if vim.g.vscode then
-	vim.keymap.set("n", "<leader>e", "<Cmd>call VSCodeNotify('workbench.view.explorer')<CR>")
-	vim.keymap.set("n", "]d", "<Cmd>call VSCodeNotify('editor.action.marker.nextInFiles')<CR>")
-end
-
 -- Override LazyVim keymaps
 vim.keymap.del("n", "<C-h>")
 vim.keymap.del("n", "<C-j>")
