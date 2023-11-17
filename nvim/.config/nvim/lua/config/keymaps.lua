@@ -18,6 +18,18 @@ vim.keymap.set("v", "<leader>d", '"_d')
 if vim.g.vscode then
 	vim.keymap.set("n", "<leader>e", "<Cmd>call VSCodeNotify('workbench.view.explorer')<CR>")
 	vim.keymap.set("n", "]d", "<Cmd>call VSCodeNotify('editor.action.marker.nextInFiles')<CR>")
+	vim.keymap.set("n", "H", "<cmd>call VSCodeNotify('workbench.action.previousEditor')<cr>")
+	vim.keymap.set("n", "L", "<cmd>call VSCodeNotify('workbench.action.nextEditor')<cr>")
+	vim.keymap.set({ "n", "x" }, "<leader>ca", "<cmd>call VSCodeNotify('editor.action.quickFix')<cr>")
+	vim.keymap.set({ "n", "x" }, "<leader>cr", "<cmd>call VSCodeNotify('editor.action.rename')<cr>")
+	vim.keymap.set("n", "<leader>cf", "<cmd>call VSCodeNotify('editor.action.formatDocument')<cr>")
+	vim.keymap.set("n", "<leader>co", "<cmd>call VSCodeNotify('editor.action.organizeImports')<cr>")
+else
+	vim.keymap.set("i", "<C-S-d>", function()
+		local new_text = vim.fn.input("Replace with?: ")
+		local cmd = "normal! *Ncgn" .. new_text
+		vim.cmd(cmd)
+	end, { desc = "ctrl+d vs code alternative" })
 end
 
 -- Override LazyVim keymaps
