@@ -14,3 +14,10 @@ vim.opt.scrolloff = 8
 vim.opt.clipboard = ""
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = ""
+
+vim.filetype.add({
+	extension = {
+		pcss = "css",
+		postcss = "css",
+	},
+})
