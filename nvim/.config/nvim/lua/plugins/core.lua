@@ -8,40 +8,41 @@ return {
 		},
 	},
 	{
-		{
-			"nvim-treesitter/nvim-treesitter",
-			opts = function(_, opts)
-				vim.list_extend(opts.ensure_installed, {
-					"svelte",
-					"css",
-				})
-			end,
+		"folke/noice.nvim",
+		keys = {
+			{ "<c-f>", false, mode = { "i", "n", "s" } },
+			{ "<c-b>", false, mode = { "i", "n", "s" } },
 		},
 	},
 	{
-		{
-			"williamboman/mason.nvim",
-			opts = {
-				ensure_installed = {
-					"css-lsp",
-					"emmet-language-server",
-					"lua-language-server",
-					"svelte-language-server",
-				},
+		"nvim-treesitter/nvim-treesitter",
+		opts = function(_, opts)
+			vim.list_extend(opts.ensure_installed, {
+				"svelte",
+				"css",
+			})
+		end,
+	},
+	{
+		"williamboman/mason.nvim",
+		opts = {
+			ensure_installed = {
+				"css-lsp",
+				"emmet-language-server",
+				"lua-language-server",
+				"svelte-language-server",
 			},
 		},
 	},
 	{
-		{
-			"nvim-neo-tree/neo-tree.nvim",
-			opts = {
-				filesystem = {
-					filtered_items = {
-						hide_dotfiles = false,
-						never_show = {
-							".DS_Store",
-							".git",
-						},
+		"nvim-neo-tree/neo-tree.nvim",
+		opts = {
+			filesystem = {
+				filtered_items = {
+					hide_dotfiles = false,
+					never_show = {
+						".DS_Store",
+						".git",
 					},
 				},
 			},
