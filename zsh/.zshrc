@@ -1,3 +1,4 @@
+export PATH=$PATH:$HOME/.local/bin
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
@@ -14,6 +15,8 @@ ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+bindkey -s "^f" "tmux-sessionizer\n"
+
 function idea() { ( intellij "$@" & ) > /dev/null 2>&1 }
 function land() { ( goland "$@" & ) > /dev/null 2>&1 }
 function rider() { ( jbrider "$@" & ) > /dev/null 2>&1 }
@@ -22,7 +25,7 @@ function lion() { ( clion "$@" & ) > /dev/null 2>&1 }
 
 alias vim='nvim'
 alias vi='nvim'
-alias vimdiff='nvim -d'
+alias fzf='fzf --prompt "❯ "'
 
 alias ls='lsd'
 alias l='ls -l'
@@ -59,11 +62,11 @@ export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
 
 # sdkman
-export SDKMAN_DIR="/home/ketutz/.sdkman"
-[[ -s "/home/ketutz/.sdkman/bin/sdkman-init.sh" ]] && source "/home/ketutz/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="/home/$(whoami)/.sdkman"
+[[ -s "/home/$(whoami)/.sdkman/bin/sdkman-init.sh" ]] && source "/home/$(whoami)/.sdkman/bin/sdkman-init.sh"
 
 # pnpm
-export PNPM_HOME="/home/ketutz/.local/share/pnpm"
+export PNPM_HOME="/home/$(whoami)/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -74,7 +77,7 @@ esac
 source <(ng completion script)
 
 # bun completions
-[ -s "/home/ketutz/.bun/_bun" ] && source "/home/ketutz/.bun/_bun"
+[ -s "/home/$(whoami)/.bun/_bun" ] && source "/home/$(whoami)/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
