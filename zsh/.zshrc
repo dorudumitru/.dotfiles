@@ -17,15 +17,20 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 bindkey -s "^f" "tmux-sessionizer\n"
 
-function idea() { ( intellij "$@" & ) > /dev/null 2>&1 }
-function land() { ( goland "$@" & ) > /dev/null 2>&1 }
-function rider() { ( jbrider "$@" & ) > /dev/null 2>&1 }
-function storm() { ( webstorm "$@" & ) > /dev/null 2>&1 }
-function lion() { ( clion "$@" & ) > /dev/null 2>&1 }
+function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
+function land { ( goland "$@" & ) > /dev/null 2>&1 }
+function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
+function storm { ( webstorm "$@" & ) > /dev/null 2>&1 }
+function lion { ( clion "$@" & ) > /dev/null 2>&1 }
+
+function ur {
+  unzip $1 -d $2
+  rm $1
+}
 
 alias vim='nvim'
-alias vi='nvim'
 alias fzf='fzf --prompt "❯ "'
+alias ts='tmux-sessionizer'
 
 alias ls='lsd'
 alias l='ls -l'
@@ -36,12 +41,9 @@ alias lt='ls --tree'
 # git-completion
 autoload -Uz compinit && compinit
 
-# go doc color
-export GDOC_STYLE=monokai
-
 # jetbrains
-export PATH=$PATH:/home/ketutz/.local/share/bin
-export PATH=$PATH:/home/ketutz/.local/bin
+export PATH=$PATH:/home/$(whoami)/.local/share/bin
+export PATH=$PATH:/home/$(whoami)/.local/bin
 
 # starship
 eval "$(starship init zsh)"
@@ -73,12 +75,3 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# Load Angular CLI autocompletion.
-source <(ng completion script)
-
-# bun completions
-[ -s "/home/$(whoami)/.bun/_bun" ] && source "/home/$(whoami)/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"

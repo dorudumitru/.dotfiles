@@ -39,11 +39,17 @@ return {
 		opts = {
 			filesystem = {
 				filtered_items = {
-					hide_dotfiles = false,
-					never_show = {
-						".DS_Store",
-						".git",
+					hide_dotfiles = true,
+					always_show = {
+						".gitignore",
+						".vscode",
+						".idea",
 					},
+				},
+			},
+			window = {
+				mappings = {
+					["Z"] = "expand_all_nodes",
 				},
 			},
 		},
