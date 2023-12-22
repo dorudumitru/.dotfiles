@@ -28,6 +28,16 @@ function ur {
   rm $1
 }
 
+function vsvim {
+  if [ $1 = enable ]; then
+    mv ~/.config/nvim ~/.config/nvim.lazy
+    cp -r ~/.dotfiles/nvim.vscode ~/.config/nvim
+  elif [ $1 = disable ]; then
+    rm -rf ~/.config/nvim
+    mv ~/.config/nvim.lazy ~/.config/nvim
+  fi
+}
+
 alias vim='nvim'
 alias fzf='fzf --prompt "❯ "'
 alias ts='tmux-sessionizer'
