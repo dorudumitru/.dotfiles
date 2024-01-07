@@ -104,3 +104,5 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# fzf
+source /usr/share/fzf/shell/key-bindings.zsh
