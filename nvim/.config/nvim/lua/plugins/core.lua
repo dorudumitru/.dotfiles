@@ -46,6 +46,9 @@ return {
 						".vscode",
 						".idea",
 					},
+					never_show = {
+						".git",
+					},
 				},
 			},
 			window = {

@@ -51,6 +51,16 @@ function vsvim {
 
     rm -rf ~/.config/nvim
     mv ~/.config/nvim.lazy ~/.config/nvim
+  elif [ $1 = status ]; then
+    selected=$(find -L ~/.config/nvim -mindepth 1 -maxdepth 1 -type d -name "lua")
+    selected_name=$(basename "$selected")
+
+    if [ "$selected_name" != "lua" ]; then
+      echo "vsvim enabled"
+      return
+    fi
+
+    echo "vsvim disabled"
   else
     echo "invalid argument"
     return
