@@ -1,0 +1,175 @@
+{
+  // theme
+  "workbench.settings.editor": "json",
+  "workbench.colorTheme": "One Dark Pro",
+  "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#568af2",
+    "terminalCursor.foreground": "#568af2"
+  },
+  "workbench.iconTheme": "symbols",
+  "symbols.hidesExplorerArrows": false,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "name": "One Dark italic",
+        "scope": [
+          "comment",
+          "entity.other.attribute-name",
+          "keyword",
+          "markup.underline.link",
+          "storage.modifier",
+          "storage.type",
+          "string.url",
+          "variable.language.super",
+          "variable.language.this"
+        ],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "name": "One Dark italic reset",
+        "scope": [
+          "keyword.operator",
+          "keyword.other.type",
+          "storage.modifier.import",
+          "storage.modifier.package",
+          "storage.type.built-in",
+          "storage.type.function.arrow",
+          "storage.type.generic",
+          "storage.type.java",
+          "storage.type.primitive"
+        ],
+        "settings": {
+          "fontStyle": ""
+        }
+      },
+      {
+        "scope": "keyword.other.dotenv",
+        "settings": {
+          "foreground": "#FF000000"
+        }
+      }
+    ]
+  },
+
+  // font
+  "editor.fontFamily": "JetBrains Mono, JetBrainsMono Nerd Font",
+  "editor.fontSize": 16,
+  "editor.fontLigatures": "true",
+  "terminal.integrated.fontSize": 16,
+  // If permission is needed
+  // sudo chown -R $(whoami) $(which code)
+  // sudo chown -R $(whoami) /usr/share/code
+  "fonted.font": "JetBrains Mono",
+
+  // nvim settings
+  "vscode-neovim.neovimExecutablePaths.linux": "/home/doru.dumitru/.local/share/bob/nvim-bin/nvim",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+
+  // languages
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "svelte",
+    "typescript",
+    "typescriptreact"
+  ],
+  "go.testOnSave": false,
+  "go.toolsManagement.autoUpdate": true,
+  // install golangci-lint from https://golangci-lint.run/usage/install for this to work
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": ["--fast"],
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "svelte.enable-ts-plugin": true,
+
+  // misc
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on", // Regex justify function null @
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorSurroundingLines": 8,
+  "editor.lineNumbers": "relative",
+  "editor.minimap.enabled": false,
+  "editor.inlineSuggest.enabled": true,
+  "files.autoSave": "onFocusChange",
+  "explorer.autoReveal": false,
+  "explorer.compactFolders": false,
+  "git.autofetch": true,
+  "window.menuBarVisibility": "toggle",
+  "remote.SSH.showLoginTerminal": true,
+  "totalTypeScript.hideAllTips": false,
+  "totalTypeScript.hideBasicTips": false,
+  "totalTypeScript.hiddenTips": [
+    "basic-types",
+    "array-type",
+    "typing-function-parameters",
+    "function-return-type",
+    "variable-type-annotation",
+    "passing-generics-to-types",
+    "type-alias-declaration",
+    "typeof",
+    "omit-utility-type",
+    "literal-type",
+    "record-utility-type",
+    "never-keyword",
+    "partial-utility-type",
+    "ts-object-type",
+    "interface-declaration",
+    "pick-utility-type",
+    "union-type",
+    "any-type",
+    "as-assertion",
+    "undefined-keyword",
+    "keyof",
+    "readonly-utility-type"
+  ],
+  "codeium.enableSearch": true,
+  "codeium.enableConfig": {
+    "*": true,
+    "xml": true
+  },
+  "inlineFold.unfoldOnLineSelect": true,
+  "inlineFold.unfoldedOpacity": 1,
+  "explorer.confirmDelete": false,
+  "window.zoomLevel": 0.5,
+
+  // telemetry
+  "telemetry.telemetryLevel": "off",
+  "redhat.telemetry.enabled": false,
+  "gitlens.telemetry.enabled": false,
+  "rest-client.enableTelemetry": false,
+  "partialDiff.enableTelemetry": false,
+  "applicationRegistrations.useEventualConsistency": false,
+  "code-runner.enableAppInsights": false,
+  "dotnetAcquisitionExtension.enableTelemetry": false,
+  "files.associations": {
+    ".env*": "dotenv"
+  },
+}
+
+
