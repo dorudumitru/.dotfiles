@@ -28,48 +28,10 @@ function ur {
   rm $1
 }
 
-function vsvim {
-  if [ $1 = enable ]; then
-    selected=$(find -L ~/.config/nvim -mindepth 1 -maxdepth 1 -type d -name "lua")
-    selected_name=$(basename "$selected")
-
-    if [ "$selected_name" != "lua" ]; then
-      echo "vsvim already enabled"
-      return
-    fi
-
-    mv ~/.config/nvim ~/.config/nvim.lazy
-    cp -r ~/.dotfiles/nvim.vscode ~/.config/nvim
-  elif [ $1 = disable ]; then
-    selected=$(find -L ~/.config/nvim -mindepth 1 -maxdepth 1 -type d -name "lua")
-    selected_name=$(basename "$selected")
-
-    if [ "$selected_name" = "lua" ]; then
-      echo "vsvim already disabled"
-      return
-    fi
-
-    rm -rf ~/.config/nvim
-    mv ~/.config/nvim.lazy ~/.config/nvim
-  elif [ $1 = status ]; then
-    selected=$(find -L ~/.config/nvim -mindepth 1 -maxdepth 1 -type d -name "lua")
-    selected_name=$(basename "$selected")
-
-    if [ "$selected_name" != "lua" ]; then
-      echo "vsvim enabled"
-      return
-    fi
-
-    echo "vsvim disabled"
-  else
-    echo "invalid argument"
-    return
-  fi
-}
-
 alias vim='nvim'
-alias fzf='fzf --prompt "❯ "'
 alias ts='tmux-sessionizer'
+alias fp='. project-finder'
+alias vsvim='. vscode-vim-switcher'
 
 alias ls='lsd'
 alias l='ls -l'
