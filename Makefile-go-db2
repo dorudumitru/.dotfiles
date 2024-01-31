@@ -1,0 +1,257 @@
+APP_NAME := $(shell basename $(CURDIR))
+
+# ==================================================================================== #
+# VARIABLES - You can change these variables to suit your needs
+# ==================================================================================== #
+
+# Local development variables
+# --------------------------
+# Accepted Values
+# - windows
+# - darwin
+# - linux
+OS := linux
+ARCH := amd64
+MAIN_PACKAGE := github.com/hartehanks-iasi/$(APP_NAME)
+MAIN_PACKAGE_PATH := .
+
+# Use if the app requires flags (ex: -u username -p password)
+RUNARGS := 
+
+# Production build variables
+# --------------------
+# Accepted Values
+# - windows
+# - darwin
+# - linux
+GOOS := linux
+GOARCH := amd64
+# Accepted Values
+# - windows: run.bat
+# - darwin: run.sh
+# - linux: run.sh
+START_SCRIPT_NAME := run.sh
+# Accepted Values
+# - windows: $(APP_NAME).exe
+# - darwin: $(APP_NAME)
+# - linux: $(APP_NAME)
+BINARY_NAME := $(APP_NAME)
+# Accepted Values
+# - windows: ntx64_odbc_cli.zip
+# - darwin: macos64_odbc_cli.tar.gz
+# - linux: linuxx64_odbc_cli.tar.gz	
+CLIDRIVER_NAME := linuxx64_odbc_cli.tar.gz
+
+# ==================================================================================== #
+# VARIABLES - Do not change these variables
+# ==================================================================================== #
+
+ifeq ($(OS),windows)
+	DEV_BINARY_NAME := $(APP_NAME).exe
+	DEV_CLIDRIVER_NAME := ntx64_odbc_cli.zip
+else ifeq ($(OS),darwin)
+	DEV_BINARY_NAME := $(APP_NAME)
+	DEV_CLIDRIVER_NAME := macos64_odbc_cli.tar.gz
+else ifeq ($(OS),linux)
+	DEV_BINARY_NAME := $(APP_NAME)
+	DEV_CLIDRIVER_NAME := linuxx64_odbc_cli.tar.gz
+else
+	$(error GOOS is not supported)
+endif
+
+CLIDRIVER_URL := https://public.dhe.ibm.com/ibmdl/export/pub/software/data/db2/drivers/odbc_cli
+
+export IBM_DB_HOME := ${CURDIR}/clidriver
+export CGO_CFLAGS := -I${IBM_DB_HOME}/include
+export CGO_LDFLAGS := -L${IBM_DB_HOME}/lib
+export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):${IBM_DB_HOME}/lib
+export PATH := $(PATH):${IBM_DB_HOME}/bin
+
+# ==================================================================================== #
+# HELPERS
+# ==================================================================================== #
+
+## help: print this help message
+.PHONY: help
+help:
+	@echo 'Usage:'
+	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
+
+.PHONY: ibmdb
+ibmdb:
+	@if [ ! -d "clidriver" ]; then \
+		echo -e "\nDownloading IBM DB2 CLI driver..."; \
+		curl -O ${CLIDRIVER_URL}/${DEV_CLIDRIVER_NAME}; \
+		echo -e "\nExtracting IBM DB2 CLI driver..."; \
+		tar -xvf ${DEV_CLIDRIVER_NAME}; \
+		rm ${DEV_CLIDRIVER_NAME}; \
+		fi
+
+.PHONY: print/init
+print/init:
+	@echo "Initializing project..."
+	@echo "Project name: ${APP_NAME}"
+	@echo "OS: ${OS}"
+	@echo "ARCH: ${ARCH}"
+	@echo "MAIN_PACKAGE: ${MAIN_PACKAGE}"
+	@echo "MAIN_PACKAGE_PATH: ${MAIN_PACKAGE_PATH}"
+	@echo "GOOS: ${GOOS}"
+	@echo "GOARCH: ${GOARCH}"
+
+## init: initialize the project
+.PHONY: init
+init: print/init ibmdb
+	@echo -e "\nInitializing git repository..."
+	@git init
+	@touch .gitignore
+	@echo "certs/" >> .gitignore
+	@echo "clidriver/" >> .gitignore
+	@echo "dist/" >> .gitignore
+	@echo ".idea/" >> .gitignore
+	@echo ".vscode/" >> .gitignore
+	@echo -e "\nInitializing Go module..."
+	@go mod init ${MAIN_PACKAGE}
+	@mkdir -p certs
+	@mkdir -p ${MAIN_PACKAGE_PATH} && touch ${MAIN_PACKAGE_PATH}/main.go
+	@echo -e "\nDownloading golangci config..."
+	@curl -O https://gist.githubusercontent.com/dorudumitru/f6207afab6e41ebbc5b3ef6dcc2c354e/raw/4e422978be190321660afd8bc84532a523962c3c/.golangci.yml
+	@echo -e "\nPLEASE MAKE SURE YOU COPY THE DB2 ARM CERTIFICATE IN THE CERTS FOLDER."
+	@echo -e "\nDone."
+
+.PHONY: clean
+clean:
+	@rm -rf dist
+
+.PHONY: no-dirty
+no-dirty:
+	git diff --exit-code
+
+# ==================================================================================== #
+# QUALITY CONTROL
+# ==================================================================================== #
+
+## tidy: format code and tidy modfile
+.PHONY: tidy
+tidy:
+	go fmt ./...
+	go mod tidy -v
+
+## audit: run quality control checks
+.PHONY: audit
+audit:
+	go mod verify
+	go vet ./...
+	go run honnef.co/go/tools/cmd/staticcheck@latest -checks=all,-ST1000,-U1000 ./...
+	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+	go test -race -buildvcs -vet=off ./...
+
+# ==================================================================================== #
+# DEVELOPMENT
+# ==================================================================================== #
+
+## test: run all tests
+.PHONY: test
+test:
+	go test -v -race -buildvcs ./...
+
+
+## test/integration: run all tests including integration
+.PHONY: test/integration
+test/integration:
+	# Include integration tests steps here...
+
+## test/cover: run all tests and display coverage
+.PHONY: test/cover
+test/cover:
+	go test -v -race -buildvcs -coverprofile=/tmp/coverage.out ./...
+	go tool cover -html=/tmp/coverage.out
+
+## build: build the application
+# include additional build steps, like TypeScript, SCSS or Tailwind compilation here...
+.PHONY: build
+build: ibmdb
+	@go build -o /tmp/bin/${DEV_BINARY_NAME} ${MAIN_PACKAGE_PATH}
+
+## run: run the  application
+.PHONY: run
+run: build
+	@/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}
+
+## run/live: run the application with reloading on file changes
+.PHONY: run/live
+run/live:
+	@go run github.com/cosmtrek/air@latest \
+		--build.cmd "make build" --build.bin "/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}" --build.delay "100" \
+		--build.exclude_dir "certs,clidriver,dist" \
+		--build.include_ext "go, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
+		--misc.clean_on_exit "true"
+
+
+# ==================================================================================== #
+# OPERATIONS
+# ==================================================================================== #
+
+## push: push changes to the remote Git repository
+.PHONY: push
+push: tidy audit no-dirty
+	git push
+
+## production: create a production build of the application
+.PHONY: production
+production: clean tidy audit no-dirty
+	GOOS=${GOOS} GOARCH=${GOARCH} go build -ldflags='-s' -o dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
+	upx -5 ./dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME}
+	@echo -e "\nCopying certificates..."
+	@cp -r ./certs ./dist/${GOOS}_${GOARCH}/${APP_NAME}/
+	@if [ "${OS}" == "${GOOS}" ]; then \
+		echo -e "\nCreating clidriver for production..."; \
+		cp -r ./clidriver ./dist/${GOOS}_${GOARCH}/${APP_NAME}/; \
+		else \
+		echo -e "\nDownloading IBM DB2 CLI driver..."; \
+		cd dist/${GOOS}_${GOARCH}/${APP_NAME}; \
+		curl -O ${CLIDRIVER_URL}/${CLIDRIVER_NAME}; \
+		echo -e "\nExtracting IBM DB2 CLI driver..."; \
+		tar -xvf ${CLIDRIVER_NAME}; \
+		rm ${CLIDRIVER_NAME}; \
+		fi
+	@echo -e "\nCreating run script..."
+	@if [ "${GOOS}" == "windows" ]; then \
+		echo "@echo off" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "cd clidriver" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "set clidrvpath=%cd%" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "set IBM_DB_HOME=%clidrvpath%" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "set PATH=%PATH%;%IBM_DB_HOME%\bin" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "cd ../../" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "set exe=for %%* in (.) do %%~n*.exe" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "cmd /k %exe%" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		else \
+		echo "if [ \"\$$IBM_DB_HOME\" == \"\" ]" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "then" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "    IBM_DB_HOME=\`pwd\`/clidriver" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "fi" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "OS=\`uname\`" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "export CGO_CFLAGS=-I\$$IBM_DB_HOME/include" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "export CGO_LDFLAGS=-L\$$IBM_DB_HOME/lib" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "if [ \"\$$OS\" == \"Darwin\" ]" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "then" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "    export DYLD_LIBRARY_PATH=\$$DYLD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "else" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "    export LD_LIBRARY_PATH=\$$LD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "fi" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "export PATH=\$$PATH:\$$IBM_DB_HOME/bin" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "./${BINARY_NAME}" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "echo -e \"\\n\"" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "read -p \"Press any key to continue\" x" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		fi
+	@echo -e "\nDone."
+
+## deploy: deploy the application to production
+.PHONY: deploy
+deploy:
+	# include deployment steps here...
