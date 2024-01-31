@@ -130,6 +130,11 @@ no-dirty:
 # QUALITY CONTROL
 # ==================================================================================== #
 
+## lint: run golangci-lint
+.PHONY: lint
+lint:
+  golangci-lint run
+
 ## tidy: format code and tidy modfile
 .PHONY: tidy
 tidy:
@@ -174,12 +179,12 @@ build: ibmdb
 
 ## run: run the  application
 .PHONY: run
-run: build
+run: lint build
 	@/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}
 
 ## run/live: run the application with reloading on file changes
 .PHONY: run/live
-run/live:
+run/live: lint
 	@go run github.com/cosmtrek/air@latest \
 		--build.cmd "make build" --build.bin "/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}" --build.delay "100" \
 		--build.exclude_dir "certs,clidriver,dist" \
@@ -193,12 +198,12 @@ run/live:
 
 ## push: push changes to the remote Git repository
 .PHONY: push
-push: tidy audit no-dirty
+push: lint tidy audit no-dirty
 	git push
 
 ## production: create a production build of the application
 .PHONY: production
-production: clean tidy audit no-dirty
+production: clean lint tidy audit no-dirty
 	GOOS=${GOOS} GOARCH=${GOARCH} go build -ldflags='-s' -o dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
 	upx -5 ./dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME}
 	@echo -e "\nCopying certificates..."
