@@ -158,7 +158,7 @@ test:
 ## test/integration: run all tests including integration
 .PHONY: test/integration
 test/integration:
-	# Include integration tests steps here...
+	# include integration tests steps here...
 
 ## test/cover: run all tests and display coverage
 .PHONY: test/cover

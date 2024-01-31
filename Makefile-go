@@ -55,7 +55,7 @@ endif
 help:
 	@echo 'Usage:'
 	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
-	
+
 ## init: initialize the project
 .PHONY: init
 init:
@@ -116,11 +116,11 @@ audit:
 .PHONY: test
 test:
 	go test -v -race -buildvcs ./...
-	
+
 ## test/integration: run all tests including integration
 .PHONY: test/integration
 test/integration:
-# Include integration tests steps here...
+	# include integration tests steps here...
 
 ## test/cover: run all tests and display coverage
 .PHONY: test/cover
@@ -163,8 +163,8 @@ push: tidy audit no-dirty
 production: clean tidy audit no-dirty
 	GOOS=${GOOS} GOARCH=${GOARCH} go build -ldflags='-s' -o dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
 	upx -5 ./dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME}
-	
+
 ## deploy: deploy the application to production
 .PHONY: deploy
 deploy:
-# include deployment steps here...
+	# include deployment steps here...
