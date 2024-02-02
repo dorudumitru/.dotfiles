@@ -95,7 +95,7 @@ no-dirty:
 ## lint: run golangci-lint
 .PHONY: lint
 lint:
-  golangci-lint run
+	golangci-lint run
 
 ## tidy: format code and tidy modfile
 .PHONY: tidy
