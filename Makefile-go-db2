@@ -111,6 +111,7 @@ init: print/init ibmdb
 	@echo ".vscode/" >> .gitignore
 	@echo -e "\nInitializing Go module..."
 	@go mod init ${MAIN_PACKAGE}
+	@go get -d github.com/ibmdb/go_ibm_db
 	@mkdir -p certs
 	@mkdir -p ${MAIN_PACKAGE_PATH} && touch ${MAIN_PACKAGE_PATH}/main.go
 	@echo -e "\nDownloading golangci config..."
@@ -159,7 +160,6 @@ audit:
 test:
 	go test -v -race -buildvcs ./...
 
-
 ## test/integration: run all tests including integration
 .PHONY: test/integration
 test/integration:
@@ -190,7 +190,6 @@ run/live: lint
 		--build.exclude_dir "certs,clidriver,dist" \
 		--build.include_ext "go, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
 		--misc.clean_on_exit "true"
-
 
 # ==================================================================================== #
 # OPERATIONS
