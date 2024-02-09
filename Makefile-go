@@ -1,4 +1,4 @@
-APP_NAME := $(shell basename $(CURDIR))
+APP_NAME := $(shell basename $(CURDIR) | tr - _)
 
 # ==================================================================================== #
 # VARIABLES - You can change these variables to suit your needs
@@ -77,7 +77,7 @@ init:
 	@go mod init ${MAIN_PACKAGE}
 	@mkdir -p ${MAIN_PACKAGE_PATH} && touch ${MAIN_PACKAGE_PATH}/main.go
 	@echo -e "\nDownloading golangci config..."
-	@curl -O https://gist.githubusercontent.com/dorudumitru/f6207afab6e41ebbc5b3ef6dcc2c354e/raw/4e422978be190321660afd8bc84532a523962c3c/.golangci.yml
+	@curl -O https://gist.githubusercontent.com/dorudumitru/f6207afab6e41ebbc5b3ef6dcc2c354e/raw/87630b0ad8dc01d574b679ab512fb02789cb3ba2/.golangci.yml
 	@echo -e "\nDone."
 
 .PHONY: clean
@@ -95,7 +95,7 @@ no-dirty:
 ## lint: run golangci-lint
 .PHONY: lint
 lint:
-	golangci-lint run
+	@golangci-lint run
 
 ## tidy: format code and tidy modfile
 .PHONY: tidy
