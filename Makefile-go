@@ -13,6 +13,7 @@ APP_NAME := $(shell basename $(CURDIR) | tr - _)
 OS := linux
 ARCH := amd64
 MAIN_PACKAGE := github.com/hartehanks-iasi/$(APP_NAME)
+# The path to the folder where main.go resides. Example: ./cmd/my-app
 MAIN_PACKAGE_PATH := .
 
 # Use if the app requires flags (ex: -u username -p password)
@@ -25,12 +26,8 @@ RUNARGS :=
 # - darwin
 # - linux
 GOOS := linux
+# Run "go tool dist list" for all possible values
 GOARCH := amd64
-# Accepted Values
-# - windows: $(APP_NAME).exe
-# - darwin: $(APP_NAME)
-# - linux: $(APP_NAME)
-BINARY_NAME := $(APP_NAME)
 
 # ==================================================================================== #
 # VARIABLES - Do not change these variables
@@ -42,7 +39,17 @@ else ifeq ($(OS),darwin)
 	DEV_BINARY_NAME := $(APP_NAME)
 else ifeq ($(OS),linux)
 	DEV_BINARY_NAME := $(APP_NAME)
-else 
+else
+	$(error OS is not supported)
+endif
+
+ifeq ($(GOOS),windows)
+	BINARY_NAME := $(APP_NAME).exe
+else ifeq ($(GOOS),darwin)
+	BINARY_NAME := $(APP_NAME)
+else ifeq ($(GOOS),linux)
+	BINARY_NAME := $(APP_NAME)
+else
 	$(error GOOS is not supported)
 endif
 
@@ -76,7 +83,7 @@ init:
 	@echo -e "\nInitializing Go module..."
 	@go mod init ${MAIN_PACKAGE}
 	@mkdir -p ${MAIN_PACKAGE_PATH} && touch ${MAIN_PACKAGE_PATH}/main.go
-	@echo -e "\nDownloading golangci config..."
+	@echo -e "\nDownloading golangci-lint config..."
 	@curl -O https://gist.githubusercontent.com/dorudumitru/f6207afab6e41ebbc5b3ef6dcc2c354e/raw/87630b0ad8dc01d574b679ab512fb02789cb3ba2/.golangci.yml
 	@echo -e "\nDone."
 
@@ -143,9 +150,9 @@ build:
 run: lint build
 	@/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}
 
-## run/live: run the application with reloading on file changes
-.PHONY: run/live
-run/live: lint
+## watch: run the application with reloading on file changes
+.PHONY: watch
+watch: lint
 	@go run github.com/cosmtrek/air@latest \
 		--build.cmd "make build" --build.bin "/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}" --build.delay "100" \
 		--build.exclude_dir "dist" \
@@ -162,8 +169,8 @@ push: lint tidy audit no-dirty
 	git push
 
 ## production: create a production build of the application
-.PHONY: production
-production: clean lint tidy audit no-dirty
+.PHONY: prod
+prod: clean lint tidy audit no-dirty
 	GOOS=${GOOS} GOARCH=${GOARCH} go build -ldflags='-s' -o dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
 	upx -5 ./dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME}
 
