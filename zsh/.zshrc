@@ -17,11 +17,11 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 bindkey -s "^f" "tmux-sessionizer\n"
 
-function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
-function land { ( goland "$@" & ) > /dev/null 2>&1 }
-function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
-function storm { ( webstorm "$@" & ) > /dev/null 2>&1 }
-function lion { ( clion "$@" & ) > /dev/null 2>&1 }
+# function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
+# function land { ( goland "$@" & ) > /dev/null 2>&1 }
+# function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
+# function storm { ( webstorm "$@" & ) > /dev/null 2>&1 }
+# function lion { ( clion "$@" & ) > /dev/null 2>&1 }
 
 function ur {
   unzip $1 -d $2
@@ -32,12 +32,6 @@ alias vim='nvim'
 alias ts='tmux-sessionizer'
 alias fp='. project-finder'
 alias vsvim='. vscode-vim-switcher'
-
-alias ls='lsd'
-alias l='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
-alias lt='ls --tree'
 
 # git-completion
 autoload -Uz compinit && compinit
@@ -69,7 +63,7 @@ export SDKMAN_DIR="/home/$(whoami)/.sdkman"
 [[ -s "/home/$(whoami)/.sdkman/bin/sdkman-init.sh" ]] && source "/home/$(whoami)/.sdkman/bin/sdkman-init.sh"
 
 # pnpm
-export PNPM_HOME="/home/$(whoami)/.local/share/pnpm"
+export PNPM_HOME="/home/dorudumitru/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
