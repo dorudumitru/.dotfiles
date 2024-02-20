@@ -7,7 +7,6 @@ APP_NAME := $(shell basename $(CURDIR) | tr - _)
 # Local development variables
 # --------------------------
 # Accepted Values
-# - windows
 # - darwin
 # - linux
 OS := linux
@@ -16,7 +15,7 @@ MAIN_PACKAGE := github.com/hartehanks-iasi/$(APP_NAME)
 # The path to the folder where main.go resides. Example: ./cmd/my-app
 MAIN_PACKAGE_PATH := .
 # Absolute path of the .arm certificate
-CERTIFICATE_PATH := ~/Documents/Go/db2/certs/etl.arm
+CERTIFICATE_PATH := ~/Documents/TrustStore/etl.arm
 
 # Use if the app requires flags (ex: -u username -p password)
 RUNARGS := 
@@ -35,10 +34,7 @@ GOARCH := amd64
 # VARIABLES - Do not change these variables
 # ==================================================================================== #
 
-ifeq ($(OS),windows)
-	DEV_BINARY_NAME := $(APP_NAME).exe
-	DEV_CLIDRIVER_NAME := ntx64_odbc_cli.zip
-else ifeq ($(OS),darwin)
+ifeq ($(OS),darwin)
 	DEV_BINARY_NAME := $(APP_NAME)
 	DEV_CLIDRIVER_NAME := macos64_odbc_cli.tar.gz
 else ifeq ($(OS),linux)
@@ -90,7 +86,7 @@ ibmdb:
 		echo -e "\nExtracting IBM DB2 CLI driver..."; \
 		tar -xvf ${DEV_CLIDRIVER_NAME}; \
 		rm ${DEV_CLIDRIVER_NAME}; \
-		fi
+	fi
 
 .PHONY: print/init
 print/init:
@@ -126,7 +122,16 @@ init: print/init ibmdb
 
 .PHONY: clean
 clean:
-	@rm -rf dist
+	@if [ ! -d "$(CURDIR)/dist/${GOOS}_${GOARCH}/${APP_NAME}/clidriver" ]; then \
+		rm -rf dist; \
+	else \
+		mkdir -p /tmp/${GOOS}_${GOARCH}/${APP_NAME}; \
+		cp -r ./dist/${GOOS}_${GOARCH}/${APP_NAME}/clidriver /tmp/${GOOS}_${GOARCH}/${APP_NAME}/clidriver; \
+		rm -rf dist; \
+		mkdir -p dist/${GOOS}_${GOARCH}/${APP_NAME}; \
+		cp -r /tmp/${GOOS}_${GOARCH}/${APP_NAME}/clidriver ./dist/${GOOS}_${GOARCH}/${APP_NAME}/clidriver; \
+		rm -rf /tmp/${GOOS}_${GOARCH}; \
+	fi
 
 .PHONY: no-dirty
 no-dirty:
@@ -212,20 +217,22 @@ prod: clean lint tidy audit no-dirty
 	upx -5 ./dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME}
 	@echo -e "\nCopying certificates..."
 	@cp -r ./certs ./dist/${GOOS}_${GOARCH}/${APP_NAME}/
-	@if [ "${OS}" == "${GOOS}" ]; then \
-		echo -e "\nCreating clidriver for production..."; \
-		cp -r ./clidriver ./dist/${GOOS}_${GOARCH}/${APP_NAME}/; \
-	else \
-		echo -e "\nDownloading IBM DB2 CLI driver..."; \
-		cd dist/${GOOS}_${GOARCH}/${APP_NAME}; \
-		curl -O ${CLIDRIVER_URL}/${CLIDRIVER_NAME}; \
-		echo -e "\nExtracting IBM DB2 CLI driver..."; \
-		if [ "${GOOS}" == "windows" ]; then \
-			unzip ${CLIDRIVER_NAME}; \
+	@if [ ! -d "$(CURDIR)/dist/${GOOS}_${GOARCH}/${APP_NAME}/clidriver" ]; then \
+		if [ "${OS}" == "${GOOS}" ]; then \
+			echo -e "\nCreating clidriver for production..."; \
+			cp -r ./clidriver ./dist/${GOOS}_${GOARCH}/${APP_NAME}/; \
 		else \
-			tar -xvf ${CLIDRIVER_NAME}; \
+			echo -e "\nDownloading IBM DB2 CLI driver..."; \
+			cd dist/${GOOS}_${GOARCH}/${APP_NAME}; \
+			curl -O ${CLIDRIVER_URL}/${CLIDRIVER_NAME}; \
+			echo -e "\nExtracting IBM DB2 CLI driver..."; \
+			if [ "${GOOS}" == "windows" ]; then \
+				unzip ${CLIDRIVER_NAME}; \
+			else \
+				tar -xvf ${CLIDRIVER_NAME}; \
+			fi; \
+			rm ${CLIDRIVER_NAME}; \
 		fi; \
-		rm ${CLIDRIVER_NAME}; \
 	fi
 	@echo -e "\nCreating run script..."
 	@if [ "${GOOS}" == "windows" ]; then \
@@ -234,10 +241,10 @@ prod: clean lint tidy audit no-dirty
 		echo "set clidrvpath=%cd%" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
 		echo "set IBM_DB_HOME=%clidrvpath%" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
 		echo "set PATH=%PATH%;%IBM_DB_HOME%\bin" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+		echo "set PATH=%PATH%;%clidrvpath%\bin\amd64.VC12.CRT" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
 		echo "cd ../" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
-		echo "set exe=for %%* in (.) do %%~n*.exe" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
-		echo "cmd /k %exe%" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
-		else \
+		echo "cmd /k ${BINARY_NAME}" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
+	else \
 		echo "if [ \"\$$IBM_DB_HOME\" == \"\" ]" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
 		echo "then" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
 		echo "    IBM_DB_HOME=\`pwd\`/clidriver" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
@@ -261,7 +268,7 @@ prod: clean lint tidy audit no-dirty
 		echo "" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
 		echo "echo -e \"\\n\"" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
 		echo "read -p \"Press any key to continue\" x" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \
-		fi
+	fi
 	@echo -e "\nDone."
 
 ## deploy: deploy the application to production

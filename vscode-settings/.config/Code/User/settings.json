@@ -60,11 +60,11 @@
   "editor.fontLigatures": "true",
   "terminal.integrated.fontFamily": "JetBrains Mono Medium, JetBrainsMono Nerd Font",
   "terminal.integrated.fontSize": 16,
-  "terminal.integrated.lineHeight": 1.2, // use with JetBrains Mono
+  "terminal.integrated.lineHeight": 1.1, // use with JetBrains Mono
   // If permission is needed
   // sudo chown -R $(whoami) $(which code)
   // sudo chown -R $(whoami) /usr/share/code
-  "fonted.font": "JetBrains Mono",
+  "fonted.font": "JetBrains Mono Medium",
 
   // NVIM SETTINGS
   "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
@@ -73,12 +73,19 @@
   },
 
   // LANGUAGES
+  "go.toolsManagement.autoUpdate": true,
+  // install golangci-lint from https://golangci-lint.run/usage/install for this to work
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": ["--fast"],
   "[go]": {
     "editor.defaultFormatter": "golang.go",
     "editor.tabSize": 4,
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
     }
+  },
+  "[go.mod]": {
+    "editor.defaultFormatter": "golang.go"
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
@@ -90,10 +97,6 @@
       "source.organizeImports": "explicit"
     }
   },
-  "go.toolsManagement.autoUpdate": true,
-  // install golangci-lint from https://golangci-lint.run/usage/install for this to work
-  "go.lintTool": "golangci-lint",
-  "go.lintFlags": ["--fast"],
   "[typescript]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
@@ -101,6 +104,9 @@
   },
   "typescript.preferences.importModuleSpecifier": "relative",
   "svelte.enable-ts-plugin": true,
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
   "eslint.validate": ["javascript", "javascriptreact", "svelte", "typescript", "typescriptreact"],
   "prettier.printWidth": 120,
 
@@ -126,10 +132,8 @@
   "explorer.confirmDelete": false,
   "files.autoSave": "onFocusChange",
   "git.autofetch": true,
-  "window.menuBarVisibility": "toggle",
   "window.titleBarStyle": "custom",
   "window.commandCenter": false,
-  "window.zoomLevel": 0.5,
   "remote.SSH.showLoginTerminal": true,
   "totalTypeScript.hideAllTips": false,
   "totalTypeScript.hideBasicTips": false,
@@ -155,17 +159,20 @@
     "as-assertion",
     "undefined-keyword",
     "keyof",
-    "readonly-utility-type"
+    "readonly-utility-type",
+    "null-keyword"
   ],
   "codeium.enableSearch": true,
   "codeium.enableConfig": {
     "*": true,
-    "xml": true
+    "xml": true,
+    "go.mod": true
   },
   "inlineFold.unfoldOnLineSelect": true,
   "inlineFold.unfoldedOpacity": 1,
   "breadcrumbs.enabled": false,
   "terminal.integrated.cursorBlinking": true,
+  "window.zoomLevel": 0.5,
 
   // TELEMETRY
   "telemetry.telemetryLevel": "off",

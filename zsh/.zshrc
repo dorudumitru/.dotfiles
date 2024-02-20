@@ -1,4 +1,5 @@
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.local/share/bin
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
@@ -32,13 +33,11 @@ alias vim='nvim'
 alias ts='tmux-sessionizer'
 alias fp='. project-finder'
 alias vsvim='. vscode-vim-switcher'
+alias gomake='. go-makefiler'
+alias cato='cato-sdp'
 
 # git-completion
 autoload -Uz compinit && compinit
-
-# jetbrains
-export PATH=$PATH:/home/$(whoami)/.local/share/bin
-export PATH=$PATH:/home/$(whoami)/.local/bin
 
 # starship
 eval "$(starship init zsh)"
@@ -59,11 +58,11 @@ export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
 
 # sdkman
-export SDKMAN_DIR="/home/$(whoami)/.sdkman"
-[[ -s "/home/$(whoami)/.sdkman/bin/sdkman-init.sh" ]] && source "/home/$(whoami)/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # pnpm
-export PNPM_HOME="/home/dorudumitru/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
