@@ -54,11 +54,11 @@
   },
 
   // FONT
-  "editor.fontFamily": "JetBrains Mono Medium, JetBrainsMono Nerd Font",
+  "editor.fontFamily": "JetBrains Mono Medium, JetBrainsMono NF Medium",
   "editor.fontSize": 16,
   "editor.lineHeight": 1.5, // use with JetBrains Mono
   "editor.fontLigatures": "true",
-  "terminal.integrated.fontFamily": "JetBrains Mono Medium, JetBrainsMono Nerd Font",
+  "terminal.integrated.fontFamily": "JetBrains Mono Medium, JetBrainsMono NF Medium",
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.lineHeight": 1.1, // use with JetBrains Mono
   // If permission is needed
@@ -166,7 +166,8 @@
   "codeium.enableConfig": {
     "*": true,
     "xml": true,
-    "go.mod": true
+    "go.mod": true,
+    "dotenv": true
   },
   "inlineFold.unfoldOnLineSelect": true,
   "inlineFold.unfoldedOpacity": 1,
