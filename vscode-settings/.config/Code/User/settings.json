@@ -186,5 +186,6 @@
   "dotnetAcquisitionExtension.enableTelemetry": false,
   "files.associations": {
     ".env*": "dotenv"
-  }
+  },
+  "dotenv.enableAutocloaking": true
 }
