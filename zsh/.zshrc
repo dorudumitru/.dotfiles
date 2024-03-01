@@ -20,7 +20,7 @@ bindkey -s "^f" "tmux-sessionizer\n"
 
 # function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
 # function land { ( goland "$@" & ) > /dev/null 2>&1 }
-# function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
+function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
 # function storm { ( webstorm "$@" & ) > /dev/null 2>&1 }
 # function lion { ( clion "$@" & ) > /dev/null 2>&1 }
 
@@ -53,8 +53,8 @@ export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
 
 # .NET
-export DOTNET_ROOT=$HOME/.dotnet
-export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
+export PATH=$PATH:$HOME/.dotnet
+export PATH=$PATH:$HOME/.dotnet/tools
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
 
 # sdkman

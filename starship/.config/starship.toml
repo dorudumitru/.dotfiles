@@ -17,7 +17,7 @@ read_only = " "
 symbol = " "
 
 [dotnet]
-symbol = " "
+symbol = "󰘐 "
 format = "via [$symbol($version )]($style)"
 detect_extensions = ["csproj", "fsproj", "xproj", "sln"]
 
@@ -38,6 +38,7 @@ symbol = " "
 
 [java]
 symbol = " "
+style = "red"
 
 [julia]
 symbol = " "
@@ -52,7 +53,7 @@ symbol = " "
 symbol = " "
 
 [package]
-symbol = " "
+symbol = "󰏗 "
 
 [perl]
 symbol = " "

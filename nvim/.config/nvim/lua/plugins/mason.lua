@@ -3,9 +3,23 @@ return {
 	opts = {
 		ensure_installed = {
 			"css-lsp",
+			"docker-compose-language-service",
+			"dockerfile-language-server",
 			"emmet-language-server",
+			"eslint-lsp",
+			"gofumpt",
+			"goimports",
+			"golangci-lint",
+			"gopls",
+			"json-lsp",
 			"lua-language-server",
+			"prettier",
+			"shfmt",
+			"stylua",
 			"svelte-language-server",
+			"tailwindcss-language-server",
+			"typescript-language-server",
+			"yaml-language-server",
 		},
 	},
 }

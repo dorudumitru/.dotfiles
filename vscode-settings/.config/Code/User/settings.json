@@ -43,12 +43,6 @@
         "settings": {
           "fontStyle": ""
         }
-      },
-      {
-        "scope": "keyword.other.dotenv",
-        "settings": {
-          "foreground": "#FF000000"
-        }
       }
     ]
   },
@@ -97,6 +91,9 @@
       "source.organizeImports": "explicit"
     }
   },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
   "[typescript]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
@@ -135,33 +132,7 @@
   "window.titleBarStyle": "custom",
   "window.commandCenter": false,
   "remote.SSH.showLoginTerminal": true,
-  "totalTypeScript.hideAllTips": false,
-  "totalTypeScript.hideBasicTips": false,
-  "totalTypeScript.hiddenTips": [
-    "basic-types",
-    "array-type",
-    "typing-function-parameters",
-    "function-return-type",
-    "variable-type-annotation",
-    "passing-generics-to-types",
-    "type-alias-declaration",
-    "typeof",
-    "omit-utility-type",
-    "literal-type",
-    "record-utility-type",
-    "never-keyword",
-    "partial-utility-type",
-    "ts-object-type",
-    "interface-declaration",
-    "pick-utility-type",
-    "union-type",
-    "any-type",
-    "as-assertion",
-    "undefined-keyword",
-    "keyof",
-    "readonly-utility-type",
-    "null-keyword"
-  ],
+  "totalTypeScript.hideAllTips": true,
   "codeium.enableSearch": true,
   "codeium.enableConfig": {
     "*": true,
@@ -169,6 +140,10 @@
     "go.mod": true,
     "dotenv": true
   },
+  "files.associations": {
+    ".env*": "dotenv"
+  },
+  "dotenv.enableAutocloaking": false,
   "inlineFold.unfoldOnLineSelect": true,
   "inlineFold.unfoldedOpacity": 1,
   "breadcrumbs.enabled": false,
@@ -183,9 +158,5 @@
   "partialDiff.enableTelemetry": false,
   "applicationRegistrations.useEventualConsistency": false,
   "code-runner.enableAppInsights": false,
-  "dotnetAcquisitionExtension.enableTelemetry": false,
-  "files.associations": {
-    ".env*": "dotenv"
-  },
-  "dotenv.enableAutocloaking": true
+  "dotnetAcquisitionExtension.enableTelemetry": false
 }

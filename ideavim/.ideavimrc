@@ -1,3 +1,8 @@
+" In order to use C-n / C-p in context menus, we need to change a few JetBrains keymaps:
+" - Parameter Info -> CTRL + SHIFT + P
+" - Up -> CTRL + P
+" - Down -> CTRL + N
+
 " Map leader to space
 let mapleader=" "
 
@@ -36,6 +41,6 @@ vnoremap <leader>d "_d
 " Actions
 nmap <leader>/ <action>(ShowErrorDescription)
 nmap <leader>e <action>(GotoNextError)
-nmap <leader>h <action>(PreviousTab)
-nmap <leader>l <action>(NextTab)
 nmap <leader>i <action>(Generate)
+nmap H <action>(PreviousTab)
+nmap L <action>(NextTab)
