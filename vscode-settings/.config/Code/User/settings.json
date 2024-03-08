@@ -8,6 +8,7 @@
   },
   "workbench.iconTheme": "symbols",
   "symbols.hidesExplorerArrows": false,
+  "workbench.tree.indent": 12,
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
@@ -50,9 +51,9 @@
   // FONT
   "editor.fontFamily": "JetBrains Mono Medium, JetBrainsMono NF Medium",
   "editor.fontSize": 16,
-  "editor.lineHeight": 1.5, // use with JetBrains Mono
+  "editor.lineHeight": 1.5,
   "editor.fontLigatures": "true",
-  "terminal.integrated.fontFamily": "JetBrains Mono Medium, JetBrainsMono NF Medium",
+  "terminal.integrated.fontFamily": "JetBrains Mono, JetBrainsMono NF Medium",
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.lineHeight": 1.1, // use with JetBrains Mono
   // If permission is needed
@@ -157,6 +158,6 @@
   "rest-client.enableTelemetry": false,
   "partialDiff.enableTelemetry": false,
   "applicationRegistrations.useEventualConsistency": false,
-  "code-runner.enableAppInsights": false,
-  "dotnetAcquisitionExtension.enableTelemetry": false
+  "dotnetAcquisitionExtension.enableTelemetry": false,
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }

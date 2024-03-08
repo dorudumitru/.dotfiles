@@ -1,3 +1,4 @@
+export GIT_EDITOR=nvim
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.local/share/bin
 export ZSH="$HOME/.oh-my-zsh"
@@ -15,7 +16,7 @@ ZSH_DISABLE_COMPFIX=true
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+### User configuration ###
 bindkey -s "^f" "tmux-sessionizer\n"
 
 # function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
@@ -27,6 +28,10 @@ function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
 function ur {
   unzip $1 -d $2
   rm $1
+}
+
+function visualvm {
+  ( /opt/visualvm_217/bin/visualvm --fontsize 20 "$@" & ) > /dev/null 2>&1
 }
 
 alias vim='nvim'
@@ -48,9 +53,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # go
-export PATH=$PATH:/usr/local/go/bin # no need to set this if go is installed with dnf
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:/usr/local/go/bin # no need to set this if go is installed with dnf
 
 # .NET
 export PATH=$PATH:$HOME/.dotnet
