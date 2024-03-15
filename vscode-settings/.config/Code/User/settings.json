@@ -139,7 +139,8 @@
     "*": true,
     "xml": true,
     "go.mod": true,
-    "dotenv": true
+    "dotenv": true,
+    "spring-boot-properties": true
   },
   "files.associations": {
     ".env*": "dotenv"
@@ -159,5 +160,10 @@
   "partialDiff.enableTelemetry": false,
   "applicationRegistrations.useEventualConsistency": false,
   "dotnetAcquisitionExtension.enableTelemetry": false,
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "sonarlint.rules": {
+    "java:S2095": {
+      "level": "on"
+    }
+  }
 }
