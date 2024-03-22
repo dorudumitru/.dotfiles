@@ -76,7 +76,7 @@
     "editor.defaultFormatter": "golang.go",
     "editor.tabSize": 4,
     "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
+      "source.organizeImports": "always"
     }
   },
   "[go.mod]": {
@@ -86,12 +86,12 @@
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.tabSize": 4
   },
-  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+  // "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
   "[java]": {
-    "editor.defaultFormatter": "redhat.java",
-    "editor.tabSize": 4,
+    // "editor.defaultFormatter": "redhat.java",
+    "editor.defaultFormatter": "josevseb.google-java-format-for-vs-code",
     "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
+      "source.organizeImports": "always"
     }
   },
   "[xml]": {
@@ -99,7 +99,7 @@
   },
   "[typescript]": {
     "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
+      "source.organizeImports": "always"
     }
   },
   "typescript.preferences.importModuleSpecifier": "relative",
@@ -113,7 +113,7 @@
   // MISC
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit"
+    "source.organizeImports": "always"
   },
   "editor.accessibilitySupport": "off",
   "editor.bracketPairColorization.enabled": true,
@@ -162,10 +162,5 @@
   "partialDiff.enableTelemetry": false,
   "applicationRegistrations.useEventualConsistency": false,
   "dotnetAcquisitionExtension.enableTelemetry": false,
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "sonarlint.rules": {
-    "java:S2095": {
-      "level": "on"
-    }
-  }
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }
