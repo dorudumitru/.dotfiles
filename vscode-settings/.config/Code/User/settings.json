@@ -94,9 +94,13 @@
       "source.organizeImports": "always"
     }
   },
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "[typescript]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": "always"
@@ -161,6 +165,5 @@
   "rest-client.enableTelemetry": false,
   "partialDiff.enableTelemetry": false,
   "applicationRegistrations.useEventualConsistency": false,
-  "dotnetAcquisitionExtension.enableTelemetry": false,
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "dotnetAcquisitionExtension.enableTelemetry": false
 }

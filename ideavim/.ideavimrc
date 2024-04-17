@@ -46,6 +46,7 @@ vnoremap <leader>d "_d
 nmap <leader>/ <action>(ShowErrorDescription)
 nmap <leader>e <action>(GotoNextError)
 nmap <leader>ca <action>(ShowIntentionActions)
+nmap <leader>cr <action>(Refactorings.QuickListPopupAction)
 nmap <A-n> <action>(Generate)
 nmap H <action>(PreviousTab)
 nmap L <action>(NextTab)

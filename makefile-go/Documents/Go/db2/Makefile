@@ -1,4 +1,4 @@
-APP_NAME := $(shell basename $(CURDIR) | tr - _)
+APP_NAME := $(shell basename $(CURDIR))
 
 # ==================================================================================== #
 # VARIABLES - You can change these variables to suit your needs
@@ -217,23 +217,7 @@ prod: clean lint tidy audit no-dirty
 	upx -5 ./dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME}
 	@echo -e "\nCopying certificates..."
 	@cp -r ./certs ./dist/${GOOS}_${GOARCH}/${APP_NAME}/
-	@if [ ! -d "$(CURDIR)/dist/${GOOS}_${GOARCH}/${APP_NAME}/clidriver" ]; then \
-		if [ "${OS}" == "${GOOS}" ]; then \
-			echo -e "\nCreating clidriver for production..."; \
-			cp -r ./clidriver ./dist/${GOOS}_${GOARCH}/${APP_NAME}/; \
-		else \
-			echo -e "\nDownloading IBM DB2 CLI driver..."; \
-			cd dist/${GOOS}_${GOARCH}/${APP_NAME}; \
-			curl -O ${CLIDRIVER_URL}/${CLIDRIVER_NAME}; \
-			echo -e "\nExtracting IBM DB2 CLI driver..."; \
-			if [ "${GOOS}" == "windows" ]; then \
-				unzip ${CLIDRIVER_NAME}; \
-			else \
-				tar -xvf ${CLIDRIVER_NAME}; \
-			fi; \
-			rm ${CLIDRIVER_NAME}; \
-		fi; \
-	fi
+
 	@echo -e "\nCreating run script..."
 	@if [ "${GOOS}" == "windows" ]; then \
 		echo "@echo off" >> dist/${GOOS}_${GOARCH}/${APP_NAME}/${START_SCRIPT_NAME}; \

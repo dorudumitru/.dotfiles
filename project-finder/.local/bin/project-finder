@@ -6,8 +6,4 @@ else
 	selected=$(find ~ ~/Projects -mindepth 1 -maxdepth 3 -type d | fzf --prompt "❯ ")
 fi
 
-if [[ -z $selected ]]; then
-	exit 0
-fi
-
 cd $selected

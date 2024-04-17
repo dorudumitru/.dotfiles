@@ -1,4 +1,4 @@
-APP_NAME := $(shell basename $(CURDIR) | tr - _)
+APP_NAME := $(shell basename $(CURDIR))
 
 # ==================================================================================== #
 # VARIABLES - You can change these variables to suit your needs
