@@ -19,16 +19,11 @@ source $ZSH/oh-my-zsh.sh
 ### User configuration ###
 bindkey -s "^f" "tmux-sessionizer\n"
 
-# function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
-# function land { ( goland "$@" & ) > /dev/null 2>&1 }
+function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
+function land { ( goland "$@" & ) > /dev/null 2>&1 }
 function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
-# function storm { ( webstorm "$@" & ) > /dev/null 2>&1 }
+function storm { ( webstorm "$@" & ) > /dev/null 2>&1 }
 # function lion { ( clion "$@" & ) > /dev/null 2>&1 }
-
-function ur {
-  unzip $1 -d $2
-  rm $1
-}
 
 function visualvm {
   ( /opt/visualvm_217/bin/visualvm --fontsize 20 "$@" & ) > /dev/null 2>&1

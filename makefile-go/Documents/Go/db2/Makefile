@@ -1,8 +1,15 @@
 APP_NAME := $(shell basename $(CURDIR))
 
+GO_IBM_DB_PATH := ~/Documents/go_ibm_db
+CURRENT_SHELL := $(shell echo $$SHELL | awk -F/ '{print $$NF}')
+SHELL_CONFIG_FILE := "$(HOME)/.${CURRENT_SHELL}rc"
+
 # ==================================================================================== #
 # VARIABLES - You can change these variables to suit your needs
 # ==================================================================================== #
+
+# Go binary that you want to use. Example: go1.21.10
+GO := go
 
 # Local development variables
 # --------------------------
@@ -62,12 +69,6 @@ endif
 
 CLIDRIVER_URL := https://public.dhe.ibm.com/ibmdl/export/pub/software/data/db2/drivers/odbc_cli
 
-export IBM_DB_HOME := ${CURDIR}/clidriver
-export CGO_CFLAGS := -I${IBM_DB_HOME}/include
-export CGO_LDFLAGS := -L${IBM_DB_HOME}/lib
-export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):${IBM_DB_HOME}/lib
-export PATH := $(PATH):${IBM_DB_HOME}/bin
-
 # ==================================================================================== #
 # HELPERS
 # ==================================================================================== #
@@ -80,12 +81,27 @@ help:
 
 .PHONY: ibmdb
 ibmdb:
-	@if [ ! -d "clidriver" ]; then \
+	@if [ ! -d ${GO_IBM_DB_PATH} ]; then \
+		mkdir -p ${GO_IBM_DB_PATH}; \
+		cd ${GO_IBM_DB_PATH}; \
 		echo -e "\nDownloading IBM DB2 CLI driver..."; \
 		curl -O ${CLIDRIVER_URL}/${DEV_CLIDRIVER_NAME}; \
 		echo -e "\nExtracting IBM DB2 CLI driver..."; \
 		tar -xvf ${DEV_CLIDRIVER_NAME}; \
 		rm ${DEV_CLIDRIVER_NAME}; \
+		if [ -z "$$IBM_DB_HOME" ]; then \
+			echo -e "\n# go_ibm_db env variables" >> ${SHELL_CONFIG_FILE}; \
+			echo "export IBM_DB_HOME=${GO_IBM_DB_PATH}/clidriver" >> ${SHELL_CONFIG_FILE}; \
+			echo "export CGO_CFLAGS=-I\$$IBM_DB_HOME/include" >> ${SHELL_CONFIG_FILE}; \
+			echo "export CGO_LDFLAGS=-L\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
+			if [ "${OS}" == "darwin" ]; then \
+				echo "export DYLD_LIBRARY_PATH=\$$DYLD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
+			else \
+				echo "export LD_LIBRARY_PATH=\$$LD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
+			fi; \
+			echo "export PATH=\$$PATH:\$$IBM_DB_HOME/bin" >> ${SHELL_CONFIG_FILE}; \
+			exec ${CURRENT_SHELL}; \
+		fi; \
 	fi
 
 .PHONY: print/init
@@ -102,6 +118,8 @@ print/init:
 ## init: initialize the project
 .PHONY: init
 init: print/init ibmdb
+	@echo -e "\nIBM DB2 CLI driver info:"
+	@echo "$$(${GO_IBM_DB_PATH}/clidriver/bin/db2level)"
 	@echo -e "\nInitializing git repository..."
 	@git init
 	@touch .gitignore
@@ -111,13 +129,13 @@ init: print/init ibmdb
 	@echo ".idea/" >> .gitignore
 	@echo ".vscode/" >> .gitignore
 	@echo -e "\nInitializing Go module..."
-	@go mod init ${MAIN_PACKAGE}
-	@go get -d github.com/ibmdb/go_ibm_db
+	@${GO} mod init ${MAIN_PACKAGE}
+	@${GO} get -d github.com/ibmdb/go_ibm_db
 	@mkdir -p certs
 	@cp ${CERTIFICATE_PATH} certs
 	@mkdir -p ${MAIN_PACKAGE_PATH} && touch ${MAIN_PACKAGE_PATH}/main.go
 	@echo -e "\nDownloading golangci-lint config..."
-	@curl -O https://gist.githubusercontent.com/dorudumitru/f6207afab6e41ebbc5b3ef6dcc2c354e/raw/87630b0ad8dc01d574b679ab512fb02789cb3ba2/.golangci.yml
+	@curl -O https://gist.githubusercontent.com/dorudumitru/f6207afab6e41ebbc5b3ef6dcc2c354e/raw/0705a77825bec3628f6f0343af44eee09fabf8ec/.golangci.yml
 	@echo -e "\nDone."
 
 .PHONY: clean
@@ -149,17 +167,17 @@ lint:
 ## tidy: format code and tidy modfile
 .PHONY: tidy
 tidy:
-	go fmt ./...
-	go mod tidy -v
+	${GO} fmt ./...
+	${GO} mod tidy -v
 
 ## audit: run quality control checks
 .PHONY: audit
 audit:
-	go mod verify
-	go vet ./...
-	go run honnef.co/go/tools/cmd/staticcheck@latest -checks=all,-ST1000,-U1000 ./...
-	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
-	go test -race -buildvcs -vet=off ./...
+	${GO} mod verify
+	${GO} vet ./...
+	${GO} run honnef.co/go/tools/cmd/staticcheck@latest -checks=all,-ST1000,-U1000 ./...
+	${GO} run golang.org/x/vuln/cmd/govulncheck@latest ./...
+	${GO} test -race -buildvcs -vet=off ./...
 
 # ==================================================================================== #
 # DEVELOPMENT
@@ -168,7 +186,7 @@ audit:
 ## test: run all tests
 .PHONY: test
 test:
-	go test -v -race -buildvcs ./...
+	${GO} test -v -race -buildvcs ./...
 
 ## test/integration: run all tests including integration
 .PHONY: test/integration
@@ -178,14 +196,14 @@ test/integration:
 ## test/cover: run all tests and display coverage
 .PHONY: test/cover
 test/cover:
-	go test -v -race -buildvcs -coverprofile=/tmp/coverage.out ./...
-	go tool cover -html=/tmp/coverage.out
+	${GO} test -v -race -buildvcs -coverprofile=/tmp/coverage.out ./...
+	${GO} tool cover -html=/tmp/coverage.out
 
 ## build: build the application
 # include additional build steps, like TypeScript, SCSS or Tailwind compilation here...
 .PHONY: build
 build: ibmdb
-	@go build -o /tmp/bin/${DEV_BINARY_NAME} ${MAIN_PACKAGE_PATH}
+	@${GO} build -o /tmp/bin/${DEV_BINARY_NAME} ${MAIN_PACKAGE_PATH}
 
 ## run: run the  application
 .PHONY: run
@@ -195,7 +213,7 @@ run: lint build
 ## watch: run the application with reloading on file changes
 .PHONY: watch
 watch: lint
-	@go run github.com/cosmtrek/air@latest \
+	@${GO} run github.com/cosmtrek/air@latest \
 		--build.cmd "make build" --build.bin "/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}" --build.delay "100" \
 		--build.exclude_dir "certs,clidriver,dist" \
 		--build.include_ext "go, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
@@ -213,10 +231,28 @@ push: lint tidy audit no-dirty
 ## prod: create a production build of the application
 .PHONY: prod
 prod: clean lint tidy audit no-dirty
-	GOOS=${GOOS} GOARCH=${GOARCH} go build -ldflags='-s' -o dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
+	GOOS=${GOOS} GOARCH=${GOARCH} ${GO} build -ldflags='-s' -o dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
 	upx -5 ./dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME}
 	@echo -e "\nCopying certificates..."
 	@cp -r ./certs ./dist/${GOOS}_${GOARCH}/${APP_NAME}/
+	
+	@if [ ! -d "$(CURDIR)/dist/${GOOS}_${GOARCH}/${APP_NAME}/clidriver" ]; then \
+		if [ "${OS}" == "${GOOS}" ]; then \
+			echo -e "\nCreating clidriver for production..."; \
+			cp -r ${GO_IBM_DB_PATH} ./dist/${GOOS}_${GOARCH}/${APP_NAME}/; \
+		else \
+			echo -e "\nDownloading IBM DB2 CLI driver..."; \
+			cd dist/${GOOS}_${GOARCH}/${APP_NAME}; \
+			curl -O ${CLIDRIVER_URL}/${CLIDRIVER_NAME}; \
+			echo -e "\nExtracting IBM DB2 CLI driver..."; \
+			if [ "${GOOS}" == "windows" ]; then \
+				unzip ${CLIDRIVER_NAME}; \
+			else \
+				tar -xvf ${CLIDRIVER_NAME}; \
+			fi; \
+			rm ${CLIDRIVER_NAME}; \
+		fi; \
+	fi
 
 	@echo -e "\nCreating run script..."
 	@if [ "${GOOS}" == "windows" ]; then \

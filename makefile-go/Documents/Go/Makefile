@@ -4,6 +4,9 @@ APP_NAME := $(shell basename $(CURDIR))
 # VARIABLES - You can change these variables to suit your needs
 # ==================================================================================== #
 
+# Go binary that you want to use. Example: go1.21.10. Default: go
+GO := go
+
 # Local development variables
 # --------------------------
 # Accepted Values
@@ -81,10 +84,10 @@ init:
 	@echo ".idea/" >> .gitignore
 	@echo ".vscode/" >> .gitignore
 	@echo -e "\nInitializing Go module..."
-	@go mod init ${MAIN_PACKAGE}
+	@${GO} mod init ${MAIN_PACKAGE}
 	@mkdir -p ${MAIN_PACKAGE_PATH} && touch ${MAIN_PACKAGE_PATH}/main.go
 	@echo -e "\nDownloading golangci-lint config..."
-	@curl -O https://gist.githubusercontent.com/dorudumitru/f6207afab6e41ebbc5b3ef6dcc2c354e/raw/87630b0ad8dc01d574b679ab512fb02789cb3ba2/.golangci.yml
+	@curl -O https://gist.githubusercontent.com/dorudumitru/f6207afab6e41ebbc5b3ef6dcc2c354e/raw/0705a77825bec3628f6f0343af44eee09fabf8ec/.golangci.yml
 	@echo -e "\nDone."
 
 .PHONY: clean
@@ -107,17 +110,17 @@ lint:
 ## tidy: format code and tidy modfile
 .PHONY: tidy
 tidy:
-	go fmt ./...
-	go mod tidy -v
+	${GO} fmt ./...
+	${GO} mod tidy -v
 
 ## audit: run quality control checks
 .PHONY: audit
 audit:
-	go mod verify
-	go vet ./...
-	go run honnef.co/go/tools/cmd/staticcheck@latest -checks=all,-ST1000,-U1000 ./...
-	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
-	go test -race -buildvcs -vet=off ./...
+	${GO} mod verify
+	${GO} vet ./...
+	${GO} run honnef.co/go/tools/cmd/staticcheck@latest -checks=all,-ST1000,-U1000 ./...
+	${GO} run golang.org/x/vuln/cmd/govulncheck@latest ./...
+	${GO} test -race -buildvcs -vet=off ./...
 
 # ==================================================================================== #
 # DEVELOPMENT
@@ -126,7 +129,7 @@ audit:
 ## test: run all unit tests
 .PHONY: test
 test:
-	go test -v -race -buildvcs ./...
+	${GO} test -v -race -buildvcs ./...
 
 ## test/integration: run all tests including integration
 .PHONY: test/integration
@@ -136,14 +139,14 @@ test/integration:
 ## test/cover: run all tests and display coverage
 .PHONY: test/cover
 test/cover:
-	go test -v -race -buildvcs -coverprofile=/tmp/coverage.out ./...
-	go tool cover -html=/tmp/coverage.out
+	${GO} test -v -race -buildvcs -coverprofile=/tmp/coverage.out ./...
+	${GO} tool cover -html=/tmp/coverage.out
 
 ## build: build the application
 # include additional build steps, like TypeScript, SCSS or Tailwind compilation here...
 .PHONY: build
 build:
-	@go build -o /tmp/bin/${DEV_BINARY_NAME} ${MAIN_PACKAGE_PATH}
+	@${GO} build -o /tmp/bin/${DEV_BINARY_NAME} ${MAIN_PACKAGE_PATH}
 
 ## run: run the  application
 .PHONY: run
@@ -153,7 +156,7 @@ run: lint build
 ## watch: run the application with reloading on file changes
 .PHONY: watch
 watch: lint
-	@go run github.com/cosmtrek/air@latest \
+	@${GO} run github.com/cosmtrek/air@latest \
 		--build.cmd "make build" --build.bin "/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}" --build.delay "100" \
 		--build.exclude_dir "dist" \
 		--build.include_ext "go, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
@@ -171,7 +174,7 @@ push: lint tidy audit no-dirty
 ## production: create a production build of the application
 .PHONY: prod
 prod: clean lint tidy audit no-dirty
-	GOOS=${GOOS} GOARCH=${GOARCH} go build -ldflags='-s' -o dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
+	GOOS=${GOOS} GOARCH=${GOARCH} ${GO} build -ldflags='-s' -o dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
 	upx -5 ./dist/${GOOS}_${GOARCH}/${APP_NAME}/${BINARY_NAME}
 
 ## deploy: deploy the application to production
