@@ -1,6 +1,5 @@
 APP_NAME := $(shell basename $(CURDIR))
 
-GO_IBM_DB_PATH := ~/Documents/go_ibm_db
 CURRENT_SHELL := $(shell echo $$SHELL | awk -F/ '{print $$NF}')
 SHELL_CONFIG_FILE := "$(HOME)/.${CURRENT_SHELL}rc"
 
@@ -10,6 +9,9 @@ SHELL_CONFIG_FILE := "$(HOME)/.${CURRENT_SHELL}rc"
 
 # Go binary that you want to use. Example: go1.21.10
 GO := go
+# Absolute path of the go clidriver. Example: ~/Documents/go_ibm_db
+GO_IBM_DB_PATH := ~/Documents/go_ibm_db
+
 
 # Local development variables
 # --------------------------
@@ -83,12 +85,11 @@ help:
 ibmdb:
 	@if [ ! -d ${GO_IBM_DB_PATH} ]; then \
 		mkdir -p ${GO_IBM_DB_PATH}; \
-		cd ${GO_IBM_DB_PATH}; \
 		echo -e "\nDownloading IBM DB2 CLI driver..."; \
-		curl -O ${CLIDRIVER_URL}/${DEV_CLIDRIVER_NAME}; \
+		curl -o ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME} ${CLIDRIVER_URL}/${DEV_CLIDRIVER_NAME}; \
 		echo -e "\nExtracting IBM DB2 CLI driver..."; \
-		tar -xvf ${DEV_CLIDRIVER_NAME}; \
-		rm ${DEV_CLIDRIVER_NAME}; \
+		tar -xvf ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME} -C ${GO_IBM_DB_PATH}; \
+		rm ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME}; \
 		if [ -z "$$IBM_DB_HOME" ]; then \
 			echo -e "\n# go_ibm_db env variables" >> ${SHELL_CONFIG_FILE}; \
 			echo "export IBM_DB_HOME=${GO_IBM_DB_PATH}/clidriver" >> ${SHELL_CONFIG_FILE}; \
