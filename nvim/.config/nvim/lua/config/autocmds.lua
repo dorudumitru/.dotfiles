@@ -26,4 +26,9 @@ if not vim.g.vscode then
 			golangcilint.cwd = cwd
 		end,
 	})
+
+	vim.api.nvim_create_autocmd({ "BufEnter" }, {
+		pattern = "*",
+		command = "hi MatchWord cterm=none gui=none",
+	})
 end

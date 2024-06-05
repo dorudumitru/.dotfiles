@@ -11,6 +11,7 @@ let mapleader=" "
 " Plugins
 set NERDTree
 set highlightedyank
+set matchit
 
 " Common settings
 set showmode

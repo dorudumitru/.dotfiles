@@ -40,5 +40,10 @@
     "key": "ctrl+m",
     "command": "workbench.action.toggleMaximizedPanel",
     "when": "terminalFocus"
+  },
+  {
+    "key": "shift+5",
+    "command": "extension.matchitJumpItems",
+    "when": "editorTextFocus"
   }
 ]

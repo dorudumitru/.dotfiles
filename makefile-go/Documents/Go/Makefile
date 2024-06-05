@@ -157,7 +157,9 @@ run: lint build
 .PHONY: watch
 watch: lint
 	@${GO} run github.com/cosmtrek/air@latest \
-		--build.cmd "make build" --build.bin "/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}" --build.delay "100" \
+		--build.cmd "make build" \
+		--build.bin "/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}" \
+		--build.delay "100" \
 		--build.exclude_dir "dist" \
 		--build.include_ext "go, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
 		--misc.clean_on_exit "true"

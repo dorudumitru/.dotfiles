@@ -105,6 +105,30 @@ ibmdb:
 		fi; \
 	fi
 
+## ibmdb/latest: download latest version of IBM DB2 CLI driver
+.PHONY: ibmdb/latest
+ibmdb/latest:
+	@echo "Downloading latest IBM DB2 CLI driver..."
+	@rm -rf ${GO_IBM_DB_PATH}
+	@mkdir -p ${GO_IBM_DB_PATH}
+	@curl -o ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME} ${CLIDRIVER_URL}/${DEV_CLIDRIVER_NAME}
+	@echo -e "\nExtracting IBM DB2 CLI driver..."
+	@tar -xvf ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME} -C ${GO_IBM_DB_PATH}
+	@rm ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME}
+	@if [ -z "$$IBM_DB_HOME" ]; then \
+		echo -e "\n# go_ibm_db env variables" >> ${SHELL_CONFIG_FILE}; \
+		echo "export IBM_DB_HOME=${GO_IBM_DB_PATH}/clidriver" >> ${SHELL_CONFIG_FILE}; \
+		echo "export CGO_CFLAGS=-I\$$IBM_DB_HOME/include" >> ${SHELL_CONFIG_FILE}; \
+		echo "export CGO_LDFLAGS=-L\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
+		if [ "${OS}" == "darwin" ]; then \
+			echo "export DYLD_LIBRARY_PATH=\$$DYLD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
+		else \
+			echo "export LD_LIBRARY_PATH=\$$LD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
+		fi; \
+		echo "export PATH=\$$PATH:\$$IBM_DB_HOME/bin" >> ${SHELL_CONFIG_FILE}; \
+		exec ${CURRENT_SHELL}; \
+	fi
+
 .PHONY: print/init
 print/init:
 	@echo "Initializing project..."

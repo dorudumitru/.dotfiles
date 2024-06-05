@@ -164,5 +164,6 @@
   "rest-client.enableTelemetry": false,
   "partialDiff.enableTelemetry": false,
   "applicationRegistrations.useEventualConsistency": false,
-  "dotnetAcquisitionExtension.enableTelemetry": false
+  "dotnetAcquisitionExtension.enableTelemetry": false,
+  "prisma.showPrismaDataPlatformNotification": false
 }

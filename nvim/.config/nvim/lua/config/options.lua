@@ -9,6 +9,7 @@ vim.opt.undofile = true
 
 vim.opt.incsearch = true
 vim.opt.hlsearch = false
+vim.opt.inccommand = "split"
 
 vim.opt.scrolloff = 8
 vim.opt.clipboard = ""

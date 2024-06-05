@@ -1,7 +1,7 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	opts = function(_, opts)
-		vim.list_extend(opts.ensure_installed, {
+	opts = {
+		ensure_installed = {
 			"bash",
 			"css",
 			"csv",
@@ -32,6 +32,9 @@ return {
 			"typescript",
 			"xml",
 			"yaml",
-		})
-	end,
+		},
+		matchup = {
+			enable = true,
+		},
+	},
 }

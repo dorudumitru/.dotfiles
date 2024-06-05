@@ -26,7 +26,21 @@ function storm { ( webstorm "$@" & ) > /dev/null 2>&1 }
 # function lion { ( clion "$@" & ) > /dev/null 2>&1 }
 
 function visualvm {
-  ( /opt/visualvm_217/bin/visualvm --fontsize 20 "$@" & ) > /dev/null 2>&1
+  ( /opt/visualvm_218/bin/visualvm --fontsize 20 "$@" & ) > /dev/null 2>&1
+}
+
+function ngp {
+  if [ $# -eq 1 ]; then
+    projectPath=~/Projects/playground/golang/$1
+    mkdir -p $projectPath
+    tmux-sessionizer $projectPath
+  elif [ $# -eq 2 ]; then
+    projectPath=~/Projects/$2/$1
+    mkdir -p $projectPath
+    tmux-sessionizer $projectPath
+  else
+    echo "invalid number of arguments"
+  fi
 }
 
 alias vim='nvim'
@@ -78,3 +92,7 @@ export CGO_CFLAGS=-I$IBM_DB_HOME/include
 export CGO_LDFLAGS=-L$IBM_DB_HOME/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IBM_DB_HOME/lib
 export PATH=$PATH:$IBM_DB_HOME/bin
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
