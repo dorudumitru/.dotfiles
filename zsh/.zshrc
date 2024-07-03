@@ -29,20 +29,6 @@ function visualvm {
   ( /opt/visualvm_218/bin/visualvm --fontsize 20 "$@" & ) > /dev/null 2>&1
 }
 
-function ngp {
-  if [ $# -eq 1 ]; then
-    projectPath=~/Projects/playground/golang/$1
-    mkdir -p $projectPath
-    tmux-sessionizer $projectPath
-  elif [ $# -eq 2 ]; then
-    projectPath=~/Projects/$2/$1
-    mkdir -p $projectPath
-    tmux-sessionizer $projectPath
-  else
-    echo "invalid number of arguments"
-  fi
-}
-
 alias vim='nvim'
 alias ts='tmux-sessionizer'
 alias fp='. project-finder'

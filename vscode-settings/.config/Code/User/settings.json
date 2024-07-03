@@ -165,5 +165,6 @@
   "partialDiff.enableTelemetry": false,
   "applicationRegistrations.useEventualConsistency": false,
   "dotnetAcquisitionExtension.enableTelemetry": false,
-  "prisma.showPrismaDataPlatformNotification": false
+  "prisma.showPrismaDataPlatformNotification": false,
+  "window.customTitleBarVisibility": "auto"
 }

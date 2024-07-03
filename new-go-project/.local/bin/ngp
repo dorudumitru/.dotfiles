@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+pararser() {
+  # Define default values
+  name=${name:-""}
+  project=${project:-""}
+  db2=${db2:-false}
+
+  # Assign the values given by the user
+  while [ $# -gt 0 ]; do
+    if [[ $1 == *"--"* ]]; then
+      param="${1/--/}"
+      if [[ $param == "db2" ]]; then
+        declare -g $param=true
+      else
+        declare -g $param="$2"
+      fi
+    fi
+    shift
+  done
+
+}
+
+pararser $@
+
+projectPath=~/Projects/$project/$name
+makefilePath=~/Documents/Go/db2/Makefile
+
+if [[ $name == "" ]]; then
+  echo "param --name is required"
+  exit
+fi
+
+if [[ $project == "" ]]; then
+  projectPath=~/Projects/playground/golang/$name
+fi
+
+if [[ $db2 == false ]]; then
+  makefilePath=~/Documents/Go/Makefile
+fi
+
+mkdir -p $projectPath
+cp $makefilePath $projectPath
+tmux-sessionizer $projectPath
