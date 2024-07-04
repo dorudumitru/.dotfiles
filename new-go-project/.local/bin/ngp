@@ -8,7 +8,12 @@ pararser() {
 
   # Assign the values given by the user
   while [ $# -gt 0 ]; do
-    if [[ $1 == *"--"* ]]; then
+    if [[ $1 == "--help" ]]; then
+      echo -e "\t --name: project name (required)"
+      echo -e "\t --project: parent project"
+      echo -e "\t --db2: use db2 Makefile"
+      exit
+    elif [[ $1 == *"--"* ]]; then
       param="${1/--/}"
       if [[ $param == "db2" ]]; then
         declare -g $param=true

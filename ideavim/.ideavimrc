@@ -12,6 +12,7 @@ let mapleader=" "
 set NERDTree
 set highlightedyank
 set matchit
+set surround
 
 " Common settings
 set showmode
