@@ -4,7 +4,8 @@ APP_NAME := $(shell basename $(CURDIR))
 # VARIABLES - You can change these variables to suit your needs
 # ==================================================================================== #
 
-# Go binary that you want to use. Example: go1.21.10. Default: go
+# Go binary that you want to use. Example: go1.21.10
+# To use the default version installed on your system, use "go" without any version number
 GO := go
 
 # Local development variables
@@ -66,9 +67,18 @@ help:
 	@echo 'Usage:'
 	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
 
+## go/version/sync: syncronyze go binary with the version specified in the Makefile
+.PHONY: go/version/sync
+go/version/sync:
+	@if [ ! "${GO}" == "go" ]; then \
+		echo "Syncing Go version..."; \
+		go install golang.org/dl/${GO}@latest; \
+		${GO} download; \
+	fi
+
 ## init: initialize the project
 .PHONY: init
-init:
+init: go/version/sync
 	@echo "Initializing project..."
 	@echo "Project name: ${APP_NAME}"
 	@echo "OS: ${OS}"

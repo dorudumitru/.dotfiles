@@ -145,7 +145,8 @@
     "xml": true,
     "go.mod": true,
     "dotenv": true,
-    "spring-boot-properties": true
+    "spring-boot-properties": true,
+    "gradle-kotlin-dsl": true
   },
   "files.associations": {
     ".env*": "dotenv"
@@ -164,7 +165,5 @@
   "rest-client.enableTelemetry": false,
   "partialDiff.enableTelemetry": false,
   "applicationRegistrations.useEventualConsistency": false,
-  "dotnetAcquisitionExtension.enableTelemetry": false,
-  "prisma.showPrismaDataPlatformNotification": false,
-  "window.customTitleBarVisibility": "auto"
+  "dotnetAcquisitionExtension.enableTelemetry": false
 }

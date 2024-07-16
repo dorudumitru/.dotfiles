@@ -8,6 +8,7 @@ SHELL_CONFIG_FILE := "$(HOME)/.${CURRENT_SHELL}rc"
 # ==================================================================================== #
 
 # Go binary that you want to use. Example: go1.21.10
+# To use the default version installed on your system, use "go" without any version number
 GO := go
 # Absolute path of the go clidriver. Example: ~/Documents/go_ibm_db
 GO_IBM_DB_PATH := ~/Documents/go_ibm_db
@@ -81,6 +82,15 @@ help:
 	@echo 'Usage:'
 	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
 
+## go/version/sync: syncronyze go binary with the version specified in the Makefile
+.PHONY: go/version/sync
+go/version/sync:
+	@if [ ! "${GO}" == "go" ]; then \
+		echo "Syncing Go version..."; \
+		go install golang.org/dl/${GO}@latest; \
+		${GO} download; \
+	fi
+
 .PHONY: ibmdb
 ibmdb:
 	@if [ ! -d ${GO_IBM_DB_PATH} ]; then \
@@ -142,7 +152,7 @@ print/init:
 
 ## init: initialize the project
 .PHONY: init
-init: print/init ibmdb
+init: print/init ibmdb go/version/sync
 	@echo -e "\nIBM DB2 CLI driver info:"
 	@echo "$$(${GO_IBM_DB_PATH}/clidriver/bin/db2level)"
 	@echo -e "\nInitializing git repository..."

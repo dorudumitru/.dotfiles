@@ -1,7 +1,3 @@
-" In order to use C-n / C-p in context menus, we need to change a few JetBrains keymaps:
-" - Parameter Info -> CTRL + SHIFT + P
-" - Up -> Ctrl + p
-" - Down -> Ctrl + n
 " In order to use A-n (Generate) in file explorer, we need to change one JetBrains keymap:
 " - New... -> Alt + n
 

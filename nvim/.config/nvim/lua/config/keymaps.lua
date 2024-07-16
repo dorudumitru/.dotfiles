@@ -17,6 +17,8 @@ vim.keymap.set("v", "<leader>d", '"_d')
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
+vim.keymap.set("v", "gy", "ygvgc", { remap = true, desc = "Yank and comment" })
+
 -- VS Code
 if vim.g.vscode then
 	vim.keymap.set("n", "<leader>e", "<Cmd>call VSCodeNotify('workbench.view.explorer')<CR>")
