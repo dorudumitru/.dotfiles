@@ -1,5 +1,5 @@
 # Font
-font_size 13
+font_size 13.0
 
 font_family      JetBrainsMono NF Medium
 bold_font        JetBrainsMono NF Bold
@@ -48,4 +48,3 @@ color14 #56b6c2
 color15 #abb2bf
 selection_foreground #282c34
 selection_background #979eab
-

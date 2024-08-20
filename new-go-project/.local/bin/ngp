@@ -3,16 +3,16 @@
 pararser() {
   # Define default values
   name=${name:-""}
-  project=${project:-""}
+  path=${path:-""}
   db2=${db2:-false}
 
   # Assign the values given by the user
   while [ $# -gt 0 ]; do
     if [[ $1 == "--help" ]]; then
       echo " Usage:"
-      echo "   --name         project name (required)"
-      echo "   --project      location inside Projects folder"
-      echo "   --db2          use db2 Makefile"
+      echo "   --name         project name (required | ex: myapp)"
+      echo "   --path         project path (optional | ex: ~/Projects/ibm | default: ~/Projects/playground/golang)"
+      echo "   --db2          use db2 Makefile (optional | use only if you want the db2 specific Makefile)"
       exit
     elif [[ $1 == *"--"* ]]; then
       param="${1/--/}"
@@ -29,7 +29,7 @@ pararser() {
 
 pararser $@
 
-projectPath=~/Projects/$project/$name
+projectPath=$path/$name
 makefilePath=~/Documents/Go/db2/Makefile
 
 if [[ $name == "" ]]; then
@@ -37,7 +37,7 @@ if [[ $name == "" ]]; then
   exit
 fi
 
-if [[ $project == "" ]]; then
+if [[ $path == "" ]]; then
   projectPath=~/Projects/playground/golang/$name
 fi
 

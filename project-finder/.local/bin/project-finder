@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 if [[ $# -eq 1 ]]; then
-	selected=$1
+  selected=$1
 else
-	selected=$(find ~ ~/Projects -mindepth 1 -maxdepth 3 -type d | fzf --prompt "❯ ")
+  selected=$(find ~ ~/Projects -mindepth 1 -maxdepth 3 -type d | fzf --prompt "❯ " --color=bg+:#282C34,border:#98C379,info:#E5C07B,pointer:#E06C75)
 fi
 
 cd $selected

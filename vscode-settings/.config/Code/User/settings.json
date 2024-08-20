@@ -8,6 +8,7 @@
   },
   "workbench.iconTheme": "symbols",
   "symbols.hidesExplorerArrows": false,
+  "workbench.editor.showTabs": "none",
   "workbench.tree.indent": 12,
   "editor.tokenColorCustomizations": {
     "textMateRules": [
@@ -85,9 +86,7 @@
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.tabSize": 4
   },
-  // "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
   "[java]": {
-    // "editor.defaultFormatter": "redhat.java",
     "editor.defaultFormatter": "josevseb.google-java-format-for-vs-code",
     "editor.codeActionsOnSave": {
       "source.organizeImports": "always"
@@ -165,5 +164,7 @@
   "rest-client.enableTelemetry": false,
   "partialDiff.enableTelemetry": false,
   "applicationRegistrations.useEventualConsistency": false,
-  "dotnetAcquisitionExtension.enableTelemetry": false
+  "dotnetAcquisitionExtension.enableTelemetry": false,
+  "applicationRegistrations.applicationListView": "Owned Applications",
+  "workbench.startupEditor": "none"
 }

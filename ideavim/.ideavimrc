@@ -9,6 +9,7 @@ set NERDTree
 set highlightedyank
 set matchit
 set surround
+set commentary
 
 " Common settings
 set showmode
@@ -39,12 +40,19 @@ vnoremap <leader>y "+y
 nnoremap <leader>Y "+Y
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
+vnoremap gy ygv :Commentary<CR>
 
 " Actions
+nmap <leader><leader> <action>(GotoFile)
 nmap <leader>/ <action>(ShowErrorDescription)
 nmap <leader>e <action>(GotoNextError)
 nmap <leader>ca <action>(ShowIntentionActions)
+vmap <leader>ca <action>(ShowIntentionActions)
 nmap <leader>cr <action>(Refactorings.QuickListPopupAction)
+vmap <leader>cr <action>(Refactorings.QuickListPopupAction)
+nmap <leader>ru <action>(Run)
+nmap <leader>st <action>(Stop)
+nmap <leader>rr <action>(CompileFile)
 nmap <A-n> <action>(Generate)
 nmap H <action>(PreviousTab)
 nmap L <action>(NextTab)

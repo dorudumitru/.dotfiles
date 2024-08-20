@@ -5,6 +5,7 @@ return {
 			colorscheme = function()
 				require("onedark").load()
 			end,
+			-- colorscheme = "catppuccin",
 		},
 	},
 }

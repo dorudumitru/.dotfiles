@@ -8,6 +8,11 @@
     "command": "-vscode-neovim.send"
   },
   {
+    "key": "ctrl+shift+d",
+    "command": "-workbench.view.debug",
+    "when": "viewContainer.workbench.view.debug.enabled"
+  },
+  {
     "command": "vscode-neovim.send",
     "key": "alt+j",
     "when": "editorTextFocus && neovim.init",
@@ -30,6 +35,12 @@
     "key": "ctrl+u",
     "when": "editorTextFocus && neovim.init && neovim.mode == normal",
     "args": "<C-u>"
+  },
+  {
+    "command": "vscode-neovim.send",
+    "key": "ctrl+shift+d",
+    "when": "editorFocus && neovim.init",
+    "args": "<C-D>"
   },
   {
     "key": "space e",

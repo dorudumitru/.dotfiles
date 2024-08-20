@@ -20,18 +20,24 @@ return {
 			},
 		},
 		window = {
-			-- position = "current",
+			position = "current",
 			mappings = {
 				["Z"] = "expand_all_nodes",
 			},
 		},
-		event_handlers = {
-			{
-				event = "file_opened",
-				handler = function()
-					require("neo-tree.command").execute({ action = "close" })
-				end,
+		default_component_configs = {
+			created = {
+				enabled = true,
+				required_width = 120,
 			},
 		},
+		-- event_handlers = {
+		-- 	{
+		-- 		event = "file_opened",
+		-- 		handler = function()
+		-- 			require("neo-tree.command").execute({ action = "close" })
+		-- 		end,
+		-- 	},
+		-- },
 	},
 }

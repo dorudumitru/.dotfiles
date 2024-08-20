@@ -11,6 +11,7 @@ return {
 					variables = "none",
 				},
 				highlights = {
+					-- ["@type.qualifier"] = { fg = "$purple", fmt = "italic" },
 					["@tag.attribute"] = { fmt = "italic" },
 					["@tag.delimiter"] = { fg = "#848b98" },
 				},

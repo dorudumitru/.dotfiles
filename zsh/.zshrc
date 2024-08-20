@@ -8,7 +8,7 @@ ZSH_THEME="robbyrussell"
 plugins=(
 	git
 	zsh-autosuggestions
-	zsh-syntax-highlighting
+  fast-syntax-highlighting
 	vi-mode
 )
 
@@ -26,7 +26,7 @@ function storm { ( webstorm "$@" & ) > /dev/null 2>&1 }
 # function lion { ( clion "$@" & ) > /dev/null 2>&1 }
 
 function visualvm {
-  ( /opt/visualvm_218/bin/visualvm --fontsize 20 "$@" & ) > /dev/null 2>&1
+  ( /opt/visualvm*/bin/visualvm --fontsize 20 "$@" & ) > /dev/null 2>&1
 }
 
 alias vim='nvim'
@@ -78,3 +78,4 @@ export CGO_CFLAGS=-I$IBM_DB_HOME/include
 export CGO_LDFLAGS=-L$IBM_DB_HOME/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IBM_DB_HOME/lib
 export PATH=$PATH:$IBM_DB_HOME/bin
+
