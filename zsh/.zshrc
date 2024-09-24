@@ -22,8 +22,10 @@ bindkey -s "^f" "tmux-sessionizer\n"
 function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
 function land { ( goland "$@" & ) > /dev/null 2>&1 }
 function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
-function storm { ( webstorm "$@" & ) > /dev/null 2>&1 }
-# function lion { ( clion "$@" & ) > /dev/null 2>&1 }
+
+function cursor {
+  ( $HOME/Applications/cursor*.appimage "$@" & ) > /dev/null 2>&1 
+}
 
 function visualvm {
   ( /opt/visualvm*/bin/visualvm --fontsize 20 "$@" & ) > /dev/null 2>&1
@@ -53,8 +55,8 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin # no need to set this if go is installed with dnf
 
 # .NET
-export PATH=$PATH:$HOME/.dotnet
-export PATH=$PATH:$HOME/.dotnet/tools
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
 
 # sdkman
