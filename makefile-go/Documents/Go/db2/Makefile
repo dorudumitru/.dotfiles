@@ -1,8 +1,5 @@
 APP_NAME := $(shell basename $(CURDIR))
 
-CURRENT_SHELL := $(shell echo $$SHELL | awk -F/ '{print $$NF}')
-SHELL_CONFIG_FILE := "$(HOME)/.${CURRENT_SHELL}rc"
-
 # ==================================================================================== #
 # VARIABLES - You can change these variables to suit your needs
 # ==================================================================================== #
@@ -10,8 +7,8 @@ SHELL_CONFIG_FILE := "$(HOME)/.${CURRENT_SHELL}rc"
 # Go binary that you want to use. Example: go1.21.10
 # To use the default version installed on your system, use "go" without any version number
 GO := go
-# Absolute path of the go clidriver. Example: ~/Documents/go_ibm_db
-GO_IBM_DB_PATH := ~/Documents/go_ibm_db
+# Absolute path of the go clidriver. Example: /home/doru.dumitru/Documents/go_ibm_db
+GO_IBM_DB_PATH := /home/doru.dumitru/Documents/go_ibm_db
 
 
 # Local development variables
@@ -25,7 +22,7 @@ MAIN_PACKAGE := github.com/hartehanks-iasi/$(APP_NAME)
 # The path to the folder where main.go resides. Example: ./cmd/my-app
 MAIN_PACKAGE_PATH := .
 # Absolute path of the .arm certificate
-CERTIFICATE_PATH := ~/Documents/TrustStore/etl.arm
+CERTIFICATE_PATH := /home/doru.dumitru/Documents/TrustStore/etl.arm
 
 # Use if the app requires flags (ex: -u username -p password)
 RUNARGS := 
@@ -72,6 +69,16 @@ endif
 
 CLIDRIVER_URL := https://public.dhe.ibm.com/ibmdl/export/pub/software/data/db2/drivers/odbc_cli
 
+export IBM_DB_HOME := ${CURDIR}/clidriver
+export CGO_CFLAGS := -I${IBM_DB_HOME}/include
+export CGO_LDFLAGS := -L${IBM_DB_HOME}/lib
+ifeq ($(OS),darwin)
+	export DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):${IBM_DB_HOME}/lib
+else ifeq ($(OS),linux)
+	export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):${IBM_DB_HOME}/lib
+endif
+export PATH := $(PATH):${IBM_DB_HOME}/bin
+
 # ==================================================================================== #
 # HELPERS
 # ==================================================================================== #
@@ -100,19 +107,6 @@ ibmdb:
 		echo -e "\nExtracting IBM DB2 CLI driver..."; \
 		tar -xvf ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME} -C ${GO_IBM_DB_PATH}; \
 		rm ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME}; \
-		if [ -z "$$IBM_DB_HOME" ]; then \
-			echo -e "\n# go_ibm_db env variables" >> ${SHELL_CONFIG_FILE}; \
-			echo "export IBM_DB_HOME=${GO_IBM_DB_PATH}/clidriver" >> ${SHELL_CONFIG_FILE}; \
-			echo "export CGO_CFLAGS=-I\$$IBM_DB_HOME/include" >> ${SHELL_CONFIG_FILE}; \
-			echo "export CGO_LDFLAGS=-L\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
-			if [ "${OS}" == "darwin" ]; then \
-				echo "export DYLD_LIBRARY_PATH=\$$DYLD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
-			else \
-				echo "export LD_LIBRARY_PATH=\$$LD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
-			fi; \
-			echo "export PATH=\$$PATH:\$$IBM_DB_HOME/bin" >> ${SHELL_CONFIG_FILE}; \
-			exec ${CURRENT_SHELL}; \
-		fi; \
 	fi
 
 ## ibmdb/latest: download latest version of IBM DB2 CLI driver
@@ -125,19 +119,6 @@ ibmdb/latest:
 	@echo -e "\nExtracting IBM DB2 CLI driver..."
 	@tar -xvf ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME} -C ${GO_IBM_DB_PATH}
 	@rm ${GO_IBM_DB_PATH}/${DEV_CLIDRIVER_NAME}
-	@if [ -z "$$IBM_DB_HOME" ]; then \
-		echo -e "\n# go_ibm_db env variables" >> ${SHELL_CONFIG_FILE}; \
-		echo "export IBM_DB_HOME=${GO_IBM_DB_PATH}/clidriver" >> ${SHELL_CONFIG_FILE}; \
-		echo "export CGO_CFLAGS=-I\$$IBM_DB_HOME/include" >> ${SHELL_CONFIG_FILE}; \
-		echo "export CGO_LDFLAGS=-L\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
-		if [ "${OS}" == "darwin" ]; then \
-			echo "export DYLD_LIBRARY_PATH=\$$DYLD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
-		else \
-			echo "export LD_LIBRARY_PATH=\$$LD_LIBRARY_PATH:\$$IBM_DB_HOME/lib" >> ${SHELL_CONFIG_FILE}; \
-		fi; \
-		echo "export PATH=\$$PATH:\$$IBM_DB_HOME/bin" >> ${SHELL_CONFIG_FILE}; \
-		exec ${CURRENT_SHELL}; \
-	fi
 
 .PHONY: print/init
 print/init:
