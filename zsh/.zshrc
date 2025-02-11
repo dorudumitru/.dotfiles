@@ -73,3 +73,6 @@ esac
 
 # fzf
 source /usr/share/fzf/shell/key-bindings.zsh
+
+# load Angular CLI autocompletion.
+source <(ng completion script)

@@ -1,5 +1,5 @@
 " In order to use A-n (Generate) in file explorer, we need to change one JetBrains keymap:
-" - New... -> Alt + n
+" - Plugins / Java IDE Customization / New... -> Alt + n
 
 " Map leader to space
 let mapleader=" "
@@ -52,6 +52,7 @@ nmap <leader>cr <action>(Refactorings.QuickListPopupAction)
 vmap <leader>cr <action>(Refactorings.QuickListPopupAction)
 nmap <leader>ru <action>(Run)
 nmap <leader>st <action>(Stop)
+nmap <leader>rd <action>(Debug)
 nmap <leader>rr <action>(CompileFile)
 nmap <A-n> <action>(Generate)
 nmap H <action>(PreviousTab)
