@@ -24,7 +24,7 @@ function land { ( goland "$@" & ) > /dev/null 2>&1 }
 function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
 
 function cursor {
-  ( $HOME/Applications/cursor*.appimage "$@" & ) > /dev/null 2>&1 
+  ( $HOME/Applications/cursor-*.AppImage "$@" & ) > /dev/null 2>&1
 }
 
 function visualvm {
