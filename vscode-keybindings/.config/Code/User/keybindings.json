@@ -55,6 +55,6 @@
   {
     "key": "shift+5",
     "command": "extension.matchitJumpItems",
-    "when": "editorTextFocus"
+    "when": "editorTextFocus && neovim.init && neovim.mode == normal"
   }
 ]
