@@ -51,11 +51,11 @@
 
   // FONT
   "editor.fontFamily": "JetBrains Mono Medium, JetBrainsMono NF Medium",
-  "editor.fontSize": 16,
+  "editor.fontSize": 14,
   "editor.lineHeight": 1.5,
   "editor.fontLigatures": "true",
   "terminal.integrated.fontFamily": "JetBrains Mono SemiBold, JetBrainsMono NF Medium",
-  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.fontSize": 14,
   "terminal.integrated.lineHeight": 1.1, // use with JetBrains Mono
   // If permission is needed
   // sudo chown -R $(whoami) $(which code) && sudo chown -R $(whoami) /usr/share/code
@@ -155,7 +155,6 @@
   "inlineFold.unfoldedOpacity": 1,
   "breadcrumbs.enabled": false,
   "terminal.integrated.cursorBlinking": true,
-  "window.zoomLevel": 0.5,
 
   // TELEMETRY
   "telemetry.telemetryLevel": "off",
