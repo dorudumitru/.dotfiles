@@ -1,12 +1,12 @@
 return {
-	{
-		"mfussenegger/nvim-lint",
-		opts = {
-			linters_by_ft = {
-				go = { "golangcilint" },
-				gomod = { "golangcilint" },
-				gowork = { "golangcilint" },
-			},
-		},
-	},
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        go = { "golangcilint" },
+        gomod = { "golangcilint" },
+        gowork = { "golangcilint" },
+      },
+    },
+  },
 }

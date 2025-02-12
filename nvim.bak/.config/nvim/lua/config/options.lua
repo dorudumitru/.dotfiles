@@ -17,18 +17,18 @@ vim.opt.conceallevel = 2
 vim.opt.concealcursor = ""
 
 vim.filetype.add({
-  -- Detect and assign filetype based on the extension of the filename
-  extension = {
-    pcss = "css",
-    postcss = "css",
-  },
-  -- Detect and apply filetypes based on the entire filename
-  filename = {
-    [".env"] = "sh",
-  },
-  -- Detect and apply filetypes based on certain patterns of the filenames
-  pattern = {
-    -- Match filenames like - ".env.example", ".env.local" and so on
-    [".env.*"] = "sh",
-  },
+	-- Detect and assign filetype based on the extension of the filename
+	extension = {
+		pcss = "css",
+		postcss = "css",
+	},
+	-- Detect and apply filetypes based on the entire filename
+	filename = {
+		[".env"] = "sh",
+	},
+	-- Detect and apply filetypes based on certain patterns of the filenames
+	pattern = {
+		-- Match filenames like - ".env.example", ".env.local" and so on
+		[".env.*"] = "sh",
+	},
 })
