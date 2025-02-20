@@ -8,7 +8,7 @@
   },
   "workbench.iconTheme": "symbols",
   "symbols.hidesExplorerArrows": false,
-  "workbench.editor.showTabs": "none",
+  "workbench.editor.showTabs": "multiple",
   "workbench.tree.indent": 12,
   "editor.tokenColorCustomizations": {
     "textMateRules": [
@@ -165,5 +165,6 @@
   "applicationRegistrations.useEventualConsistency": false,
   "dotnetAcquisitionExtension.enableTelemetry": false,
   "applicationRegistrations.applicationListView": "Owned Applications",
-  "workbench.startupEditor": "none"
+  "workbench.startupEditor": "none",
+  "@azure.argTenant": ""
 }
