@@ -1,5 +1,6 @@
 {
   // THEME
+  "workbench.startupEditor": "none",
   "workbench.settings.editor": "json",
   "workbench.colorTheme": "One Dark Pro",
   "workbench.colorCustomizations": {
@@ -11,6 +12,26 @@
   "workbench.editor.showTabs": "multiple",
   "workbench.tree.indent": 12,
   "editor.tokenColorCustomizations": {
+    "[*Light*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#000"
+          }
+        }
+      ]
+    },
+    "[*Dark*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#fff"
+          }
+        }
+      ]
+    },
     "textMateRules": [
       {
         "name": "One Dark italic",
@@ -52,14 +73,14 @@
   // FONT
   "editor.fontFamily": "JetBrains Mono Medium, JetBrainsMono NF Medium",
   "editor.fontSize": 14,
-  "editor.lineHeight": 1.5,
+  "editor.lineHeight": 1.5, // use with JetBrains Mono
   "editor.fontLigatures": "true",
   "terminal.integrated.fontFamily": "JetBrains Mono SemiBold, JetBrainsMono NF Medium",
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.lineHeight": 1.1, // use with JetBrains Mono
   // If permission is needed
   // sudo chown -R $(whoami) $(which code) && sudo chown -R $(whoami) /usr/share/code
-  "fonted.font": "JetBrains Mono Medium",
+  "fonted.font": "JetBrains Mono",
 
   // NVIM SETTINGS
   "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
@@ -138,21 +159,10 @@
   "window.commandCenter": false,
   "remote.SSH.showLoginTerminal": true,
   "totalTypeScript.hideAllTips": true,
-  "codeium.enableSearch": true,
-  "codeium.enableConfig": {
-    "*": true,
-    "xml": true,
-    "go.mod": true,
-    "dotenv": true,
-    "spring-boot-properties": true,
-    "gradle-kotlin-dsl": true
-  },
   "files.associations": {
     ".env*": "dotenv"
   },
   "dotenv.enableAutocloaking": false,
-  "inlineFold.unfoldOnLineSelect": true,
-  "inlineFold.unfoldedOpacity": 1,
   "breadcrumbs.enabled": false,
   "terminal.integrated.cursorBlinking": true,
 
@@ -162,9 +172,11 @@
   "gitlens.telemetry.enabled": false,
   "rest-client.enableTelemetry": false,
   "partialDiff.enableTelemetry": false,
-  "applicationRegistrations.useEventualConsistency": false,
   "dotnetAcquisitionExtension.enableTelemetry": false,
+
+  // OTHER
+  "applicationRegistrations.useEventualConsistency": false,
   "applicationRegistrations.applicationListView": "Owned Applications",
-  "workbench.startupEditor": "none",
-  "@azure.argTenant": ""
+  "@azure.argTenant": "",
+  "sqltools.useNodeRuntime": true
 }

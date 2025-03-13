@@ -1,4 +1,6 @@
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export GIT_EDITOR=nvim
+export EDITOR=nvim
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.local/share/bin
 export ZSH="$HOME/.oh-my-zsh"
@@ -64,7 +66,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # pnpm
-export PNPM_HOME="$HOME/.local/share/pnpm"
+export PNPM_HOME="/home/doru.dumitru/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -73,6 +75,3 @@ esac
 
 # fzf
 source /usr/share/fzf/shell/key-bindings.zsh
-
-# load Angular CLI autocompletion.
-source <(ng completion script)
