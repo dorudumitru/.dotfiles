@@ -3,7 +3,8 @@
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find ~ ~/Projects -mindepth 1 -maxdepth 3 -type d | fzf --prompt "❯ " --color=bg+:#282C34,border:#98C379,info:#E5C07B,pointer:#E06C75)
+  # selected=$(find ~ ~/Projects -mindepth 1 -maxdepth 3 -type d | fzf --prompt "❯ " --color=bg+:#282C34,border:#98C379,info:#E5C07B,pointer:#E06C75) # One Dark Theme
+  selected=$(find ~ ~/Projects -mindepth 1 -maxdepth 3 -type d | fzf --prompt "❯ " --color=bg+:#24273a,border:#8aadf4,info:#8bd5ca,pointer:#ed8796) # Catppuccin Macchiato Theme
 fi
 
-cd $selected
+cd "$selected" || exit

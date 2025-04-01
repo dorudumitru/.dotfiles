@@ -1,9 +1,9 @@
 #! /usr/bin/env bash
 
 if [ $# -eq 0 ]; then
-	cp ~/Documents/Go/Makefile .
-elif [ $1 = db2 ]; then
-	cp ~/Documents/Go/db2/Makefile .
+  cp ~/Documents/Go/Makefile .
+elif [ "$1" = db2 ]; then
+  cp ~/Documents/Go/db2/Makefile .
 else
-	echo "invalid argument"
+  echo "invalid argument"
 fi

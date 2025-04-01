@@ -18,14 +18,14 @@ pararser() {
       exit
     elif [[ $1 == *"--"* ]]; then
       param="${1/--/}"
-      declare -g $param="$2"
+      declare -g "$param"="$2"
     fi
     shift
   done
 
 }
 
-pararser $@
+pararser "$@"
 
 if [[ $zip == "" ]]; then
   echo "param --zip is required"
@@ -36,25 +36,24 @@ if [[ $path == "" ]]; then
   path=~/Projects/playground/java
 fi
 
-bname="$(basename -- $zip)"
+bname="$(basename -- "$zip")"
 projectName=${bname%.*}
-dirpath="$(dirname $zip)"
 fullProjectPath=$path/$projectName
 
-mkdir -p $fullProjectPath || {
+mkdir -p "$fullProjectPath" || {
   exit 1
 }
 
-unzip $zip -d $path || {
+unzip "$zip" -d "$path" || {
   exit 1
 }
 
-rm $zip || {
+rm "$zip" || {
   exit 1
 }
 
 if [[ $rename != "" ]]; then
-  mv $fullProjectPath $path/$rename || {
+  mv "$fullProjectPath" "$path"/"$rename" || {
     exit 1
   }
   fullProjectPath=$path/$rename
@@ -65,15 +64,15 @@ function idea() {
 }
 
 if [[ $ide == "idea" ]]; then
-  idea $fullProjectPath || {
+  idea "$fullProjectPath" || {
     exit 1
   }
 elif [[ $ide == "code" ]]; then
-  code $fullProjectPath || {
+  code "$fullProjectPath" || {
     exit 1
   }
 else
-  tmux-sessionizer $fullProjectPath || {
+  tmux-sessionizer "$fullProjectPath" || {
     exit 1
   }
 fi

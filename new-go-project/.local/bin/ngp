@@ -17,9 +17,9 @@ pararser() {
     elif [[ $1 == *"--"* ]]; then
       param="${1/--/}"
       if [[ $param == "db2" ]]; then
-        declare -g $param=true
+        declare -g "$param"=true
       else
-        declare -g $param="$2"
+        declare -g "$param"="$2"
       fi
     fi
     shift
@@ -27,7 +27,7 @@ pararser() {
 
 }
 
-pararser $@
+pararser "$@"
 
 projectPath=$path/$name
 makefilePath=~/Documents/Go/db2/Makefile
@@ -45,6 +45,6 @@ if [[ $db2 == false ]]; then
   makefilePath=~/Documents/Go/Makefile
 fi
 
-mkdir -p $projectPath
-cp $makefilePath $projectPath
-tmux-sessionizer $projectPath
+mkdir -p "$projectPath"
+cp $makefilePath "$projectPath"
+tmux-sessionizer "$projectPath"
