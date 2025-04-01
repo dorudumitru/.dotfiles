@@ -2,10 +2,10 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = function()
-        require("onedark").load()
-      end,
-      -- colorscheme = "catppuccin",
+      -- colorscheme = function()
+      --   require("onedark").load()
+      -- end,
+      colorscheme = "catppuccin-macchiato",
     },
   },
 }

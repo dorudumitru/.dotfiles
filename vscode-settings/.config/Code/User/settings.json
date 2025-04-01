@@ -83,7 +83,7 @@
   "fonted.font": "JetBrains Mono",
 
   // NVIM SETTINGS
-  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "vscode-neovim.neovimExecutablePaths.linux": "/opt/nvim-linux-x86_64/bin/nvim",
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
@@ -178,5 +178,6 @@
   "applicationRegistrations.useEventualConsistency": false,
   "applicationRegistrations.applicationListView": "Owned Applications",
   "@azure.argTenant": "",
-  "sqltools.useNodeRuntime": true
+  "sqltools.useNodeRuntime": true,
+  "makefile.configureOnOpen": false
 }
