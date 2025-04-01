@@ -12,8 +12,8 @@ set surround
 set commentary
 set notimeout
 set which-key
-let g:WhichKey_PrefixColor = "#C678DD"
-let g:WhichKey_CommandColor = "#61AFEF"
+let g:WhichKey_PrefixColor = "#f5bde6"
+let g:WhichKey_CommandColor = "#8aadf4"
 let g:WhichKey_PrefixStyle = "bold"
 let g:WhichKey_KeyStyle = "italic"
 let g:WhichKey_FontFamily = "JetBrains Mono"
