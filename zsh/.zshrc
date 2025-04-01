@@ -36,7 +36,6 @@ function visualvm {
 alias vim='nvim'
 alias ts='tmux-sessionizer'
 alias fp='. project-finder'
-alias vsvim='. vscode-vim-switcher'
 alias gomake='. go-makefiler'
 alias cato='cato-sdp'
 
