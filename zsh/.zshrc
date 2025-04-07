@@ -6,6 +6,7 @@ export PATH=$PATH:$HOME/.local/share/bin
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
+ZSH_DISABLE_COMPFIX=true
 
 plugins=(
 	git
@@ -13,8 +14,6 @@ plugins=(
   fast-syntax-highlighting
 	vi-mode
 )
-
-ZSH_DISABLE_COMPFIX=true
 
 source $ZSH/oh-my-zsh.sh
 
@@ -36,8 +35,10 @@ function visualvm {
 alias vim='nvim'
 alias ts='tmux-sessionizer'
 alias fp='. project-finder'
-alias gomake='. go-makefiler'
 alias cato='cato-sdp'
+
+# remove annoying error when using ssh
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
 # git-completion
 autoload -Uz compinit && compinit
@@ -70,7 +71,6 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
 
 # fzf
 source /usr/share/fzf/shell/key-bindings.zsh
