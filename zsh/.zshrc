@@ -18,8 +18,6 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 ### User configuration ###
-bindkey -s "^f" "tmux-sessionizer\n"
-
 function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
 function land { ( goland "$@" & ) > /dev/null 2>&1 }
 function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
@@ -36,6 +34,9 @@ alias vim='nvim'
 alias ts='tmux-sessionizer'
 alias fp='. project-finder'
 alias cato='cato-sdp'
+
+# open tmux sessionizer with <C-f>
+bindkey -s "^f" "ts\n"
 
 # remove annoying error when using ssh
 [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"

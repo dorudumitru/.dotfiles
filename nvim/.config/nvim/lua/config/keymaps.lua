@@ -15,7 +15,6 @@ vim.keymap.set("n", "<leader>xf", "<cmd>!chmod +x %<CR>", { desc = "Make file ex
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", { desc = "Open tmux-sessionizer form vim" })
 
 vim.keymap.set("v", "gy", "ygvgc", { remap = true, desc = "Yank and comment" })
--- vim.keymap.set("n", "<leader>tf", "<cmd>:TailwindFoldToggle<CR>", { desc = "Toggle Tailwind Fold" })
 
 -- VS Code
 if vim.g.vscode then

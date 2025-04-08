@@ -70,7 +70,6 @@ nmap <A-n> <action>(Generate)
 nmap [[ <Action>(MethodUp)
 nmap ]] <Action>(MethodDown)
 nmap <C-m> <Action>(ToolWindowsGroup)
-nmap <C-S-m> <Action>(ShowPopupMenu)
 
 " Information
 nmap <leader>ie <Action>(ShowErrorDescription)
@@ -263,7 +262,7 @@ nmap <leader>sa <Action>(GotoAction)
 nmap <leader>ss <Action>(GotoSymbol)
 nmap <leader>st <Action>(TextSearchAction)
 let g:WhichKeyDesc_search = "<leader>s Search"
-let g:WhichKeyDesc_search_usages = "<leader>su Find Usages"
+let g:WhichKeyDesc_search_usages = "<leader>su Search Usages"
 let g:WhichKeyDesc_search_action = "<leader>sa Search Action"
 let g:WhichKeyDesc_search_symbol = "<leader>ss Search Symbol"
 let g:WhichKeyDesc_search_text = "<leader>st Search Text"
@@ -280,16 +279,17 @@ nmap <leader>Gg <Action>(CheckinProject)
 nmap <leader>Gt <Action>(ActivateVersionControlToolWindow)
 nmap <leader>Gr <Action>(Vcs.RollbackChangedLines)
 nmap <leader>Gu <Action>(Vcs.UpdateProject)
+nmap <leader>Gl <Action>(Vcs.Show.Log)
 let g:WhichKeyDesc_git = "<leader>G Git"
-let g:WhichKeyDesc_git_checkin = "<leader>Gg Checkin"
+let g:WhichKeyDesc_git_local_changes = "<leader>Gc Show Local Changes"
 let g:WhichKeyDesc_git_branches = "<leader>Gb Branches"
+let g:WhichKeyDesc_git_fetch = "<leader>Gf Fetch"
 let g:WhichKeyDesc_git_push = "<leader>Gp Push"
 let g:WhichKeyDesc_git_commit_and_push = "<leader>GP Commit & Push"
+let g:WhichKeyDesc_git_open_pull_requests = "<leader>Go Open Pull Requests"
 let g:WhichKeyDesc_git_menu = "<leader>Gm Menu"
-let g:WhichKeyDesc_git_fetch = "<leader>Gf Fetch"
-let g:WhichKeyDesc_git_log = "<leader>Gl Log"
+let g:WhichKeyDesc_git_checkin = "<leader>Gg Checkin"
 let g:WhichKeyDesc_git_tool = "<leader>Gt Tool"
 let g:WhichKeyDesc_git_rollback_changed_lines = "<leader>Gr Rollback"
-let g:WhichKeyDesc_git_open_pull_requests = "<leader>Go Open Pull Requests"
-let g:WhichKeyDesc_git_local_changes = "<leader>Gc Show Local Changes"
 let g:WhichKeyDesc_git_update_project = "<leader>Gu Update Project"
+let g:WhichKeyDesc_git_log = "<leader>Gl Log"
