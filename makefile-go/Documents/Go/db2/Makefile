@@ -151,7 +151,7 @@ init: print/init ibmdb go/version/sync
 	@cp ${CERTIFICATE_PATH} certs
 	@mkdir -p ${MAIN_PACKAGE_PATH} && touch ${MAIN_PACKAGE_PATH}/main.go
 	@echo -e "\nDownloading golangci-lint config..."
-	@curl -O https://gist.githubusercontent.com/dorudumitru/f6207afab6e41ebbc5b3ef6dcc2c354e/raw/0705a77825bec3628f6f0343af44eee09fabf8ec/.golangci.yml
+	@curl -O https://gist.githubusercontent.com/maratori/47a4d00457a92aa426dbd48a18776322/raw/ae78780d0653027c1c83d3a705cfda028afc1a5b/.golangci.yml
 	@echo -e "\nDone."
 
 .PHONY: clean
