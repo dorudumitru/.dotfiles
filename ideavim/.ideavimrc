@@ -17,7 +17,7 @@ let g:WhichKey_CommandColor = "#8aadf4"
 let g:WhichKey_PrefixStyle = "bold"
 let g:WhichKey_KeyStyle = "italic"
 let g:WhichKey_FontFamily = "JetBrains Mono"
-let g:WhichKey_FontSize = 20
+let g:WhichKey_FontSize = 14
 let g:WhichKey_SortOrder = "by_key_prefix_first"
 let g:WhichKey_ShowTypedSequence = "false"
 
