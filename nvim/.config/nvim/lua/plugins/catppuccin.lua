@@ -3,6 +3,7 @@ return {
   lazy = true,
   name = "catppuccin",
   opts = {
+    transparent_background = true,
     styles = {
       comments = { "italic" },
       conditionals = { "italic" },

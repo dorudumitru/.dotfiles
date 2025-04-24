@@ -9,7 +9,8 @@ return {
           -- Your JDTLS configuration goes here
           jdtls = {
             handlers = {
-              -- By assigning an empty function, you can remove the notifications
+              -- By assigning an empty function,
+              -- you can remove the notifications
               -- printed to the cmd
               ["$/progress"] = function() end,
               -- This should remove the inlay hints bug

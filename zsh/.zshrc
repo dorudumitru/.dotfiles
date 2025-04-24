@@ -1,4 +1,3 @@
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export GIT_EDITOR=nvim
 export EDITOR=nvim
 export PATH=$PATH:$HOME/.local/bin
@@ -74,4 +73,11 @@ case ":$PATH:" in
 esac
 
 # fzf
+export FZF_DEFAULT_OPTS=" \
+--prompt '❯ '
+--color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
+--color=fg:#cad3f5,header:#ed8796,info:#8bd5ca,pointer:#ed8796 \
+--color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
+--color=selected-bg:#494d64 \
+--color=border:#8aadf4,label:#cad3f5"
 source /usr/share/fzf/shell/key-bindings.zsh
