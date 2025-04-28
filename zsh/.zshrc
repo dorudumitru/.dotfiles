@@ -1,7 +1,6 @@
 export GIT_EDITOR=nvim
 export EDITOR=nvim
 export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$HOME/.local/share/bin
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"

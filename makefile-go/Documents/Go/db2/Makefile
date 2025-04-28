@@ -226,6 +226,11 @@ build: ibmdb
 run: lint build
 	@/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}
 
+## run/no-lint: run the  application without linting
+.PHONY: run/no-lint
+run/no-lint: build
+	@/tmp/bin/${DEV_BINARY_NAME} ${RUNARGS}
+
 ## watch: run the application with reloading on file changes
 .PHONY: watch
 watch: lint
