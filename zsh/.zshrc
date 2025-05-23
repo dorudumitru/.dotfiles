@@ -2,6 +2,7 @@ export GIT_EDITOR=nvim
 export EDITOR=nvim
 export PATH=$PATH:$HOME/.local/bin
 export ZSH="$HOME/.oh-my-zsh"
+export SSH_AUTH_SOCK=/home/doru.dumitru/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock
 
 ZSH_THEME="robbyrussell"
 ZSH_DISABLE_COMPFIX=true
@@ -30,6 +31,7 @@ function visualvm {
 
 alias vim='nvim'
 alias ts='tmux-sessionizer'
+alias lg='lazygit'
 alias fp='. project-finder'
 alias cato='cato-sdp'
 
