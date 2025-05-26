@@ -2,7 +2,7 @@ export GIT_EDITOR=nvim
 export EDITOR=nvim
 export PATH=$PATH:$HOME/.local/bin
 export ZSH="$HOME/.oh-my-zsh"
-export SSH_AUTH_SOCK=/home/doru.dumitru/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock
+export SSH_AUTH_SOCK=$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock
 
 ZSH_THEME="robbyrussell"
 ZSH_DISABLE_COMPFIX=true
@@ -73,12 +73,12 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-# fzf
-export FZF_DEFAULT_OPTS=" \
---prompt '❯ '
---color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
---color=fg:#cad3f5,header:#ed8796,info:#8bd5ca,pointer:#ed8796 \
---color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
---color=selected-bg:#494d64 \
---color=border:#8aadf4,label:#cad3f5"
+# fzf (use with catppuccin theme)
+# export FZF_DEFAULT_OPTS=" \
+# --prompt '❯ '
+# --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
+# --color=fg:#cad3f5,header:#ed8796,info:#8bd5ca,pointer:#ed8796 \
+# --color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
+# --color=selected-bg:#494d64 \
+# --color=border:#8aadf4,label:#cad3f5"
 source /usr/share/fzf/shell/key-bindings.zsh
