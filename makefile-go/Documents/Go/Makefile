@@ -16,7 +16,7 @@ GO := go
 # - linux
 OS := linux
 ARCH := amd64
-MAIN_PACKAGE := github.com/hartehanks-iasi/$(APP_NAME)
+MAIN_PACKAGE := github.com/HarteHanks/$(APP_NAME)
 # The path to the folder where main.go resides. Example: ./cmd/my-app
 MAIN_PACKAGE_PATH := .
 
@@ -67,6 +67,18 @@ help:
 	@echo 'Usage:'
 	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
 
+.PHONY: confirm
+confirm:
+	@echo -n 'Are you sure? [y/N] ' && read ans && [ $${ans:-N} = y ]
+
+.PHONY: no-dirty
+no-dirty:
+	git diff --exit-code
+
+.PHONY: clean
+clean:
+	@rm -rf dist
+
 ## go/version/sync: syncronyze go binary with the version specified in the Makefile
 .PHONY: go/version/sync
 go/version/sync:
@@ -79,6 +91,10 @@ go/version/sync:
 ## init: initialize the project
 .PHONY: init
 init: go/version/sync
+	@if ! command -v "golangci-lint" &> /dev/null; then \
+		echo "Please install 'golangci-lint' from https://golangci-lint.run/docs/welcome/install/ to continue."; \
+		exit 1; \
+	fi
 	@echo "Initializing project..."
 	@echo "Project name: ${APP_NAME}"
 	@echo "OS: ${OS}"
@@ -100,14 +116,6 @@ init: go/version/sync
 	@curl -O https://gist.githubusercontent.com/maratori/47a4d00457a92aa426dbd48a18776322/raw/ae78780d0653027c1c83d3a705cfda028afc1a5b/.golangci.yml
 	@echo -e "\nDone."
 
-.PHONY: clean
-clean:
-	@rm -rf dist
-
-.PHONY: no-dirty
-no-dirty:
-	git diff --exit-code
-
 # ==================================================================================== #
 # QUALITY CONTROL
 # ==================================================================================== #
@@ -120,15 +128,14 @@ lint:
 ## tidy: format code and tidy modfile
 .PHONY: tidy
 tidy:
-	${GO} fmt ./...
 	${GO} mod tidy -v
+	${GO} fmt ./...
 
 ## audit: run quality control checks
 .PHONY: audit
 audit:
 	${GO} mod verify
 	${GO} vet ./...
-	${GO} run honnef.co/go/tools/cmd/staticcheck@latest -checks=all,-ST1000,-U1000 ./...
 	${GO} run golang.org/x/vuln/cmd/govulncheck@latest ./...
 	${GO} test -race -buildvcs -vet=off ./...
 
@@ -182,11 +189,6 @@ watch: lint
 # ==================================================================================== #
 # OPERATIONS
 # ==================================================================================== #
-
-## push: push changes to the remote Git repository
-.PHONY: push
-push: lint tidy audit no-dirty
-	git push
 
 ## production: create a production build of the application
 .PHONY: prod

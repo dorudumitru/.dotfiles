@@ -2,7 +2,10 @@ export GIT_EDITOR=nvim
 export EDITOR=nvim
 export PATH=$PATH:$HOME/.local/bin
 export ZSH="$HOME/.oh-my-zsh"
-export SSH_AUTH_SOCK=$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock
+export SSH_AUTH_SOCK=$HOME/.bitwarden-ssh-agent.sock
+
+export EPM_SERVICES_USER_ID="doru.dumitru@ro.ibm.com"
+export EPM_SERVICES_USER_PW="II9ZCoMS6c&ycCsC"
 
 ZSH_THEME="robbyrussell"
 ZSH_DISABLE_COMPFIX=true
@@ -18,27 +21,28 @@ source $ZSH/oh-my-zsh.sh
 
 ### User configuration ###
 function idea { ( intellij "$@" & ) > /dev/null 2>&1 }
-function land { ( goland "$@" & ) > /dev/null 2>&1 }
-function rider { ( jbrider "$@" & ) > /dev/null 2>&1 }
 
-function cursor {
-  ( $HOME/Applications/cursor-*.AppImage "$@" & ) > /dev/null 2>&1
+function tmux-ssh() {
+  ssh "$1" -t -- /bin/sh -c 'tmux has-session && exec tmux attach || exec tmux'
 }
 
 function visualvm {
   ( /opt/visualvm*/bin/visualvm --fontsize 20 "$@" & ) > /dev/null 2>&1
 }
 
+alias ls='eza --icons=auto --group-directories-first'
 alias vim='nvim'
 alias ts='tmux-sessionizer'
+alias ssh='tmux-ssh'
 alias lg='lazygit'
 alias fp='. project-finder'
 alias cato='cato-sdp'
+alias oc='opencode'
 
 # open tmux sessionizer with <C-f>
 bindkey -s "^f" "ts\n"
 
-# remove annoying error when using ssh
+# remove annoying error when using ssh with kitty
 [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
 # git-completion
@@ -67,13 +71,16 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # pnpm
-export PNPM_HOME="/home/doru.dumitru/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-# fzf (use with catppuccin theme)
+# opencode
+export PATH=$HOME/.opencode/bin:$PATH
+
+# fzf - Catppuccin theme
 # export FZF_DEFAULT_OPTS=" \
 # --prompt '❯ '
 # --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
@@ -81,4 +88,11 @@ esac
 # --color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
 # --color=selected-bg:#494d64 \
 # --color=border:#8aadf4,label:#cad3f5"
+
+# fzf - One Dark theme
+export FZF_DEFAULT_OPTS=" \
+  --prompt '❯ ' \
+  --color=bg+:#282C34,border:#98C379,info:#E5C07B,pointer:#E06C75"
+
 source /usr/share/fzf/shell/key-bindings.zsh
+
