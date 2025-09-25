@@ -31,6 +31,7 @@ function visualvm {
 }
 
 alias ls='eza --icons=auto --group-directories-first'
+alias cd='z'
 alias vim='nvim'
 alias ts='tmux-sessionizer'
 alias ssh='tmux-ssh'
@@ -50,6 +51,9 @@ autoload -Uz compinit && compinit
 
 # starship
 eval "$(starship init zsh)"
+
+# zoxide
+eval "$(zoxide init zsh)"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
