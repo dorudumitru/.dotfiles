@@ -4,9 +4,6 @@ export PATH=$PATH:$HOME/.local/bin
 export ZSH="$HOME/.oh-my-zsh"
 export SSH_AUTH_SOCK=$HOME/.bitwarden-ssh-agent.sock
 
-export EPM_SERVICES_USER_ID="doru.dumitru@ro.ibm.com"
-export EPM_SERVICES_USER_PW="II9ZCoMS6c&ycCsC"
-
 ZSH_THEME="robbyrussell"
 ZSH_DISABLE_COMPFIX=true
 
@@ -85,18 +82,18 @@ esac
 export PATH=$HOME/.opencode/bin:$PATH
 
 # fzf - Catppuccin theme
-# export FZF_DEFAULT_OPTS=" \
-# --prompt '❯ '
-# --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
-# --color=fg:#cad3f5,header:#ed8796,info:#8bd5ca,pointer:#ed8796 \
-# --color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
-# --color=selected-bg:#494d64 \
-# --color=border:#8aadf4,label:#cad3f5"
+export FZF_DEFAULT_OPTS=" \
+--prompt '❯ '
+--color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
+--color=fg:#cad3f5,header:#ed8796,info:#8bd5ca,pointer:#ed8796 \
+--color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
+--color=selected-bg:#494d64 \
+--color=border:#8aadf4,label:#cad3f5"
 
 # fzf - One Dark theme
-export FZF_DEFAULT_OPTS=" \
-  --prompt '❯ ' \
-  --color=bg+:#282C34,border:#98C379,info:#E5C07B,pointer:#E06C75"
+# export FZF_DEFAULT_OPTS=" \
+#   --prompt '❯ ' \
+#   --color=bg+:#282C34,border:#98C379,info:#E5C07B,pointer:#E06C75"
 
 source /usr/share/fzf/shell/key-bindings.zsh
 
