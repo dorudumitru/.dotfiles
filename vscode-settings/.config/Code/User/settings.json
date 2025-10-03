@@ -2,73 +2,15 @@
   // THEME
   "workbench.startupEditor": "none",
   "workbench.settings.editor": "json",
-  "workbench.colorTheme": "One Dark Pro",
-  "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#568af2",
-    "terminalCursor.foreground": "#568af2"
-  },
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.colorTheme": "Catppuccin Macchiato",
   "workbench.iconTheme": "symbols",
-  "symbols.hidesExplorerArrows": false,
+  "window.titleBarStyle": "custom",
+  "window.commandCenter": false,
   "workbench.editor.showTabs": "multiple",
   "workbench.tree.indent": 12,
-  "editor.tokenColorCustomizations": {
-    "[*Light*]": {
-      "textMateRules": [
-        {
-          "scope": "ref.matchtext",
-          "settings": {
-            "foreground": "#000"
-          }
-        }
-      ]
-    },
-    "[*Dark*]": {
-      "textMateRules": [
-        {
-          "scope": "ref.matchtext",
-          "settings": {
-            "foreground": "#fff"
-          }
-        }
-      ]
-    },
-    "textMateRules": [
-      {
-        "name": "One Dark italic",
-        "scope": [
-          "comment",
-          "entity.other.attribute-name",
-          "keyword",
-          "markup.underline.link",
-          "storage.modifier",
-          "storage.type",
-          "string.url",
-          "variable.language.super",
-          "variable.language.this"
-        ],
-        "settings": {
-          "fontStyle": "italic"
-        }
-      },
-      {
-        "name": "One Dark italic reset",
-        "scope": [
-          "keyword.operator",
-          "keyword.other.type",
-          "storage.modifier.import",
-          "storage.modifier.package",
-          "storage.type.built-in",
-          "storage.type.function.arrow",
-          "storage.type.generic",
-          "storage.type.java",
-          "storage.type.primitive"
-        ],
-        "settings": {
-          "fontStyle": ""
-        }
-      }
-    ]
-  },
+  "catppuccin.accentColor": "rosewater",
+  "symbols.hidesExplorerArrows": false,
 
   // FONT
   "editor.fontFamily": "MonoLisa Variable, JetBrains Mono Medium, JetBrainsMono NF Medium",
@@ -76,9 +18,11 @@
   "editor.fontSize": 14,
   "editor.lineHeight": 1.5,
   "editor.fontLigatures": "true",
+  "editor.semanticHighlighting.enabled": true,
   "terminal.integrated.fontWeight": "500",
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.lineHeight": 1.1,
+  "terminal.integrated.minimumContrastRatio": 1,
   // If permission is needed
   // sudo chown -R $(whoami) $(which code) && sudo chown -R $(whoami) /usr/share/code
   // "fonted.font": "JetBrains Mono",
@@ -91,6 +35,20 @@
   },
 
   // LANGUAGES
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
   "go.toolsManagement.autoUpdate": true,
   // install golangci-lint from https://golangci-lint.run/usage/install for this to work
   "go.lintTool": "golangci-lint-v2",
@@ -109,6 +67,9 @@
   },
   "[go.mod]": {
     "editor.defaultFormatter": "golang.go"
+  },
+  "gopls": {
+    "ui.semanticTokens": true
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
@@ -163,8 +124,6 @@
   "explorer.confirmDelete": false,
   "files.autoSave": "onFocusChange",
   "git.autofetch": true,
-  "window.titleBarStyle": "custom",
-  "window.commandCenter": false,
   "remote.SSH.showLoginTerminal": true,
   "totalTypeScript.hideAllTips": true,
   "files.associations": {
@@ -214,5 +173,28 @@
     {
       "text": "- @azure Rule - Summarize topic before taking action: When the user asks about Azure Functions, invoke the azure_development-summarize_topic tool once first to see if any existing custom mode could be a good fit to what user is asking."
     }
-  ]
+  ],
+  "editor.tokenColorCustomizations": {
+    "[*Light*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#000"
+          }
+        }
+      ]
+    },
+    "[*Dark*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#fff"
+          }
+        }
+      ]
+    },
+    "textMateRules": []
+  }
 }
