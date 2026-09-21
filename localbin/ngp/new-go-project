@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+pararser() {
+  # Define default values
+  name=${name:-""}
+  path=${path:-""}
+  ide=${ide:-""}
+  positional=()
+
+  # Assign the values given by the user
+  while [ $# -gt 0 ]; do
+    if [[ $1 == "--help" ]]; then
+      echo " Usage:"
+      echo "   new-go-project [name] project name (required)"
+      echo "   --name         project name (optional if positional is used | ex: myapp)"
+      echo "   --path         project path (optional | ex: ~/Projects/work | default: ~/Projects/personal)"
+      echo "   --ide          open project in IDE (optional | value: code / idea / tmux | default: tmux)"
+      exit
+    elif [[ $1 == *"--"* ]]; then
+      param="${1/--/}"
+      declare -g "$param"="$2"
+      shift
+    else
+      positional+=("$1")
+    fi
+    shift
+  done
+
+  if [[ -z "$name" ]] && [[ ${#positional[@]} -gt 0 ]]; then
+    name="${positional[0]}"
+  fi
+}
+
+pararser "$@"
+
+projectPath=$path/$name
+makefilePath=~/Documents/Go/Makefile
+
+if [[ $name == "" ]]; then
+  echo "param --name is required"
+  exit
+fi
+
+if [[ $path == "" ]]; then
+  projectPath=~/Projects/personal/$name
+fi
+
+mkdir -p "$projectPath"
+cp $makefilePath "$projectPath"
+# tmux-sessionizer "$projectPath"
+
+function idea() {
+  intellij "$1" >/dev/null 2>&1 &
+}
+
+if [[ $ide == "idea" ]]; then
+  idea "$projectPath" || {
+    exit 1
+  }
+elif [[ $ide == "code" ]]; then
+  code "$projectPath" || {
+    exit 1
+  }
+else
+  tmux-sessionizer "$projectPath" || {
+    exit 1
+  }
+fi

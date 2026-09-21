@@ -1,0 +1,206 @@
+{
+  // THEME
+  "workbench.editor.useModal": "off",
+  "workbench.startupEditor": "none",
+  "workbench.settings.editor": "json",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.colorTheme": "Catppuccin Macchiato",
+  "workbench.iconTheme": "symbols",
+  "window.titleBarStyle": "custom",
+  "workbench.tree.indent": 12,
+  "catppuccin.accentColor": "rosewater",
+  "symbols.hidesExplorerArrows": false,
+
+  // FONT
+  "editor.fontFamily": "Lilex, MonoLisa Variable, JetBrains Mono SemiBold, Symbols Nerd Font",
+  "editor.fontWeight": "500",
+  "editor.fontSize": 15,
+  "editor.lineHeight": 1.4,
+  "editor.fontLigatures": "true",
+  "editor.semanticHighlighting.enabled": true,
+  "terminal.integrated.fontWeight": "500",
+  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.lineHeight": 1.0,
+  "terminal.integrated.minimumContrastRatio": 1,
+  // If permission is needed
+  // sudo chown -R $(whoami) $(which code) && sudo chown -R $(whoami) /usr/share/code
+  "fonted.font": "Lilex Medium",
+  "errorLens.fontWeight": "500",
+  "errorLens.enabledDiagnosticLevels": ["error", "warning", "info", "hint"],
+  "errorLens.messageBackgroundMode": "message",
+
+  // VIM SETTINGS
+  "vim.leader": "<space>",
+  "vim.handleKeys": {
+    "<space>": false,
+  },
+  "vim.highlightedyank.enable": true,
+  "vim.useSystemClipboard": false,
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1,
+  },
+  "vim.normalModeKeyBindings": [
+    {
+      "before": ["%"],
+      "commands": [
+        {
+          "command": "extension.matchitJumpItems",
+        },
+      ],
+    },
+    {
+      "before": ["<leader>", "y"],
+      "after": ["\"", "+", "y"],
+    },
+  ],
+  "vim.visualModeKeyBindings": [
+    {
+      "before": ["<leader>", "y"],
+      "after": ["\"", "+", "y"],
+    },
+  ],
+
+  // LANGUAGES
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true,
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "go.toolsGopath": "${env:HOME}/.go",
+  "go.toolsEnvVars": {
+    "GOPATH": "${env:HOME}/.go",
+    "GOMODCACHE": "${env:HOME}/.go/pkg/mod",
+  },
+  "go.toolsManagement.autoUpdate": true,
+  "go.diagnostic.vulncheck": "Imports",
+  // install golangci-lint from https://golangci-lint.run/usage/install for this to work
+  "go.lintTool": "golangci-lint-v2",
+  "go.lintFlags": ["--path-mode=abs"],
+  "go.formatTool": "custom",
+  "go.alternateTools": {
+    "customFormatter": "golangci-lint-v2",
+  },
+  "go.formatFlags": ["fmt", "--stdin"],
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+    },
+  },
+  "[go.mod]": {
+    "editor.defaultFormatter": "golang.go",
+  },
+  "gopls": {
+    "ui.semanticTokens": true,
+  },
+  "rust-analyzer.check.command": "clippy",
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.tabSize": 4,
+  },
+  "[java]": {
+    "editor.defaultFormatter": "josevseb.google-java-format-for-vs-code",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+    },
+  },
+  "python.analysis.inlayHints.variableTypes": true,
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+    },
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml",
+  },
+  "js/ts.preferences.importModuleSpecifier": "relative",
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+    },
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "svelte", "typescript", "typescriptreact"],
+  "prettier.printWidth": 120,
+
+  // MISC
+  "editor.linkedEditing": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+  },
+  "editor.accessibilitySupport": "off",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on", // Regex justify function null @
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorSurroundingLines": 8,
+  "editor.cursorBlinking": "solid",
+  "editor.lineNumbers": "relative",
+  "editor.minimap.enabled": false,
+  "editor.inlineSuggest.enabled": true,
+  "explorer.autoReveal": false,
+  "explorer.compactFolders": false,
+  "explorer.confirmDelete": false,
+  "files.autoSave": "onFocusChange",
+  "git.autofetch": true,
+  "remote.SSH.showLoginTerminal": true,
+  "files.associations": {
+    ".env*": "dotenv",
+  },
+  "breadcrumbs.enabled": false,
+  "terminal.integrated.cursorBlinking": true,
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.saveFileBeforeRun": true,
+  "sonarlint.pathToNodeExecutable": "/home/dorudumitru/.nvm/versions/node/v24.14.0/bin/node",
+  "redHatDependencyAnalytics.exclude": [
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/vendor/**",
+    "**/.angular/**",
+    "**/.next/**",
+  ],
+
+  // TELEMETRY
+  "telemetry.telemetryLevel": "off",
+  "redhat.telemetry.enabled": false,
+  "rest-client.enableTelemetry": false,
+  "partialDiff.enableTelemetry": false,
+
+  // AI
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "claudeCode.preferredLocation": "panel",
+  "chat.viewSessions.orientation": "stacked",
+
+  // OTHER
+  "makefile.configureOnOpen": false,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [],
+  },
+  "update.showReleaseNotes": false,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "go": false,
+  },
+  "yaml.disableSchemaDetection": [],
+  "docker.extension.enableComposeLanguageServer": false,
+}

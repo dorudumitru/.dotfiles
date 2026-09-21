@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+sanity_check() {
+  for cmd in tmux fzf fd; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+      echo "$cmd is not installed. Please install it first."
+      return 1
+    fi
+  done
+}
+
+switch_to() {
+  if [[ -z $TMUX ]]; then
+    tmux attach-session -t "$1"
+  else
+    tmux switch-client -t "$1"
+  fi
+}
+
+sanity_check
+
+if [[ $# -eq 1 ]]; then
+  selected=$1
+else
+  selected=$(
+    fd . ~/Projects \
+      -t d \
+      --min-depth 1 \
+      --max-depth 3 \
+      --hidden \
+      -E .git \
+      -E node_modules \
+      -E .next \
+      -E dist \
+      -E build \
+      -E coverage \
+      -E .turbo \
+      -E .cache \
+      -E target \
+      -E .venv \
+      -E venv \
+      -E __pycache__ \
+      -E .idea \
+      -E .vscode \
+      2>/dev/null | fzf
+  )
+fi
+
+if [[ -z $selected ]]; then
+  exit 0
+fi
+
+selected_name=$(basename "$selected" | tr -d '\n' | tr -cs '[:alnum:]' '_')
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+  tmux new-session -s "$selected_name" -c "$selected"
+  exit 0
+fi
+
+if ! tmux has-session -t="$selected_name" 2>/dev/null; then
+  tmux new-session -ds "$selected_name" -c "$selected"
+fi
+
+switch_to "$selected_name"
