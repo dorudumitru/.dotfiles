@@ -1,7 +1,12 @@
 [[plugin.deps]]
 use = "KKV9/compress"
-rev = "c264639"
-hash = "e17c11b605d989568a1d1741ca17c584"
+rev = "80e5268"
+hash = "868db729374b97871bc30b96d0e9061f"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mount"
+rev = "f703392"
+hash = "b95f898e6dc60b52edbc415952e14395"
 
 [flavor]
 deps = []
