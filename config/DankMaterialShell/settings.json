@@ -23,7 +23,6 @@
   "enableRippleEffects": false,
   "blurEnabled": true,
   "foregroundLayerTransparency": 0.95,
-  "systemTrayIconTintMode": "monochrome",
   "controlCenterShowMicPercent": true,
   "showWorkspaceApps": true,
   "showOccupiedWorkspacesOnly": true,
@@ -178,5 +177,10 @@
       "trigger": "qrg"
     }
   },
+  "clipboardVisibleEntryActions": [
+    "delete",
+    "edit",
+    "pin"
+  ],
   "configVersion": 18
 }
