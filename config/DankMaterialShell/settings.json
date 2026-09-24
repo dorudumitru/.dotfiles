@@ -80,6 +80,10 @@
       ],
       "rightWidgets": [
         "systemTray",
+        {
+          "id": "zmkBattery",
+          "enabled": true
+        },
         "cpuUsage",
         "memUsage",
         "notificationButton",

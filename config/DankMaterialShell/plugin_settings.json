@@ -1,0 +1,10 @@
+{
+  "zmkBattery": {
+    "enabled": true,
+    "keyboardName": "TOTEM",
+    "batteryLabels": "{\"central\":\"C\",\"peripheral:0\":\"P\"}"
+  },
+  "dockerManager": {
+    "enabled": false
+  }
+}
