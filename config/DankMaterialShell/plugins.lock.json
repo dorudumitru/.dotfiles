@@ -1,4 +1,9 @@
 {
   "lockfileVersion": 1,
-  "plugins": {}
+  "plugins": {
+    "zmkBattery": {
+      "repo": "https://github.com/ayaOwO/ZmkBattery",
+      "commit": "1a7337ee8d848b42fe4e34e04eb857c61ec20c31"
+    }
+  }
 }
