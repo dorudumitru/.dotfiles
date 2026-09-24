@@ -53,6 +53,7 @@
   "monoFontFamily": "Lilex Medium",
   "textRenderQuality": 3,
   "batteryChargeLimit": 90,
+  "batteryNotifyChargeLimit": true,
   "matugenTemplateKitty": false,
   "matugenTemplateVscode": false,
   "lockScreenFontFamily": "Inter",

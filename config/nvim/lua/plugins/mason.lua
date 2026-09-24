@@ -5,6 +5,7 @@ return {
       "sonarlint-language-server",
       "rust-analyzer",
       "lemminx",
+      "google-java-format",
       "css-lsp",
       "css-variables-language-server",
     },

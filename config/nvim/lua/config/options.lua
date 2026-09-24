@@ -31,14 +31,3 @@ vim.filetype.add({
     [".env.*"] = "sh",
   },
 })
-
-vim.filetype.add({
-  extension = {
-    gohtml = "gotmpl",
-  },
-})
-
-if vim.g.neovide then
-  vim.o.guifont = "Lilex Medium:h11"
-  vim.g.neovide_opacity = 0.9
-end
