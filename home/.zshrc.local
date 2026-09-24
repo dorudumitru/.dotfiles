@@ -1,0 +1,55 @@
+# Daily zsh tweaks — symlinked from ~/.dotfiles.
+
+# functions
+function tmux-ssh() {
+  ssh "$1" -t -- /bin/sh -c 'tmux has-session && exec tmux attach || exec tmux'
+}
+
+function git-ssh() {
+  if [[ "$1" == "work" ]]; then
+    git config core.sshCommand 'ssh -o IdentitiesOnly=yes -o IdentityFile=$HOME/.ssh/work.pub'
+    echo "Successfully configured \"Work\" ssh key for current repository"
+  elif [[ "$1" == "personal" ]]; then
+    git config core.sshCommand 'ssh -o IdentitiesOnly=yes -o IdentityFile=$HOME/.ssh/personal.pub'
+    echo "Successfully configured \"Personal\" ssh key for current repository"
+  else
+    echo "Argument required: work | personal"
+  fi
+}
+
+function kill-port() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: kill-port <port>"
+    return 1
+  fi
+
+  if ! lsof -i :"$1" -t > /dev/null; then
+    echo "No process found running on port $1"
+    return 0
+  fi
+
+  lsof -i :"$1" -t | xargs kill -9
+}
+
+# open tmux sessionizer with <C-f>
+bindkey -s "^f" "ts\n"
+
+# remove annoying error when using ssh with kitty
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
+
+# aliases
+alias ls="eza --icons=auto --group-directories-first"
+alias cat="bat"
+alias vim="nvim"
+alias ts="tmux-sessionizer"
+alias ngp="new-go-project"
+alias uao="unzip-and-open"
+alias tssh="tmux-ssh"
+alias lg="lazygit"
+alias fp=". find-project"
+alias yz="yazi"
+alias oc="opencode"
+alias cc="claude"
+alias cx="codex"
+alias visualvm="visualvm --fontsize 20"
+alias zb="zmk-battery"
