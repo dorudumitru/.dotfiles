@@ -39,7 +39,7 @@
       "hideAfterInactiveMs": 0
     },
     "hyprland": {
-      "hideOnKeyPress": false,
+      "hideOnKeyPress": true,
       "hideOnTouch": false,
       "inactiveTimeout": 0
     },
