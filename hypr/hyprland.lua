@@ -81,12 +81,6 @@ hl.window_rule({ match = { class = "^(zoom)$" }, float = true })
 hl.layer_rule({ match = { namespace = "^(quickshell)$" }, no_anim = true })
 hl.layer_rule({ match = { namespace = "^dms:.*" }, no_anim = true })
 
-hl.config({
-	xwayland = {
-		force_zero_scaling = true,
-	},
-})
-
 require("dms.colors")
 require("dms.outputs")
 require("dms.layout")
