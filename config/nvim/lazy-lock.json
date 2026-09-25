@@ -58,7 +58,6 @@
   "snacks.nvim": { "branch": "main", "commit": "882c996cf28183f4d63640de0b4c02ec886d01f2" },
   "sonarlint.nvim": { "branch": "main", "commit": "acd09b78969ddc965a7ddf59abb9d9eec5ecd94f" },
   "spring-boot.nvim": { "branch": "main", "commit": "9880be48170a21d97444b1eba75853fd3bad33c3" },
-  "spring-tools.nvim": { "branch": "main", "commit": "5249891106235cc206864b9c57e1142686ab3a61" },
   "sqlit.nvim": { "branch": "main", "commit": "ecac5bea884379f50ef40c1bde93025ccfb21d58" },
   "todo-comments.nvim": { "branch": "main", "commit": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668" },
   "tokyonight.nvim": { "branch": "main", "commit": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6" },

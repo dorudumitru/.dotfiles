@@ -134,6 +134,7 @@ return {
 
           make_task("Maven: test", mvn, { "test" }, root, { overseer.TAG.TEST }),
           make_task("Maven: verify", mvn, { "verify" }, root, { overseer.TAG.TEST }),
+          make_task("Maven: spotless apply", mvn, { "spotless:apply" }, root, { overseer.TAG.BUILD }),
 
           make_task("Maven: package", mvn, { "package" }, root, { overseer.TAG.BUILD }),
           make_task("Maven: clean package", mvn, { "clean", "package" }, root, { overseer.TAG.BUILD }),
@@ -168,6 +169,7 @@ return {
 
           make_task("Gradle: test", gradle, { "test" }, root, { overseer.TAG.TEST }),
           make_task("Gradle: check", gradle, { "check" }, root, { overseer.TAG.TEST }),
+          make_task("Gradle: spotless apply", gradle, { "spotlessApply" }, root, { overseer.TAG.BUILD }),
 
           make_task("Gradle: build", gradle, { "build" }, root, { overseer.TAG.BUILD }),
           make_task("Gradle: clean build", gradle, { "clean", "build" }, root, { overseer.TAG.BUILD }),
