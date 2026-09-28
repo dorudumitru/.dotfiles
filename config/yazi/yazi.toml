@@ -71,6 +71,12 @@ rules = [
     "open",
     "reveal",
   ] },
+  # HTML in browser
+  { mime = "text/html", use = [
+    "open",
+    "edit",
+    "reveal",
+  ] },
   # Text
   { mime = "text/*", use = [
     "edit",
@@ -122,7 +128,7 @@ fetch_workers = 5
 preload_workers = 2
 process_workers = 5
 bizarre_retry = 3
-image_alloc = 536870912 # 512MB
+image_alloc = 536870912      # 512MB
 image_bound = [10000, 10000]
 suppress_preload = false
 

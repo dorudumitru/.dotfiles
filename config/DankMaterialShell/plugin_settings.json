@@ -1,6 +1,6 @@
 {
   "zmkBattery": {
-    "enabled": true,
+    "enabled": false,
     "keyboardName": "TOTEM",
     "batteryLabels": "{\"central\":\"C\",\"peripheral:0\":\"P\"}"
   },
