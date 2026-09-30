@@ -8,6 +8,7 @@ return {
       "google-java-format",
       "css-lsp",
       "css-variables-language-server",
+      "buf",
     },
   },
 }
