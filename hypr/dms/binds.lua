@@ -1,5 +1,11 @@
 -- DMS default keybinds (Hyprland 0.55+ Lua)
 
+hl.config({
+	scrolling = {
+		explicit_column_widths = "0.5, 1.0",
+	},
+})
+
 -- === Application Launchers ===
 hl.bind("SUPER + Return", hl.dsp.exec_cmd("kitty"))
 hl.bind("SUPER + D", hl.dsp.exec_cmd("dms ipc call spotlight toggle"))
@@ -62,7 +68,8 @@ hl.bind("SUPER + W", hl.dsp.exec_cmd("wayscriber --daemon-toggle"))
 
 -- === Window Management ===
 hl.bind("SUPER + Q", hl.dsp.window.close())
-hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+-- hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+hl.bind("SUPER + F", hl.dsp.layout("colresize +conf"))
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 hl.bind("SUPER + SHIFT + T", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("dms ipc call window-rules toggle"))
@@ -164,7 +171,7 @@ hl.bind("SUPER + bracketright", hl.dsp.layout("preselect r"))
 
 -- === Sizing & Layout ===
 hl.bind("SUPER + R", hl.dsp.layout("togglesplit"))
-hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "set" }))
+hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 
 -- === Move/resize windows with mainMod + LMB/RMB and dragging ===
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true, description = "Move window" })

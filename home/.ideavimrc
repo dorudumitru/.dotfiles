@@ -6,8 +6,9 @@ let mapleader=" "
 
 " Plugins
 set VimEverywhere
+set classtextobj
 set argtextobj
-set functiontextobj
+set functextobj
 set NERDTree
 set highlightedyank
 set matchit
@@ -19,8 +20,8 @@ let g:WhichKey_PrefixColor = "#c6a0f6"
 let g:WhichKey_CommandColor = "#f4dbd6"
 let g:WhichKey_PrefixStyle = "bold"
 let g:WhichKey_KeyStyle = "italic"
-let g:WhichKey_FontFamily = "Lilex Medium"
-let g:WhichKey_FontSize = 13
+let g:WhichKey_FontFamily = "MonoLisa Medium"
+let g:WhichKey_FontSize = 12
 let g:WhichKey_SortOrder = "by_key_prefix_first"
 let g:WhichKey_ShowTypedSequence = "false"
 let g:WhichKey_DefaultTriggers = ['<leader>', '[', ']']
@@ -52,13 +53,12 @@ vnoremap < <gv
 vnoremap > >gv
 xnoremap <leader>p "_dP
 noremap <leader>y "+y
-nnoremap <leader>Y "+Y
 vnoremap gy ygv :Commentary<CR>
+let g:WhichKeyDesc_leader_p = "<leader>p "
 let g:WhichKeyDesc_leader_y = "<leader>y "
-let g:WhichKeyDesc_leader_Y = "<leader>Y "
 
 " Actions
-nmap <leader><leader> <Action>(GotoFile)
+nmap <leader><space> <Action>(GotoFile)
 nmap ]d <Action>(GotoNextError)
 nmap [d <Action>(GotoPreviousError)
 nmap <leader>p <Action>(Back)
@@ -68,7 +68,7 @@ nmap [[ <Action>(MethodUp)
 nmap ]] <Action>(MethodDown)
 nmap <C-m> <Action>(ToolWindowsGroup)
 imap <S-CR> <Action>(EditorCompleteStatement)
-let g:WhichKeyDesc_leader_leader = "<leader><leader> "
+let g:WhichKeyDesc_leader_space = "<leader><space> "
 let g:WhichKeyDesc_back = "<leader>p "
 let g:WhichKeyDesc_forward = "<leader>n "
 

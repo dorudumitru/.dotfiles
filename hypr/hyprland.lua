@@ -24,7 +24,8 @@ hl.config({
 		gaps_in = 4,
 		gaps_out = 4,
 		border_size = 2,
-		layout = "dwindle",
+		-- layout = "dwindle",
+		layout = "scrolling",
 	},
 	decoration = {
 		rounding = 4,
