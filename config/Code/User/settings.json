@@ -12,7 +12,7 @@
   "symbols.hidesExplorerArrows": false,
 
   // FONT
-  "editor.fontFamily": "Lilex, MonoLisa Variable, JetBrains Mono SemiBold, Symbols Nerd Font",
+  "editor.fontFamily": "Lilexx, MonoLisa Medium, JetBrains Mono Medium, Symbols Nerd Font",
   "editor.fontWeight": "500",
   "editor.fontSize": 15,
   "editor.lineHeight": 1.4,
@@ -24,7 +24,7 @@
   "terminal.integrated.minimumContrastRatio": 1,
   // If permission is needed
   // sudo chown -R $(whoami) $(which code) && sudo chown -R $(whoami) /usr/share/code
-  "fonted.font": "Lilex Medium",
+  "fonted.font": "MonoLisa Medium",
   "errorLens.fontWeight": "500",
   "errorLens.enabledDiagnosticLevels": ["error", "warning", "info", "hint"],
   "errorLens.messageBackgroundMode": "message",
@@ -188,7 +188,13 @@
   "claudeCode.preferredLocation": "panel",
   "chat.viewSessions.orientation": "stacked",
 
+  // TRUSTED DOMAINS
+  "json.schemaDownload.trustedDomains": {
+    "https://raw.githubusercontent.com/": true,
+  },
+
   // OTHER
+  "mise.configureExtensionsAutomatically": true,
   "makefile.configureOnOpen": false,
   "editor.tokenColorCustomizations": {
     "textMateRules": [],

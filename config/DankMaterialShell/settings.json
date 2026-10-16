@@ -55,6 +55,7 @@
   "batteryChargeLimit": 90,
   "batteryNotifyChargeLimit": true,
   "lockBeforeSuspend": true,
+  "matugenTemplateGhostty": false,
   "matugenTemplateKitty": false,
   "matugenTemplateVscode": false,
   "lockScreenFontFamily": "Inter",

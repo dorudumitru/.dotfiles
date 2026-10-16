@@ -30,6 +30,9 @@ return {
           ["@lsp.type.variable.rust"] = { fg = macchiato.sky }, -- interpolated variables
           ["@lsp.type.formatSpecifier.rust"] = { fg = macchiato.peach }, -- interpolated variables curly braces
           ["@lsp.mod.format.go"] = { fg = macchiato.sky }, -- format placeholders in strings
+          ["@string.escape.go"] = { fg = macchiato.sky },
+          ["@lsp.type.keyword.go"] = { fg = macchiato.mauve, italic = false },
+          ["@keyword.coroutine.go"] = { italic = false },
         }
       end,
     },
