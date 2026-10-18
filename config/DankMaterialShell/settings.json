@@ -11,10 +11,10 @@
     }
   },
   "popupTransparency": 0.9,
-  "floatingWindowSyncGlobal": false,
-  "floatingWindowTransparency": 0.95,
-  "floatingWindowForegroundTransparency": 0.95,
+  "floatingWindowTransparency": 0.9,
+  "floatingWindowForegroundTransparency": 0.9,
   "cornerRadius": 12,
+  "niriLayoutRadiusOverride": 8,
   "hyprlandLayoutGapsOverride": 4,
   "hyprlandLayoutRadiusOverride": 8,
   "hyprlandLayoutBorderSize": 2,
@@ -36,7 +36,7 @@
     "theme": "Bibata-Modern-Classic",
     "size": 24,
     "niri": {
-      "hideWhenTyping": false,
+      "hideWhenTyping": true,
       "hideAfterInactiveMs": 0
     },
     "hyprland": {
@@ -51,7 +51,7 @@
   "launcherLogoMode": "os",
   "launcherLogoSizeOffset": 2,
   "fontFamily": "Inter",
-  "monoFontFamily": "Lilex Medium",
+  "monoFontFamily": "MonoLisa Medium",
   "textRenderQuality": 3,
   "batteryChargeLimit": 90,
   "batteryNotifyChargeLimit": true,
@@ -100,8 +100,8 @@
       "barLengthPadding": 0,
       "bottomGap": 0,
       "attachToScreenEdge": false,
-      "transparency": 0.9,
-      "widgetTransparency": 0.9,
+      "transparency": 0.8,
+      "widgetTransparency": 0.8,
       "squareCorners": false,
       "noBackground": false,
       "maximizeWidgetIcons": false,
