@@ -14,12 +14,12 @@
   // FONT
   "editor.fontFamily": "Lilexx, MonoLisa Medium, JetBrains Mono Medium, Symbols Nerd Font",
   "editor.fontWeight": "500",
-  "editor.fontSize": 15,
+  "editor.fontSize": 14,
   "editor.lineHeight": 1.4,
   "editor.fontLigatures": "true",
   "editor.semanticHighlighting.enabled": true,
   "terminal.integrated.fontWeight": "500",
-  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontSize": 14,
   "terminal.integrated.lineHeight": 1.0,
   "terminal.integrated.minimumContrastRatio": 1,
   // If permission is needed

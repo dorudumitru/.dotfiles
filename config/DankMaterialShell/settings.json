@@ -27,6 +27,7 @@
   "showWorkspaceApps": true,
   "showOccupiedWorkspacesOnly": true,
   "appIdSubstitutions": [],
+  "clockDateFormat": "ddd MMM d",
   "greeterFontFamily": "Inter",
   "dankLauncherV2ShowFooter": false,
   "useAutoLocation": true,
@@ -67,10 +68,20 @@
       "name": "Main Bar",
       "enabled": true,
       "position": 0,
-      "screenPreferences": ["all"],
+      "screenPreferences": [
+        "all"
+      ],
       "showOnLastDisplay": true,
-      "leftWidgets": ["launcherButton", "workspaceSwitcher", "focusedWindow"],
-      "centerWidgets": ["music", "clock", "weather"],
+      "leftWidgets": [
+        "launcherButton",
+        "workspaceSwitcher",
+        "focusedWindow"
+      ],
+      "centerWidgets": [
+        "music",
+        "clock",
+        "weather"
+      ],
       "rightWidgets": [
         "systemTray",
         {
@@ -174,6 +185,10 @@
       "trigger": "qrg"
     }
   },
-  "clipboardVisibleEntryActions": ["delete", "edit", "pin"],
+  "clipboardVisibleEntryActions": [
+    "delete",
+    "edit",
+    "pin"
+  ],
   "configVersion": 18
 }
