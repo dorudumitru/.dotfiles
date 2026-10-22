@@ -15,6 +15,7 @@
   "floatingWindowForegroundTransparency": 0.9,
   "cornerRadius": 12,
   "niriLayoutRadiusOverride": 8,
+  "niriLayoutBorderSize": 2,
   "hyprlandLayoutGapsOverride": 4,
   "hyprlandLayoutRadiusOverride": 8,
   "hyprlandLayoutBorderSize": 2,
@@ -23,6 +24,7 @@
   "enableRippleEffects": false,
   "blurEnabled": true,
   "foregroundLayerTransparency": 0.9,
+  "blurWallpaperOnOverview": true,
   "controlCenterShowMicPercent": true,
   "showWorkspaceApps": true,
   "showOccupiedWorkspacesOnly": true,
@@ -60,6 +62,7 @@
   "matugenTemplateKitty": false,
   "matugenTemplateVscode": false,
   "lockScreenFontFamily": "Inter",
+  "notificationShowTimeoutBar": true,
   "osdAlwaysShowValue": true,
   "osdPowerProfileEnabled": true,
   "barConfigs": [
@@ -156,7 +159,8 @@
     "hslHue": -1,
     "hslSaturation": 0,
     "hslLightness": 1,
-    "valid": true
+    "valid": true,
+    "rgba": -1
   },
   "systemMonitorCustomColor": {
     "r": 1,
@@ -169,7 +173,8 @@
     "hslHue": -1,
     "hslSaturation": 0,
     "hslLightness": 1,
-    "valid": true
+    "valid": true,
+    "rgba": -1
   },
   "builtInPluginSettings": {
     "dms_settings_search": {

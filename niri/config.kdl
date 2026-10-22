@@ -16,6 +16,7 @@ gestures {
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 input {
+    focus-follows-mouse
     keyboard {
         xkb {
             // You can set rules, model, layout, variant and options.
@@ -106,7 +107,7 @@ layout {
     // `draw-border-with-background`.
     border {
         off
-        width 4
+        width 2
         active-color   "#707070"      // Neutral gray
         inactive-color "#d0d0d0"      // Light gray
         urgent-color   "#cc4444"      // Softer red
@@ -226,9 +227,6 @@ window-rule {
     match app-id="zoom"
     open-floating true
 }
-window-rule {
-    open-maximized true
-}
 debug {
     honor-xdg-activation-with-invalid-serial
 }
@@ -243,25 +241,12 @@ recent-windows {
     }
 }
 
-workspace "kitty" {
-  open-on-output "DP-1"
-}
-
-workspace "bitwarden" {
-  open-on-output "DP-1"
-}
-
-workspace "brave" {
-  open-on-output "DP-1"
-}
-
-workspace "whatsapp" {
-  open-on-output "DP-1"
-}
-
-workspace "ide" {
-  open-on-output "DP-1"
-}
+// Default Named Workspaces
+workspace "kitty"
+workspace "bitwarden"
+workspace "brave"
+workspace "whatsapp"
+workspace "ide"
 
 // Include dms files
 include optional=true "dms/colors.kdl"

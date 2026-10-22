@@ -32,6 +32,8 @@ return {
           ["@lsp.mod.format.go"] = { fg = macchiato.sky }, -- format placeholders in strings
           ["@lsp.type.keyword.go"] = { italic = true }, -- go keyword italic
           ["@keyword.coroutine.go"] = { fg = macchiato.teal }, -- go keyword teal
+          ["@character.printf"] = { fg = macchiato.teal },
+          ["@string.escape.go"] = { fg = macchiato.teal },
         }
       end,
     },
