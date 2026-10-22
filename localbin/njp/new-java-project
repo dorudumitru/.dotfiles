@@ -1,0 +1,668 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Generate a Maven Java application or library project.
+# Usage: njp [project-name] [--name NAME] [--group GROUP]
+#        [--path PATH] [--ide code|idea|tmux] [--type app|lib]
+# Dependency and Maven plugin versions are resolved from Maven Central at generation time
+# and written into pom.xml so later builds use the versions selected today.
+
+usage() {
+  cat <<'USAGE'
+Usage: njp PROJECT_NAME [OPTIONS]
+       njp --name PROJECT_NAME [OPTIONS]
+
+Create a Maven Java project in ~/Projects/personal by default. A project name is required.
+By default the project is an application with an executable uber JAR.
+
+Options:
+  --name NAME       Project name (alternative to positional PROJECT_NAME)
+  --group GROUP     Java group/package prefix (default: com.example)
+  --path PATH       Parent directory for the project (default: ~/Projects/personal)
+  --ide IDE         Open with code, idea, or tmux (default: tmux)
+  --type TYPE       Project type: app or lib (default: app)
+  -h, --help        Show this help message
+
+Examples:
+  njp my-app
+  njp --name my-app --group org.example --ide code
+  njp my-lib --type lib
+  njp my-lib --type=lib --path ~/Work --ide idea
+USAGE
+}
+
+POSITIONAL_NAME=""
+POSITIONAL_NAME_SET=0
+OPTION_NAME=""
+NAME_OPTION_SET=0
+GROUP_ID="com.example"
+BASE_PATH="${HOME}/Projects/personal"
+IDE="tmux"
+PROJECT_TYPE="app"
+TYPE_OPTION_SET=0
+
+while (($#)); do
+  case "$1" in
+  --name)
+    if (($# < 2)) || [[ -z "$2" ]]; then
+      echo "Error: --name requires a non-empty value." >&2
+      exit 2
+    fi
+    if ((NAME_OPTION_SET)); then
+      echo "Error: --name may only be specified once." >&2
+      exit 2
+    fi
+    OPTION_NAME="$2"
+    NAME_OPTION_SET=1
+    shift 2
+    ;;
+  --name=*)
+    if ((NAME_OPTION_SET)); then
+      echo "Error: --name may only be specified once." >&2
+      exit 2
+    fi
+    OPTION_NAME="${1#*=}"
+    if [[ -z "$OPTION_NAME" ]]; then
+      echo "Error: --name requires a non-empty value." >&2
+      exit 2
+    fi
+    NAME_OPTION_SET=1
+    shift
+    ;;
+  --group)
+    if (($# < 2)) || [[ -z "$2" ]]; then
+      echo "Error: --group requires a non-empty value." >&2
+      exit 2
+    fi
+    GROUP_ID="$2"
+    shift 2
+    ;;
+  --group=*)
+    GROUP_ID="${1#*=}"
+    if [[ -z "$GROUP_ID" ]]; then
+      echo "Error: --group requires a non-empty value." >&2
+      exit 2
+    fi
+    shift
+    ;;
+  --path)
+    if (($# < 2)) || [[ -z "$2" ]]; then
+      echo "Error: --path requires a non-empty value." >&2
+      exit 2
+    fi
+    BASE_PATH="$2"
+    shift 2
+    ;;
+  --path=*)
+    BASE_PATH="${1#*=}"
+    if [[ -z "$BASE_PATH" ]]; then
+      echo "Error: --path requires a non-empty value." >&2
+      exit 2
+    fi
+    shift
+    ;;
+  --ide)
+    if (($# < 2)) || [[ -z "$2" ]]; then
+      echo "Error: --ide requires one of: code, idea, tmux." >&2
+      exit 2
+    fi
+    IDE="$2"
+    shift 2
+    ;;
+  --ide=*)
+    IDE="${1#*=}"
+    if [[ -z "$IDE" ]]; then
+      echo "Error: --ide requires one of: code, idea, tmux." >&2
+      exit 2
+    fi
+    shift
+    ;;
+  --type)
+    if (($# < 2)) || [[ -z "$2" ]]; then
+      echo "Error: --type requires either 'app' or 'lib'." >&2
+      exit 2
+    fi
+    if ((TYPE_OPTION_SET)); then
+      echo "Error: --type may only be specified once." >&2
+      exit 2
+    fi
+    PROJECT_TYPE="$2"
+    TYPE_OPTION_SET=1
+    shift 2
+    ;;
+  --type=*)
+    if ((TYPE_OPTION_SET)); then
+      echo "Error: --type may only be specified once." >&2
+      exit 2
+    fi
+    PROJECT_TYPE="${1#*=}"
+    if [[ -z "$PROJECT_TYPE" ]]; then
+      echo "Error: --type requires either 'app' or 'lib'." >&2
+      exit 2
+    fi
+    TYPE_OPTION_SET=1
+    shift
+    ;;
+  -h | --help)
+    usage
+    exit 0
+    ;;
+  --)
+    shift
+    while (($#)); do
+      if ((POSITIONAL_NAME_SET)); then
+        echo "Error: only one positional project name is accepted." >&2
+        usage >&2
+        exit 2
+      fi
+      if [[ -z "$1" ]]; then
+        echo "Error: positional project name must not be empty." >&2
+        usage >&2
+        exit 2
+      fi
+      POSITIONAL_NAME="$1"
+      POSITIONAL_NAME_SET=1
+      shift
+    done
+    ;;
+  -*)
+    echo "Error: unknown option '$1'." >&2
+    usage >&2
+    exit 2
+    ;;
+  *)
+    if ((POSITIONAL_NAME_SET)); then
+      echo "Error: only one positional project name is accepted." >&2
+      usage >&2
+      exit 2
+    fi
+    if [[ -z "$1" ]]; then
+      echo "Error: positional project name must not be empty." >&2
+      usage >&2
+      exit 2
+    fi
+    POSITIONAL_NAME="$1"
+    POSITIONAL_NAME_SET=1
+    shift
+    ;;
+  esac
+done
+
+if ((NAME_OPTION_SET && POSITIONAL_NAME_SET)); then
+  echo "Error: use either --name or a positional project name, not both." >&2
+  usage >&2
+  exit 2
+fi
+if ((! NAME_OPTION_SET && ! POSITIONAL_NAME_SET)); then
+  echo "Error: a project name is required; provide it positionally or with --name." >&2
+  usage >&2
+  exit 2
+fi
+if ((NAME_OPTION_SET)); then
+  PROJECT_NAME="$OPTION_NAME"
+else
+  PROJECT_NAME="$POSITIONAL_NAME"
+fi
+
+case "$IDE" in
+code | idea | tmux) ;;
+*)
+  echo "Error: invalid --ide '$IDE'. Choose one of: code, idea, tmux." >&2
+  exit 2
+  ;;
+esac
+
+case "$PROJECT_TYPE" in
+app | lib) ;;
+*)
+  echo "Error: invalid --type '$PROJECT_TYPE'. Choose either: app, lib." >&2
+  exit 2
+  ;;
+esac
+
+if ! [[ "$PROJECT_NAME" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]]; then
+  echo "Error: project name may contain only letters, digits, dot, underscore, and hyphen, and must start with a letter or digit." >&2
+  exit 2
+fi
+
+if ! [[ "$GROUP_ID" =~ ^[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)*$ ]]; then
+  echo "Error: --group must be a dotted Java package-style name, e.g. com.example." >&2
+  exit 2
+fi
+
+# Expand the common tilde forms without eval, so paths containing spaces stay safe.
+if [[ "$BASE_PATH" == "~" ]]; then
+  BASE_PATH="$HOME"
+elif [[ "$BASE_PATH" == "~/"* ]]; then
+  BASE_PATH="$HOME/${BASE_PATH:2}"
+fi
+
+for command_name in java javac mvn git; do
+  if ! command -v "$command_name" >/dev/null 2>&1; then
+    echo "Error: '$command_name' was not found on PATH. Install a JDK, Maven, and Git first." >&2
+    exit 1
+  fi
+done
+
+# Check the requested launcher before downloading dependencies or creating files.
+# We deliberately require a command-line launcher on PATH so failures are caught
+# before the project directory is created.
+case "$IDE" in
+code)
+  IDE_COMMAND="code"
+  if ! command -v "$IDE_COMMAND" >/dev/null 2>&1; then
+    cat >&2 <<'ERR'
+Error: the Visual Studio Code command-line launcher 'code' was not found on PATH.
+Install Visual Studio Code and make its 'code' command available on PATH.
+On macOS, use the Command Palette action: "Shell Command: Install 'code' command in PATH".
+No project was created.
+ERR
+    exit 1
+  fi
+  ;;
+idea)
+  IDE_COMMAND="idea"
+  if ! command -v "$IDE_COMMAND" >/dev/null 2>&1; then
+    cat >&2 <<'ERR'
+Error: the IntelliJ IDEA command-line launcher 'idea' was not found on PATH.
+Configure/install the IDEA launcher from your IDE installation (for example,
+Tools > Create Command-line Launcher on macOS) and ensure it is on PATH.
+No project was created.
+ERR
+    exit 1
+  fi
+  ;;
+tmux)
+  IDE_COMMAND="tmux"
+  if ! command -v "$IDE_COMMAND" >/dev/null 2>&1; then
+    cat >&2 <<'ERR'
+Error: 'tmux' was selected but tmux was not found on PATH.
+Install tmux with your operating system's package manager.
+No project was created.
+ERR
+    exit 1
+  fi
+  ;;
+esac
+
+# Read the Java feature version (e.g. 1.8 -> 8, 17 -> 17).
+JAVA_VERSION_RAW="$(java -XshowSettings:properties -version 2>&1 | sed -nE 's/^[[:space:]]*java\.specification\.version = (.*)$/\1/p' | head -n 1)"
+if [[ -z "$JAVA_VERSION_RAW" ]]; then
+  echo "Error: could not determine the Java version from 'java'." >&2
+  exit 1
+fi
+if [[ "$JAVA_VERSION_RAW" == 1.* ]]; then
+  JAVA_VERSION="${JAVA_VERSION_RAW#1.}"
+else
+  JAVA_VERSION="$JAVA_VERSION_RAW"
+fi
+if ! [[ "$JAVA_VERSION" =~ ^[0-9]+$ ]]; then
+  echo "Error: unrecognized Java feature version '$JAVA_VERSION_RAW'." >&2
+  exit 1
+fi
+
+# JUnit 6 requires Java 17+. JUnit 5 supports Java 8+.
+if ((JAVA_VERSION >= 17)); then
+  JUNIT_MAJOR=6
+elif ((JAVA_VERSION >= 8)); then
+  JUNIT_MAJOR=5
+else
+  echo "Error: JUnit Jupiter requires Java 8 or newer; detected Java $JAVA_VERSION." >&2
+  exit 1
+fi
+
+if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+  echo "Error: either 'curl' or 'wget' is required to resolve current versions from Maven Central." >&2
+  exit 1
+fi
+
+MAVEN_CENTRAL_BASE="https://repo.maven.apache.org/maven2"
+
+fetch_maven_metadata() {
+  local artifact_path="$1"
+  local url="${MAVEN_CENTRAL_BASE}/${artifact_path}/maven-metadata.xml"
+
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL --retry 2 --connect-timeout 10 "$url"
+  else
+    wget -qO- --timeout=10 "$url"
+  fi
+}
+
+# Return true if dotted numeric version $1 is newer than $2. This handles
+# versions with differing numbers of numeric components (for example 3.9 and 3.10.0).
+version_gt() {
+  local IFS=.
+  local -a left right
+  read -r -a left <<<"$1"
+  read -r -a right <<<"$2"
+
+  local i count l r
+  count="${#left[@]}"
+  if ((${#right[@]} > count)); then
+    count="${#right[@]}"
+  fi
+
+  for ((i = 0; i < count; i++)); do
+    l="${left[$i]:-0}"
+    r="${right[$i]:-0}"
+    if ((10#$l > 10#$r)); then return 0; fi
+    if ((10#$l < 10#$r)); then return 1; fi
+  done
+  return 1
+}
+
+# Select the newest stable, all-numeric release from Maven metadata.
+# If major_filter is supplied, only releases in that major line are considered.
+latest_stable_version() {
+  local metadata="$1"
+  local major_filter="${2:-}"
+  local candidate best=""
+
+  while IFS= read -r candidate; do
+    [[ -n "$candidate" ]] || continue
+    if [[ -n "$major_filter" && "$candidate" != "$major_filter".* ]]; then
+      continue
+    fi
+    if [[ -z "$best" ]] || version_gt "$candidate" "$best"; then
+      best="$candidate"
+    fi
+  done < <(printf '%s\n' "$metadata" | sed -nE 's/^[[:space:]]*<version>([0-9]+(\.[0-9]+){1,3})<\/version>[[:space:]]*$/\1/p')
+
+  [[ -n "$best" ]] || return 1
+  printf '%s\n' "$best"
+}
+
+resolve_latest_version() {
+  local display_name="$1"
+  local artifact_path="$2"
+  local major_filter="${3:-}"
+  local metadata version
+
+  if ! metadata="$(fetch_maven_metadata "$artifact_path")"; then
+    echo "Error: could not fetch $display_name version metadata from Maven Central." >&2
+    return 1
+  fi
+  if ! version="$(latest_stable_version "$metadata" "$major_filter")"; then
+    if [[ -n "$major_filter" ]]; then
+      echo "Error: could not find a stable $display_name release in major version $major_filter." >&2
+    else
+      echo "Error: could not find a stable $display_name release in Maven Central metadata." >&2
+    fi
+    return 1
+  fi
+  printf '%s\n' "$version"
+}
+
+# Pin versions discovered now in the generated POM. The JAR Plugin is declared
+# explicitly only for libraries. Applications use Maven's default jar:jar lifecycle
+# binding to create the input JAR, then Shade Plugin turns it into an executable uber JAR.
+JUNIT_VERSION="$(resolve_latest_version "JUnit Jupiter" "org/junit/jupiter/junit-jupiter" "$JUNIT_MAJOR")" || exit 1
+MAVEN_COMPILER_PLUGIN_VERSION="$(resolve_latest_version "Maven Compiler Plugin" "org/apache/maven/plugins/maven-compiler-plugin")" || exit 1
+MAVEN_SUREFIRE_PLUGIN_VERSION="$(resolve_latest_version "Maven Surefire Plugin" "org/apache/maven/plugins/maven-surefire-plugin")" || exit 1
+MAVEN_JAR_PLUGIN_VERSION=""
+MAVEN_SHADE_PLUGIN_VERSION=""
+if [[ "$PROJECT_TYPE" == "lib" ]]; then
+  MAVEN_JAR_PLUGIN_VERSION="$(resolve_latest_version "Maven JAR Plugin" "org/apache/maven/plugins/maven-jar-plugin")" || exit 1
+else
+  MAVEN_SHADE_PLUGIN_VERSION="$(resolve_latest_version "Maven Shade Plugin" "org/apache/maven/plugins/maven-shade-plugin")" || exit 1
+fi
+
+mkdir -p -- "$BASE_PATH"
+BASE_PATH="$(cd "$BASE_PATH" && pwd -P)"
+PROJECT_DIR="${BASE_PATH%/}/${PROJECT_NAME}"
+if [[ -e "$PROJECT_DIR" ]]; then
+  echo "Error: '$PROJECT_DIR' already exists; refusing to overwrite it." >&2
+  exit 1
+fi
+
+PACKAGE_SUFFIX="$(printf '%s' "$PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[.-]+/_/g')"
+if [[ "$PACKAGE_SUFFIX" =~ ^[0-9] ]]; then
+  PACKAGE_SUFFIX="app_${PACKAGE_SUFFIX}"
+fi
+PACKAGE_NAME="${GROUP_ID}.${PACKAGE_SUFFIX}"
+PACKAGE_PATH="$(printf '%s' "$PACKAGE_NAME" | tr '.' '/')"
+MAIN_CLASS=""
+if [[ "$PROJECT_TYPE" == "app" ]]; then
+  MAIN_CLASS="${PACKAGE_NAME}.App"
+fi
+
+mkdir -p "$PROJECT_DIR/src/main/java/$PACKAGE_PATH" \
+  "$PROJECT_DIR/src/test/java/$PACKAGE_PATH"
+
+cat >"$PROJECT_DIR/.gitignore" <<'GITIGNORE'
+# Maven build output
+/target/
+
+# Compiled Java artifacts
+*.class
+
+# IDE metadata
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+GITIGNORE
+
+JAR_PLUGIN_SECTION=""
+if [[ "$PROJECT_TYPE" == "lib" ]]; then
+  JAR_PLUGIN_SECTION="$(
+    cat <<JAR
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${MAVEN_JAR_PLUGIN_VERSION}</version>
+      </plugin>
+JAR
+  )"
+fi
+
+SHADE_PLUGIN_SECTION=""
+if [[ "$PROJECT_TYPE" == "app" ]]; then
+  SHADE_PLUGIN_SECTION="$(
+    cat <<SHADE
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>${MAVEN_SHADE_PLUGIN_VERSION}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>${MAIN_CLASS}</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+SHADE
+  )"
+fi
+
+cat >"$PROJECT_DIR/pom.xml" <<POM
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>${GROUP_ID}</groupId>
+  <artifactId>${PROJECT_NAME}</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>${JAVA_VERSION}</maven.compiler.release>
+    <junit.version>${JUNIT_VERSION}</junit.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>\${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${MAVEN_COMPILER_PLUGIN_VERSION}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${MAVEN_SUREFIRE_PLUGIN_VERSION}</version>
+      </plugin>
+${JAR_PLUGIN_SECTION}
+${SHADE_PLUGIN_SECTION}
+    </plugins>
+  </build>
+</project>
+POM
+
+if [[ "$PROJECT_TYPE" == "app" ]]; then
+  cat >"$PROJECT_DIR/src/main/java/$PACKAGE_PATH/App.java" <<JAVA
+package ${PACKAGE_NAME};
+
+public class App {
+    public static void main(String[] args) {
+        System.out.println(message());
+    }
+
+    static String message() {
+        return "Hello, World!";
+    }
+}
+JAVA
+
+  cat >"$PROJECT_DIR/src/test/java/$PACKAGE_PATH/AppTest.java" <<JAVA
+package ${PACKAGE_NAME};
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+class AppTest {
+    @Test
+    void messageReturnsGreeting() {
+        assertEquals("Hello, World!", App.message());
+    }
+}
+JAVA
+else
+  cat >"$PROJECT_DIR/src/main/java/$PACKAGE_PATH/Library.java" <<JAVA
+package ${PACKAGE_NAME};
+
+/** A small example class for this library. */
+public class Library {
+    public static String message() {
+        return "Hello from the library!";
+    }
+}
+JAVA
+
+  cat >"$PROJECT_DIR/src/test/java/$PACKAGE_PATH/LibraryTest.java" <<JAVA
+package ${PACKAGE_NAME};
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+class LibraryTest {
+    @Test
+    void messageReturnsGreeting() {
+        assertEquals("Hello from the library!", Library.message());
+    }
+}
+JAVA
+fi
+
+# Initialize a repository, but do not create a commit automatically.
+git -C "$PROJECT_DIR" init --quiet
+
+cat <<INFO
+Created Maven project: $PROJECT_DIR
+Project type: $PROJECT_TYPE
+Initialized Git repository: $PROJECT_DIR/.git
+Generated .gitignore
+Detected Java feature version: $JAVA_VERSION
+Selected JUnit Jupiter version: $JUNIT_VERSION
+Selected Maven Compiler Plugin version: $MAVEN_COMPILER_PLUGIN_VERSION
+Selected Maven Surefire Plugin version: $MAVEN_SUREFIRE_PLUGIN_VERSION
+INFO
+
+if [[ "$PROJECT_TYPE" == "app" ]]; then
+  cat <<INFO
+Selected Maven Shade Plugin version: $MAVEN_SHADE_PLUGIN_VERSION
+Main class: $MAIN_CLASS
+Maven's default JAR lifecycle binding creates the input JAR; no explicit JAR Plugin is configured.
+
+Build and run it:
+  cd "$PROJECT_DIR"
+  mvn package
+  java -jar "target/${PROJECT_NAME}-1.0-SNAPSHOT.jar"
+
+The Shade Plugin bundles runtime dependencies into an executable uber JAR.
+INFO
+else
+  cat <<INFO
+Selected Maven JAR Plugin version: $MAVEN_JAR_PLUGIN_VERSION
+
+Build the library JAR:
+  cd "$PROJECT_DIR"
+  mvn package
+
+The standard JAR is created at:
+  target/${PROJECT_NAME}-1.0-SNAPSHOT.jar
+
+No uber JAR is configured for library projects.
+INFO
+fi
+
+cat <<INFO
+
+Opening project with: $IDE
+INFO
+
+case "$IDE" in
+code)
+  if ! code "$PROJECT_DIR"; then
+    echo "Error: the 'code' launcher failed to open the project." >&2
+    echo "The project was created successfully at: $PROJECT_DIR" >&2
+    echo "You can open it manually with: code ""$PROJECT_DIR""" >&2
+    exit 1
+  fi
+  ;;
+idea)
+  if ! idea "$PROJECT_DIR"; then
+    echo "Error: the 'idea' launcher failed to open the project." >&2
+    echo "The project was created successfully at: $PROJECT_DIR" >&2
+    echo "You can open it manually with: idea ""$PROJECT_DIR""" >&2
+    exit 1
+  fi
+  ;;
+tmux)
+  if ! tmux-sessionizer "$PROJECT_DIR"; then
+    echo "Error: tmux-sessionizer could not create a new window." >&2
+    echo "The project was created successfully at: $PROJECT_DIR" >&2
+    echo "Open it manually with: ts ""$PROJECT_DIR""" >&2
+    exit 1
+  fi
+  ;;
+esac
