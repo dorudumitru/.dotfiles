@@ -7,7 +7,6 @@ layout {
     gaps 4
 
     border {
-        on
         width 2
     }
 
@@ -24,15 +23,16 @@ window-rule {
 }
 
 layer-rule {
-    exclude namespace="^dms:bar$"
     background-effect {
         xray false
     }
 }
 
 window-rule {
-    match app-id="^com.danklinux.dms$"
+    match app-id="^(dev.duxlabs.shell|com.danklinux.dms)$"
     background-effect {
         xray false
     }
 }
+
+// bar-xray off

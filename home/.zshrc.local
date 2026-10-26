@@ -1,4 +1,5 @@
 # Daily zsh tweaks — symlinked from ~/.dotfiles.
+# Edit this file, then `exec zsh`. No nixos-rebuild needed.
 
 # functions
 function tmux-ssh() {
@@ -43,6 +44,7 @@ alias cat="bat"
 alias vim="nvim"
 alias ts="tmux-sessionizer"
 alias ngp="new-go-project"
+alias njp="new-java-project"
 alias uao="unzip-and-open"
 alias tssh="tmux-ssh"
 alias lg="lazygit"
