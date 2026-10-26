@@ -3,7 +3,7 @@
   "plugins": {
     "zmkBattery": {
       "repo": "https://github.com/ayaOwO/ZmkBattery",
-      "commit": "1a7337ee8d848b42fe4e34e04eb857c61ec20c31"
+      "commit": "ed7ba5404e1f27bb9001889b546118451f7187da"
     }
   }
 }

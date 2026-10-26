@@ -607,5 +607,6 @@
     }
   ],
   "lockScreenShowPowerActions": true,
-  "focusRingWidth": 1.5
+  "focusRingWidth": 1.5,
+  "avatarRing": "outline"
 }
