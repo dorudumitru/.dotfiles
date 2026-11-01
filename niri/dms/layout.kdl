@@ -11,7 +11,7 @@ layout {
     }
 
     focus-ring {
-        width 0
+        width 2
     }
 }
 

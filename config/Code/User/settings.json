@@ -12,9 +12,9 @@
   "symbols.hidesExplorerArrows": false,
 
   // FONT
-  "editor.fontFamily": "Lilexx, MonoLisa Medium, JetBrains Mono Medium, Symbols Nerd Font",
+  "editor.fontFamily": "Lilex, MonoLisa Medium, JetBrains Mono Medium, Symbols Nerd Font",
   "editor.fontWeight": "500",
-  "editor.fontSize": 14,
+  "editor.fontSize": 15,
   "editor.lineHeight": 1.4,
   "editor.fontLigatures": "true",
   "editor.semanticHighlighting.enabled": true,
@@ -24,7 +24,7 @@
   "terminal.integrated.minimumContrastRatio": 1,
   // If permission is needed
   // sudo chown -R $(whoami) $(which code) && sudo chown -R $(whoami) /usr/share/code
-  "fonted.font": "MonoLisa Medium",
+  "fonted.font": "Lilex Medium",
   "errorLens.fontWeight": "500",
   "errorLens.enabledDiagnosticLevels": ["error", "warning", "info", "hint"],
   "errorLens.messageBackgroundMode": "message",

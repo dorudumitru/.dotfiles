@@ -398,6 +398,7 @@ resolve_latest_version() {
 # explicitly only for libraries. Applications use Maven's default jar:jar lifecycle
 # binding to create the input JAR, then Shade Plugin turns it into an executable uber JAR.
 JUNIT_VERSION="$(resolve_latest_version "JUnit Jupiter" "org/junit/jupiter/junit-jupiter" "$JUNIT_MAJOR")" || exit 1
+ASSERTJ_VERSION="$(resolve_latest_version "AssertJ" "org/assertj/assertj-core")" || exit 1
 MAVEN_COMPILER_PLUGIN_VERSION="$(resolve_latest_version "Maven Compiler Plugin" "org/apache/maven/plugins/maven-compiler-plugin")" || exit 1
 MAVEN_SUREFIRE_PLUGIN_VERSION="$(resolve_latest_version "Maven Surefire Plugin" "org/apache/maven/plugins/maven-surefire-plugin")" || exit 1
 MAVEN_JAR_PLUGIN_VERSION=""
@@ -416,9 +417,9 @@ if [[ -e "$PROJECT_DIR" ]]; then
   exit 1
 fi
 
-PACKAGE_SUFFIX="$(printf '%s' "$PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[.-]+/_/g')"
+PACKAGE_SUFFIX="$(printf '%s' "$PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[.-]+//g')"
 if [[ "$PACKAGE_SUFFIX" =~ ^[0-9] ]]; then
-  PACKAGE_SUFFIX="app_${PACKAGE_SUFFIX}"
+  PACKAGE_SUFFIX="app${PACKAGE_SUFFIX}"
 fi
 PACKAGE_NAME="${GROUP_ID}.${PACKAGE_SUFFIX}"
 PACKAGE_PATH="$(printf '%s' "$PACKAGE_NAME" | tr '.' '/')"
@@ -506,6 +507,7 @@ cat >"$PROJECT_DIR/pom.xml" <<POM
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>${JAVA_VERSION}</maven.compiler.release>
     <junit.version>${JUNIT_VERSION}</junit.version>
+    <assertj.version>${ASSERTJ_VERSION}</assertj.version>
   </properties>
 
   <dependencies>
@@ -513,6 +515,12 @@ cat >"$PROJECT_DIR/pom.xml" <<POM
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>\${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>\${assertj.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -554,14 +562,14 @@ JAVA
   cat >"$PROJECT_DIR/src/test/java/$PACKAGE_PATH/AppTest.java" <<JAVA
 package ${PACKAGE_NAME};
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
 class AppTest {
     @Test
     void messageReturnsGreeting() {
-        assertEquals("Hello, World!", App.message());
+        assertThat(App.message()).isEqualTo("Hello, World!");
     }
 }
 JAVA
@@ -580,14 +588,14 @@ JAVA
   cat >"$PROJECT_DIR/src/test/java/$PACKAGE_PATH/LibraryTest.java" <<JAVA
 package ${PACKAGE_NAME};
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
 class LibraryTest {
     @Test
     void messageReturnsGreeting() {
-        assertEquals("Hello from the library!", Library.message());
+        assertThat(Library.message()).isEqualTo("Hello from the library!");
     }
 }
 JAVA
@@ -603,6 +611,7 @@ Initialized Git repository: $PROJECT_DIR/.git
 Generated .gitignore
 Detected Java feature version: $JAVA_VERSION
 Selected JUnit Jupiter version: $JUNIT_VERSION
+Selected AssertJ version: $ASSERTJ_VERSION
 Selected Maven Compiler Plugin version: $MAVEN_COMPILER_PLUGIN_VERSION
 Selected Maven Surefire Plugin version: $MAVEN_SUREFIRE_PLUGIN_VERSION
 INFO

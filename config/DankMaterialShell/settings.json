@@ -72,7 +72,8 @@
         {
           "id": "launcherButton",
           "enabled": true,
-          "launcherLogoMode": "os"
+          "launcherLogoMode": "os",
+          "launcherLogoSizeOffset": 2
         },
         {
           "id": "workspaceSwitcher",
@@ -108,6 +109,10 @@
       "rightWidgets": [
         {
           "id": "systemTray",
+          "enabled": true
+        },
+        {
+          "id": "zmkBattery",
           "enabled": true
         },
         {
@@ -186,7 +191,7 @@
       "followInterfaceStyle": false,
       "widgetFollowInterfaceStyle": false,
       "barLengthMode": "full",
-      "surfaceColor": "default",
+      "surfaceColor": "sc",
       "widgetStyle": "pills"
     },
     {
@@ -439,14 +444,15 @@
         "transparency": 0,
         "weight": 0,
         "twoTone": true,
-        "showDate": true,
+        "showDate": false,
         "showDigitalSeconds": false,
         "showAnalogNumbers": false,
         "showAnalogSeconds": true,
         "autoPosition": false,
         "colorMode": "default",
         "customColor": "#ffffff",
-        "rounded": true
+        "rounded": true,
+        "fontFamily": ""
       }
     },
     {
@@ -458,7 +464,7 @@
           "all"
         ],
         "syncPositionAcrossScreens": true,
-        "format": "short",
+        "format": "long",
         "colorMode": "default",
         "customColor": "#ffffff"
       }
@@ -530,14 +536,15 @@
         "transparency": 0,
         "weight": 0,
         "twoTone": true,
-        "showDate": true,
+        "showDate": false,
         "showDigitalSeconds": false,
         "showAnalogNumbers": false,
         "showAnalogSeconds": true,
         "autoPosition": false,
         "colorMode": "default",
         "customColor": "#ffffff",
-        "rounded": true
+        "rounded": true,
+        "fontFamily": ""
       }
     },
     {
@@ -549,7 +556,7 @@
           "all"
         ],
         "syncPositionAcrossScreens": true,
-        "format": "short",
+        "format": "long",
         "colorMode": "default",
         "customColor": "#ffffff"
       }
@@ -607,6 +614,12 @@
     }
   ],
   "lockScreenShowPowerActions": true,
-  "focusRingWidth": 1.5,
-  "avatarRing": "outline"
+  "focusRingWidth": 1,
+  "avatarRing": "outline",
+  "showWeekNumber": false,
+  "dashOptions": {
+    "calendar": {
+      "weekends": true
+    }
+  }
 }
