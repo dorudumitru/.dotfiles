@@ -12,9 +12,9 @@
   "symbols.hidesExplorerArrows": false,
 
   // FONT
-  "editor.fontFamily": "Lilex, MonoLisa Medium, JetBrains Mono Medium, Symbols Nerd Font",
+  "editor.fontFamily": "Lilexx, MonoLisa Mediumm, JetBrains Mono Medium, Symbols Nerd Font",
   "editor.fontWeight": "500",
-  "editor.fontSize": 15,
+  "editor.fontSize": 14,
   "editor.lineHeight": 1.4,
   "editor.fontLigatures": "true",
   "editor.semanticHighlighting.enabled": true,
@@ -209,4 +209,16 @@
   },
   "yaml.disableSchemaDetection": [],
   "docker.extension.enableComposeLanguageServer": false,
+  "java.completion.favoriteStaticMembers": [
+    "org.assertj.core.api.Assertions.*",
+    "org.junit.Assert.*",
+    "org.junit.Assume.*",
+    "org.junit.jupiter.api.Assertions.*",
+    "org.junit.jupiter.api.Assumptions.*",
+    "org.junit.jupiter.api.DynamicContainer.*",
+    "org.junit.jupiter.api.DynamicTest.*",
+    "org.mockito.Mockito.*",
+    "org.mockito.ArgumentMatchers.*",
+    "org.mockito.Answers.*",
+  ],
 }

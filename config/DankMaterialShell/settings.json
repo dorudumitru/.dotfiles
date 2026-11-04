@@ -1,12 +1,18 @@
 {
   "currentThemeName": "custom",
   "currentThemeCategory": "registry",
-  "customThemeFile": "/home/dorudumitru/.config/DankMaterialShell/themes/catppuccin/theme.json",
+  "customThemeFile": "/home/dorudumitru/.config/dms/themes/catppuccin/theme.json",
   "registryThemeVariants": {
     "catppuccin": {
       "dark": {
         "flavor": "macchiato",
         "accent": "rosewater"
+      }
+    },
+    "monokaiPro": {
+      "dark": {
+        "flavor": "pro",
+        "accent": "yellow"
       }
     }
   },
