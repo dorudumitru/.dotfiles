@@ -394,7 +394,8 @@
   ],
   "blurBorderSeeded": true,
   "dmsWindowsFloatingSeeded": [
-    "niri"
+    "niri",
+    "hyprland"
   ],
   "radiusMode": "scale",
   "terminalOpacity": 90,
