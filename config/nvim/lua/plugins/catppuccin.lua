@@ -23,6 +23,7 @@ return {
       properties = {},
       types = {},
       operators = {},
+      -- miscs = {}, -- Uncomment to turn off hard-coded styles
     },
     highlight_overrides = {
       all = function(macchiato)
