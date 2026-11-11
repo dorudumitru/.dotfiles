@@ -6,8 +6,7 @@ config-notification {
     disable-failed
 }
 
-// Maximize the only window on a workspace (first opened or last remaining).
-spawn-at-startup "oniri"
+spawn-at-startup "oniri --tiling-layout"
 
 gestures {
     hot-corners {

@@ -152,7 +152,7 @@
       "barLengthPadding": 0,
       "bottomGap": 0,
       "attachToScreenEdge": false,
-      "transparency": 0.9,
+      "transparency": 0.8,
       "widgetTransparency": 0.9,
       "squareCorners": false,
       "noBackground": false,
@@ -636,5 +636,6 @@
   "hyprlandGroupbarBlur": false,
   "hyprlandWindowOpacity": 100,
   "hyprlandTilingLayout": "scrolling",
-  "hyprlandGroupbarDisableWhenOnly": false
+  "hyprlandGroupbarDisableWhenOnly": false,
+  "matugenTemplateZenBrowser": false
 }
