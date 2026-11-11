@@ -6,6 +6,9 @@ config-notification {
     disable-failed
 }
 
+// Maximize the only window on a workspace (first opened or last remaining).
+spawn-at-startup "oniri"
+
 gestures {
     hot-corners {
         off
@@ -244,7 +247,7 @@ recent-windows {
 // Default Named Workspaces
 workspace "kitty"
 workspace "bitwarden"
-workspace "brave"
+workspace "zen"
 workspace "whatsapp"
 workspace "ide"
 

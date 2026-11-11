@@ -52,7 +52,7 @@
     }
   },
   "fontFamily": "Inter",
-  "monoFontFamily": "MonoLisa Medium",
+  "monoFontFamily": "Lilex Medium",
   "textRenderQuality": 3,
   "batteryChargeLimit": 90,
   "batteryNotifyChargeLimit": true,
