@@ -637,5 +637,7 @@
   "hyprlandWindowOpacity": 100,
   "hyprlandTilingLayout": "scrolling",
   "hyprlandGroupbarDisableWhenOnly": false,
-  "matugenTemplateZenBrowser": false
+  "matugenTemplateZenBrowser": false,
+  "niriLayoutGapsOverride": -1,
+  "focusFollowsMouse": 1
 }
